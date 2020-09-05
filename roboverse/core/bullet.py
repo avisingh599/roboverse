@@ -20,7 +20,7 @@ def connect_headless(gui=False):
     p.setGravity(0, 0, GRAVITY)
 
 
-def get_view_matrix(target_pos=[.75, -.2, 0], distance=0.9,
+def get_view_matrix(target_pos=(.75, -.2, 0), distance=0.9,
                     yaw=180, pitch=-20, roll=0, up_axis_index=2):
     view_matrix = p.computeViewMatrixFromYawPitchRoll(
         target_pos, distance, yaw, pitch, roll, up_axis_index)
