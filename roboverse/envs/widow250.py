@@ -17,8 +17,10 @@ class Widow250Env(gym.Env, Serializable):
                  object_names=['beer_bottle', 'gatorade'],
                  scalings=[0.75, 0.5],
                  observation_mode='pixels',
+                 control_mode='continuous',
                  observation_img_dim=48,
                  num_sim_steps=10,
+                 num_sim_steps_discrete_action=75,
                  transpose_image=True,
                  gui=False,
                  camera_target_pos=(0.6, 0.0, -0.4),
@@ -29,8 +31,10 @@ class Widow250Env(gym.Env, Serializable):
                  ):
 
         self.observation_mode = observation_mode
+        self.control_mode = control_mode
         self.observation_img_dim = observation_img_dim
         self.num_sim_steps = num_sim_steps
+        self.num_sim_steps_discrete_action = num_sim_steps_discrete_action
         self.transpose_image = transpose_image
         self.gui = gui
 
@@ -70,6 +74,9 @@ class Widow250Env(gym.Env, Serializable):
         self.xyz_action_scale = 1.0
         self.abc_action_scale = 20.0
         self.gripper_action_scale = 20.0
+
+        self._set_action_space()
+        self._set_observation_space()
 
         self.reset()
 
@@ -118,16 +125,35 @@ class Widow250Env(gym.Env, Serializable):
                                                   self.movable_joints)
         gripper_state = np.asarray([joint_states[-2], joint_states[-1]])
 
-        target_ee_pos = ee_pos + self.xyz_action_scale*xyz_action
+        target_ee_pos = ee_pos + self.xyz_action_scale * xyz_action
         ee_deg = bullet.quat_to_deg(ee_quat)
-        target_ee_deg = ee_deg + self.abc_action_scale*abc_action
+        target_ee_deg = ee_deg + self.abc_action_scale * abc_action
         target_ee_quat = bullet.deg_to_quat(target_ee_deg)
-        target_gripper_state = gripper_state + [-self.gripper_action_scale*gripper_action,
-                                                +self.gripper_action_scale*gripper_action]
+
+        if self.control_mode == 'continuous':
+            num_sim_steps = self.num_sim_steps
+            target_gripper_state = gripper_state + \
+                                   [-self.gripper_action_scale * gripper_action,
+                                    self.gripper_action_scale * gripper_action]
+
+        elif self.control_mode == 'discrete_gripper':
+            if gripper_action > 0.5:
+                num_sim_steps = self.num_sim_steps_discrete_action
+                target_gripper_state = [0.036, -0.036]
+            elif gripper_action < 0.5:
+                num_sim_steps = self.num_sim_steps_discrete_action
+                target_gripper_state = [0.0, 0.0]
+            else:
+                num_sim_steps = self.num_sim_steps
+                target_gripper_state = gripper_state
+        else:
+            raise NotImplementedError
+
         bullet.apply_action_ik(
-            target_ee_pos, target_ee_quat, target_gripper_state, self.robot_id,
+            target_ee_pos, target_ee_quat, target_gripper_state,
+            self.robot_id,
             self.end_effector_index, self.movable_joints,
-            num_sim_steps=self.num_sim_steps)
+            num_sim_steps=num_sim_steps)
 
         info = self.get_info()
         reward = self.get_reward(info)
@@ -137,12 +163,12 @@ class Widow250Env(gym.Env, Serializable):
     def get_observation(self):
         joint_states, _ = bullet.get_joint_states(self.robot_id,
                                                   self.movable_joints)
-        gripper_tips_distance = [0.]   # TODO(avi) fix this
+        gripper_tips_distance = [0.]  # FIXME(avi)
         ee_pos, ee_quat = bullet.get_link_state(
             self.robot_id, self.end_effector_index)
         if self.observation_mode == 'pixels':
             image_observation = self.render_obs()
-            image_observation = np.float32(image_observation.flatten())/255.0
+            image_observation = np.float32(image_observation.flatten()) / 255.0
             observation = {
                 'state': np.concatenate(
                     (ee_pos, ee_quat, gripper_tips_distance)),
@@ -167,6 +193,26 @@ class Widow250Env(gym.Env, Serializable):
             img = np.transpose(img, (2, 0, 1))
         return img
 
+    def _set_action_space(self):
+        self.action_dim = 7
+        act_bound = 1
+        act_high = np.ones(self.action_dim) * act_bound
+        self.action_space = gym.spaces.Box(-act_high, act_high)
+
+    def _set_observation_space(self):
+        if self.observation_mode == 'pixels':
+            self.image_length = (self.observation_img_dim ** 2) * 3
+            img_space = gym.spaces.Box(0, 1, (self.image_length,),
+                                       dtype=np.float32)
+            robot_state_dim = 8  # XYZ + QUAT + GRIPPER
+            obs_bound = 100
+            obs_high = np.ones(robot_state_dim) * obs_bound
+            state_space = gym.spaces.Box(-obs_high, obs_high)
+            spaces = {'image': img_space, 'state': state_space}
+            self.observation_space = gym.spaces.Dict(spaces)
+        else:
+            raise NotImplementedError
+
 
 if __name__ == "__main__":
     env = Widow250Env(gui=True)
@@ -174,12 +220,13 @@ if __name__ == "__main__":
 
     for i in range(25):
         print(i)
-        env.step(np.asarray([0., 0., 0., 0., 0., 0., -0.5]))
+        env.step(np.asarray([0., 0., -0.1, 0., 0., 0., 0.]))
         time.sleep(0.1)
 
     env.reset()
     for _ in range(25):
-        env.step(np.asarray([0., 0., 0., 0., 0., 0., +0.5]))
+        env.step(np.asarray([0., 0., 0., 0., 0., 0., 0.6]))
         time.sleep(0.1)
 
     env.reset()
+
