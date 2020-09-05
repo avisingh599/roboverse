@@ -16,6 +16,7 @@ class Widow250Env(gym.Env, Serializable):
                  control_mode='continuous',
                  observation_img_dim=48,
                  num_sim_steps=10,
+                 num_sim_steps_reset=50,
                  num_sim_steps_discrete_action=75,
                  transpose_image=True,
                  gui=False,
@@ -30,6 +31,7 @@ class Widow250Env(gym.Env, Serializable):
         self.control_mode = control_mode
         self.observation_img_dim = observation_img_dim
         self.num_sim_steps = num_sim_steps
+        self.num_sim_steps_reset = num_sim_steps_reset
         self.num_sim_steps_discrete_action = num_sim_steps_discrete_action
         self.transpose_image = transpose_image
         self.gui = gui
@@ -58,6 +60,9 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
+        self.object_position = (.65, 0.2, -.3)
+        self.object_orientation = (0, 0, 0.707107, 0.707107)
+
         self.xyz_action_scale = 1.0
         self.abc_action_scale = 20.0
         self.gripper_action_scale = 20.0
@@ -71,6 +76,7 @@ class Widow250Env(gym.Env, Serializable):
         from roboverse.envs import objects
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
+        self.tray_id = objects.tray()
         self.duck_id = objects.duck()
 
     def reset(self):
@@ -78,7 +84,9 @@ class Widow250Env(gym.Env, Serializable):
             self.robot_id,
             self.reset_joint_indices,
             self.reset_joint_values)
-        # TODO(avi): reset objects
+        # TODO(avi): Generalize this to more than one object
+        bullet.reset_object(self.duck_id, self.object_position, self.object_orientation)
+        bullet.step_simulation(self.num_sim_steps_reset)
         return self.get_observation()
 
     def step(self, action):
@@ -187,15 +195,16 @@ if __name__ == "__main__":
     env = Widow250Env(gui=True)
     import time
 
-    for i in range(25):
+    for i in range(10):
         print(i)
-        env.step(np.asarray([0., 0., -0.1, 0., 0., 0., 0.]))
+        env.step(np.asarray([0., 0., 0.1, 0., 0., 0., 0.]))
         time.sleep(0.1)
 
     env.reset()
+    time.sleep(1)
     for _ in range(25):
         env.step(np.asarray([0., 0., 0., 0., 0., 0., 0.6]))
         time.sleep(0.1)
 
     env.reset()
-
+    import IPython; IPython.embed()

@@ -17,4 +17,3 @@ def connect_headless(gui=False):
                                  cameraPitch=-40,
                                  cameraTargetPosition=[0.6, 0, -0.4])
     p.setGravity(0, 0, GRAVITY)
-

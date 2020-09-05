@@ -72,6 +72,23 @@ def reset_robot(robot_id, reset_joint_indices, reset_joint_values):
         p.resetJointState(robot_id, i, value)
 
 
+def reset_object(body_id, position, orientation):
+    p.resetBasePositionAndOrientation(body_id,
+                                      position,
+                                      orientation)
+
+
+def get_object_position(body_id):
+    object_position, object_orientation = \
+        p.getBasePositionAndOrientation(body_id)
+    return object_position, object_orientation
+
+
+def step_simulation(num_sim_steps):
+    for _ in range(num_sim_steps):
+        p.stepSimulation()
+
+
 def quat_to_deg(quat):
     euler_rad = p.getEulerFromQuaternion(quat)
     euler_deg = rad_to_deg(euler_rad)
