@@ -23,6 +23,7 @@ class Widow250Env(gym.Env, Serializable):
                  camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
+                 use_vr=False,
                  ):
 
         self.observation_mode = observation_mode
@@ -30,8 +31,11 @@ class Widow250Env(gym.Env, Serializable):
         self.num_sim_steps = num_sim_steps
         self.transpose_image = transpose_image
         self.gui = gui
-
-        bullet.connect_headless(self.gui)
+        self.use_vr = use_vr
+        if self.use_vr:
+            bullet.connect_headless_vr(self.gui)
+        else:
+            bullet.connect_headless(self.gui)
 
         self._load_meshes()
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
