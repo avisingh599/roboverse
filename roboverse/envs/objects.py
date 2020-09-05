@@ -1,7 +1,7 @@
 import pybullet_data
 import pybullet as p
 import os
-import roboverse.core.bullet as bullet
+import roboverse.bullet as bullet
 
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
@@ -16,10 +16,10 @@ def table():
     return table_id
 
 
-def duck():
+def duck(base_position=(.65, 0.2, -.4)):
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
     duck_id = p.loadURDF('duck_vhacd.urdf',
-                         basePosition=[.75, .0, -.3],
+                         basePosition=base_position,
                          baseOrientation=[0, 0, 0.707107, 0.707107],
                          globalScaling=0.8)
     return duck_id
