@@ -3,16 +3,19 @@ import numpy as np
 
 from roboverse.bullet.serializable import Serializable
 import roboverse.bullet as bullet
-
+from roboverse.envs import objects
 
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0.036, -0.036]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 10, 11]
+shapenet_obj_path_map, shapenet_path_scaling_map = objects.import_shapenet_metadata()
 
 
 class Widow250Env(gym.Env, Serializable):
 
     def __init__(self,
+                 object_names=['beer_bottle', 'gatorade'],
+                 scalings=[0.75, 0.5],
                  observation_mode='pixels',
                  observation_img_dim=48,
                  num_sim_steps=10,
@@ -32,6 +35,15 @@ class Widow250Env(gym.Env, Serializable):
         self.gui = gui
 
         bullet.connect_headless(self.gui)
+
+        # object stuff
+        assert len(object_names) == len(scalings)
+        self._object_position_high = (.86, .2, -.20)
+        self._object_position_low = (.84, -.15, -.20)
+        self.object_names = object_names
+        self.objects = {}
+        self.scalings = scalings
+        self.set_obj_scalings()
 
         self._load_meshes()
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
@@ -62,10 +74,28 @@ class Widow250Env(gym.Env, Serializable):
         self.reset()
 
     def _load_meshes(self):
-        from roboverse.envs import objects
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
         self.duck_id = objects.duck()
+        for object_name in self.object_names:
+            self.load_object(object_name,
+                self._object_position_low, self._object_position_high)
+
+    def load_object(self, name, obj_pos_high, obj_pos_low, quat=[1, 1, 0, 0]):
+        pos = np.random.uniform(obj_pos_low, obj_pos_high)
+        self.objects[name] = objects.load_shapenet_object(
+            self.object_path_dict[name], self.scaling_map[name],
+            pos, quat=quat)
+
+    def set_obj_scalings(self):
+        obj_path_map, path_scaling_map = dict(shapenet_obj_path_map), dict(shapenet_path_scaling_map)
+
+        self.object_path_dict = dict(
+            [(obj, path) for obj, path in obj_path_map.items() if obj in self.object_names])
+        self.scaling_map = dict(
+            [(name, scaling * path_scaling_map[
+                '{}/{}'.format(obj_path_map[name].split("/")[-2], obj_path_map[name].split("/")[-1])])
+                for name, scaling in zip(self.object_names, self.scalings)])
 
     def reset(self):
         bullet.reset_robot(
