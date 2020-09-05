@@ -1,12 +1,13 @@
 import gym
 import numpy as np
 
-from roboverse.core.serializable import Serializable
-import roboverse.core.bullet as bullet
+from roboverse.bullet.serializable import Serializable
+import roboverse.bullet as bullet
 
 
 END_EFFECTOR_INDEX = 8
-RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57]
+RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0.036, -0.036]
+RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 10, 11]
 
 
 class Widow250Env(gym.Env, Serializable):
@@ -17,8 +18,9 @@ class Widow250Env(gym.Env, Serializable):
                  num_sim_steps=10,
                  transpose_image=True,
                  gui=False,
-                 camera_target_pos=[0.6, 0.0, -0.4],
+                 camera_target_pos=(0.6, 0.0, -0.4),
                  camera_distance=0.5,
+                 camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
                  ):
@@ -35,15 +37,19 @@ class Widow250Env(gym.Env, Serializable):
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
         self.end_effector_index = END_EFFECTOR_INDEX
         self.reset_joint_values = RESET_JOINT_VALUES
-
+        self.reset_joint_indices = RESET_JOINT_INDICES
 
         self.camera_target_pos = camera_target_pos
         self.camera_distance = camera_distance
+        self.camera_roll = camera_roll
         self.camera_pitch = camera_pitch
         self.camera_yaw = camera_yaw
         view_matrix_args = dict(target_pos=self.camera_target_pos,
-                                distance=self.camera_distance, yaw=self.camera_yaw,
-                                pitch=self.camera_pitch, roll=0, up_axis_index=2)
+                                distance=self.camera_distance,
+                                yaw=self.camera_yaw,
+                                pitch=self.camera_pitch,
+                                roll=self.camera_roll,
+                                up_axis_index=2)
         self._view_matrix_obs = bullet.get_view_matrix(
             **view_matrix_args)
         self._projection_matrix_obs = bullet.get_projection_matrix(
@@ -64,14 +70,13 @@ class Widow250Env(gym.Env, Serializable):
     def reset(self):
         bullet.reset_robot(
             self.robot_id,
-            list(range(len(self.reset_joint_values))),
+            self.reset_joint_indices,
             self.reset_joint_values)
         # TODO(avi): reset objects
         return self.get_observation()
 
     def step(self, action):
         action = np.clip(action, -1, +1)  # TODO maybe clean this up
-
 
         xyz_action = action[:3]  # ee position actions
         abc_action = action[3:6]  # ee orientation actions
@@ -82,7 +87,6 @@ class Widow250Env(gym.Env, Serializable):
         joint_states, _ = bullet.get_joint_states(self.robot_id,
                                                   self.movable_joints)
         gripper_state = np.asarray([joint_states[-2], joint_states[-1]])
-
 
         target_ee_pos = ee_pos + self.xyz_action_scale*xyz_action
         ee_deg = bullet.quat_to_deg(ee_quat)
