@@ -7,6 +7,13 @@ import roboverse.bullet as bullet
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 5, 7, 10, 11]
+GUESS = 3.14  # TODO(avi) This is a guess, need to verify what joint this is
+JOINT_LIMIT_LOWER = [-3.14, -1.88, -1.60, -3.14, -2.14, -3.14, -GUESS, 0.015, -0.037]
+JOINT_LIMIT_UPPER = [3.14, 1.99, 2.14, 3.14, 1.74, 3.14, GUESS, 0.037, -0.015]
+JOINT_RANGE = []
+for upper, lower in zip(JOINT_LIMIT_LOWER, JOINT_LIMIT_UPPER):
+    JOINT_RANGE.append(upper-lower)
+
 GRIPPER_LIMITS_LOW = [0., -0.036]
 GRIPPER_LIMITS_HIGH = [0.036, 0.]
 GRIPPER_OPEN_STATE = [0.036, -0.036]
@@ -50,6 +57,9 @@ class Widow250Env(gym.Env, Serializable):
 
         bullet.connect_headless(self.gui)
 
+        self.object_position = (.65, 0.3, -.3)
+        self.object_orientation = (0, 0, 0.707107, 0.707107)
+
         self._load_meshes()
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
         self.end_effector_index = END_EFFECTOR_INDEX
@@ -72,8 +82,7 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
-        self.object_position = (.65, 0.2, -.3)
-        self.object_orientation = (0, 0, 0.707107, 0.707107)
+
 
         self.xyz_action_scale = 1.0
         self.abc_action_scale = 20.0
@@ -90,19 +99,20 @@ class Widow250Env(gym.Env, Serializable):
         from roboverse.envs import objects
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
-        self.tray_id = objects.tray()
+        self.tray_id = objects.tray(base_position=self.object_position)
+        # TODO(avi): Generalize this to more than one object
         self.duck_id = objects.duck()
 
     def reset(self):
+        bullet.reset()
+        bullet.setup_headless()
+        self._load_meshes()
         bullet.reset_robot(
             self.robot_id,
             self.reset_joint_indices,
             self.reset_joint_values)
-        self.is_gripper_open = True # TODO(avi): Clean this up
+        self.is_gripper_open = True  # TODO(avi): Clean this up
 
-        # TODO(avi): Generalize this to more than one object
-        bullet.reset_object(self.duck_id, self.object_position, self.object_orientation)
-        bullet.step_simulation(self.num_sim_steps_reset)
         return self.get_observation()
 
     def step(self, action):
@@ -157,6 +167,10 @@ class Widow250Env(gym.Env, Serializable):
             target_ee_pos, target_ee_quat, target_gripper_state,
             self.robot_id,
             self.end_effector_index, self.movable_joints,
+            lower_limit=JOINT_LIMIT_LOWER,
+            upper_limit=JOINT_LIMIT_UPPER,
+            rest_pose=RESET_JOINT_VALUES,
+            joint_range=JOINT_RANGE,
             num_sim_steps=num_sim_steps)
 
         info = self.get_info()

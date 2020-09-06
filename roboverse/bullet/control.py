@@ -28,11 +28,16 @@ def get_link_state(body_id, link_index):
 
 def apply_action_ik(target_ee_pos, target_ee_quat, target_gripper_state,
                     robot_id, end_effector_index, movable_joints,
+                    lower_limit, upper_limit, rest_pose, joint_range,
                     num_sim_steps=5):
     joint_poses = p.calculateInverseKinematics(robot_id,
                                                end_effector_index,
                                                target_ee_pos,
                                                target_ee_quat,
+                                               lowerLimits=lower_limit,
+                                               upperLimits=upper_limit,
+                                               jointRanges=joint_range,
+                                               restPoses=rest_pose,
                                                jointDamping=[0.001] * len(
                                                    movable_joints),
                                                solver=0,
