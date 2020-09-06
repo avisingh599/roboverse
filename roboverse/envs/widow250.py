@@ -3,12 +3,11 @@ import numpy as np
 
 from roboverse.bullet.serializable import Serializable
 import roboverse.bullet as bullet
-from roboverse.envs import objects
+from roboverse.envs import objects, object_utils
 
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0.036, -0.036]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 10, 11]
-shapenet_obj_path_map, shapenet_path_scaling_map = objects.import_shapenet_metadata()
 
 
 class Widow250Env(gym.Env, Serializable):
@@ -42,12 +41,16 @@ class Widow250Env(gym.Env, Serializable):
 
         # object stuff
         assert len(object_names) == len(scalings)
-        self._object_position_high = (.86, .2, -.20)
-        self._object_position_low = (.84, -.15, -.20)
+        self.pos_high_list = [(.86, .2, -.20)] * 2
+        self.pos_low_list = [(.84, -.15, -.20)] * 2
+        assert len(self.pos_high_list) == len(self.pos_low_list) == len(object_names)
         self.object_names = object_names
         self.objects = {}
         self.scalings = scalings
-        self.set_obj_scalings()
+        self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
+            self.object_names, self.scalings)
+        self.pos_high_map, self.pos_low_map = object_utils.set_pos_high_low_maps(
+            self.object_names, self.pos_high_list, self.pos_low_list)
 
         self._load_meshes()
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
@@ -85,12 +88,11 @@ class Widow250Env(gym.Env, Serializable):
         self.robot_id = objects.widow250()
         self.duck_id = objects.duck()
         for object_name in self.object_names:
-            self.load_object(object_name,
-                self._object_position_low, self._object_position_high)
+            self.load_object(object_name)
 
-    def load_object(self, name, obj_pos_high, obj_pos_low, quat=[1, 1, 0, 0]):
-        pos = np.random.uniform(obj_pos_low, obj_pos_high)
-        self.objects[name] = objects.load_shapenet_object(
+    def load_object(self, name, quat=[1, 1, 0, 0]):
+        pos = np.random.uniform(self.pos_high_map[name], self.pos_low_map[name])
+        self.objects[name] = object_utils.load_shapenet_object(
             self.object_path_dict[name], self.scaling_map[name],
             pos, quat=quat)
 
