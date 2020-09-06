@@ -82,8 +82,6 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
-
-
         self.xyz_action_scale = 1.0
         self.abc_action_scale = 20.0
         self.gripper_action_scale = 20.0
@@ -99,7 +97,7 @@ class Widow250Env(gym.Env, Serializable):
         from roboverse.envs import objects
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
-        self.tray_id = objects.tray(base_position=self.object_position)
+        self.tray_id = objects.tray()
         # TODO(avi): Generalize this to more than one object
         self.duck_id = objects.duck()
 
