@@ -1,8 +1,6 @@
 import numpy as np
 import pybullet as p
 
-GRAVITY = -10
-
 
 def connect_headless(gui=False):
     if gui:
@@ -16,7 +14,6 @@ def connect_headless(gui=False):
                                  cameraYaw=180,
                                  cameraPitch=-40,
                                  cameraTargetPosition=[0.6, 0, -0.4])
-    p.setGravity(0, 0, GRAVITY)
 
 
 def connect_headless_vr(gui=False):
@@ -32,5 +29,15 @@ def connect_headless_vr(gui=False):
                                  cameraPitch=-40,
                                  cameraTargetPosition=[0.6, 0, -0.4])
     p.setRealTimeSimulation(False)
-    p.setGravity(0, 0, GRAVITY)
+    p.stepSimulation()
+
+
+def reset():
+    p.resetSimulation()
+
+
+def setup_headless(timestep=1./240, solver_iterations=150, gravity=-10):
+    p.setPhysicsEngineParameter(numSolverIterations=solver_iterations)
+    p.setTimeStep(timestep)
+    p.setGravity(0, 0, gravity)
     p.stepSimulation()

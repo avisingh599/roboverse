@@ -16,7 +16,7 @@ def table():
     return table_id
 
 
-def duck(base_position=(.65, 0.2, -.3)):
+def duck(base_position=(.65, 0.3, -.3)):
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
     duck_id = p.loadURDF('duck_vhacd.urdf',
                          basePosition=base_position,
@@ -25,7 +25,7 @@ def duck(base_position=(.65, 0.2, -.3)):
     return duck_id
 
 
-def tray(base_position=(.60, 0.2, -.37)):
+def tray(base_position=(.60, 0.3, -.37)):
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
     tray_id = p.loadURDF('tray/tray.urdf',
                          basePosition=base_position,
