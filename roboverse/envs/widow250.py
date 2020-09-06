@@ -3,6 +3,8 @@ import numpy as np
 
 from roboverse.bullet.serializable import Serializable
 import roboverse.bullet as bullet
+from roboverse.envs import objects
+from roboverse.bullet import object_utils
 
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
@@ -26,6 +28,8 @@ class Widow250Env(gym.Env, Serializable):
                  control_mode='continuous',
                  observation_mode='pixels',
                  observation_img_dim=48,
+                 object_names=['beer_bottle', 'gatorade'],
+                 scalings=[0.75, 0.5],
                  num_sim_steps=10,
                  num_sim_steps_reset=50,
                  num_sim_steps_discrete_action=75,
@@ -57,6 +61,20 @@ class Widow250Env(gym.Env, Serializable):
 
         bullet.connect_headless(self.gui)
 
+        # object stuff
+        assert len(object_names) == len(scalings)
+        self.pos_high_list = [(.86, .2, -.20)] * 2
+        self.pos_low_list = [(.84, -.15, -.20)] * 2
+        assert len(self.pos_high_list) == len(self.pos_low_list) == len(object_names)
+        self.object_names = object_names
+        self.objects = {}
+        self.scalings = scalings
+        self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
+            self.object_names, self.scalings)
+        self.pos_high_map, self.pos_low_map = object_utils.set_pos_high_low_maps(
+            self.object_names, self.pos_high_list, self.pos_low_list)
+
+        # TODO(avi) To be removed
         self.object_position = (.65, 0.3, -.3)
         self.object_orientation = (0, 0, 0.707107, 0.707107)
 
@@ -94,12 +112,19 @@ class Widow250Env(gym.Env, Serializable):
         self.reset()
 
     def _load_meshes(self):
-        from roboverse.envs import objects
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
         self.tray_id = objects.tray()
         # TODO(avi): Generalize this to more than one object
         self.duck_id = objects.duck()
+        for object_name in self.object_names:
+            self.load_object(object_name)
+
+    def load_object(self, name, quat=[1, 1, 0, 0]):
+        pos = np.random.uniform(self.pos_high_map[name], self.pos_low_map[name])
+        self.objects[name] = object_utils.load_shapenet_object(
+            self.object_path_dict[name], self.scaling_map[name],
+            pos, quat=quat)
 
     def reset(self):
         bullet.reset()
