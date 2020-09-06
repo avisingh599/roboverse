@@ -28,8 +28,10 @@ class Widow250Env(gym.Env, Serializable):
                  control_mode='continuous',
                  observation_mode='pixels',
                  observation_img_dim=48,
-                 object_names=['beer_bottle', 'gatorade'],
-                 scalings=[0.75, 0.5],
+                 object_names=('beer_bottle', 'gatorade'),
+                 object_scales=(0.75, 0.75),
+                 object_pos_high=(.66, .4, -.20),
+                 object_pos_low=(.64, .2, -.20),
                  num_sim_steps=10,
                  num_sim_steps_reset=50,
                  num_sim_steps_discrete_action=75,
@@ -62,17 +64,17 @@ class Widow250Env(gym.Env, Serializable):
         bullet.connect_headless(self.gui)
 
         # object stuff
-        assert len(object_names) == len(scalings)
-        self.pos_high_list = [(.86, .2, -.20)] * 2
-        self.pos_low_list = [(.84, -.15, -.20)] * 2
-        assert len(self.pos_high_list) == len(self.pos_low_list) == len(object_names)
+        assert len(object_names) == len(object_scales)
+        self.object_pos_high = [object_pos_high] * len(object_names)
+        self.object_pos_low = [object_pos_low] * len(object_names)
+        assert len(self.object_pos_high) == len(self.object_pos_low) == len(object_names)
         self.object_names = object_names
         self.objects = {}
-        self.scalings = scalings
+        self.object_scales = object_scales
         self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
-            self.object_names, self.scalings)
+            self.object_names, self.object_scales)
         self.pos_high_map, self.pos_low_map = object_utils.set_pos_high_low_maps(
-            self.object_names, self.pos_high_list, self.pos_low_list)
+            self.object_names, self.object_pos_high, self.object_pos_low)
 
         # TODO(avi) To be removed
         self.object_position = (.65, 0.3, -.3)
