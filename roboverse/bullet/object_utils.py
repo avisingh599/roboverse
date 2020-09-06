@@ -45,7 +45,8 @@ def load_shapenet_object(object_path, scaling, object_position, scale_local=0.5,
     obj = load_obj(
         SHAPENET_ASSET_PATH + '/ShapeNetCore_vhacd/{0}/{1}/model.obj'.format(
             dir_name, object_name),
-        SHAPENET_ASSET_PATH + '/ShapeNetCore.v2/{0}/{1}/models/model_normalized.obj'.format(
+        SHAPENET_ASSET_PATH + '/ShapeNetCore.v2/{0}/{1}/'
+                              'models/model_normalized.obj'.format(
             dir_name, object_name),
         object_position,
         quat,  # this rotates objects 90 degrees. Originally: [0, 0, 1, 0]
