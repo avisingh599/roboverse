@@ -28,11 +28,16 @@ def get_link_state(body_id, link_index):
 
 def apply_action_ik(target_ee_pos, target_ee_quat, target_gripper_state,
                     robot_id, end_effector_index, movable_joints,
+                    lower_limit, upper_limit, rest_pose, joint_range,
                     num_sim_steps=5):
     joint_poses = p.calculateInverseKinematics(robot_id,
                                                end_effector_index,
                                                target_ee_pos,
                                                target_ee_quat,
+                                               lowerLimits=lower_limit,
+                                               upperLimits=upper_limit,
+                                               jointRanges=joint_range,
+                                               restPoses=rest_pose,
                                                jointDamping=[0.001] * len(
                                                    movable_joints),
                                                solver=0,
@@ -70,6 +75,23 @@ def reset_robot(robot_id, reset_joint_indices, reset_joint_values):
     assert len(reset_joint_indices) == len(reset_joint_values)
     for i, value in zip(reset_joint_indices, reset_joint_values):
         p.resetJointState(robot_id, i, value)
+
+
+def reset_object(body_id, position, orientation):
+    p.resetBasePositionAndOrientation(body_id,
+                                      position,
+                                      orientation)
+
+
+def get_object_position(body_id):
+    object_position, object_orientation = \
+        p.getBasePositionAndOrientation(body_id)
+    return np.asarray(object_position), np.asarray(object_orientation)
+
+
+def step_simulation(num_sim_steps):
+    for _ in range(num_sim_steps):
+        p.stepSimulation()
 
 
 def quat_to_deg(quat):
