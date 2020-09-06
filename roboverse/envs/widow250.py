@@ -96,16 +96,6 @@ class Widow250Env(gym.Env, Serializable):
             self.object_path_dict[name], self.scaling_map[name],
             pos, quat=quat)
 
-    def set_obj_scalings(self):
-        obj_path_map, path_scaling_map = dict(shapenet_obj_path_map), dict(shapenet_path_scaling_map)
-
-        self.object_path_dict = dict(
-            [(obj, path) for obj, path in obj_path_map.items() if obj in self.object_names])
-        self.scaling_map = dict(
-            [(name, scaling * path_scaling_map[
-                '{}/{}'.format(obj_path_map[name].split("/")[-2], obj_path_map[name].split("/")[-1])])
-                for name, scaling in zip(self.object_names, self.scalings)])
-
     def reset(self):
         bullet.reset_robot(
             self.robot_id,
