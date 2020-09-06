@@ -5,10 +5,12 @@ from roboverse.bullet.serializable import Serializable
 import roboverse.bullet as bullet
 
 END_EFFECTOR_INDEX = 8
-RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0.036, -0.036]
-RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 10, 11]
+RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
+RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 5, 7, 10, 11]
 GRIPPER_LIMITS_LOW = [0., -0.036]
 GRIPPER_LIMITS_HIGH = [0.036, 0.]
+GRIPPER_OPEN_STATE = [0.036, -0.036]
+GRIPPER_CLOSED_STATE = [0., 0.]
 
 
 class Widow250Env(gym.Env, Serializable):
@@ -42,6 +44,7 @@ class Widow250Env(gym.Env, Serializable):
         self.transpose_image = transpose_image
         self.gui = gui
 
+        # TODO(avi): Add limits to ee orientation as well
         self.ee_pos_high = ee_pos_high
         self.ee_pos_low = ee_pos_low
 
@@ -79,6 +82,8 @@ class Widow250Env(gym.Env, Serializable):
         self._set_action_space()
         self._set_observation_space()
 
+        self.is_gripper_open = True  # TODO(avi): Clean this up
+
         self.reset()
 
     def _load_meshes(self):
@@ -93,6 +98,8 @@ class Widow250Env(gym.Env, Serializable):
             self.robot_id,
             self.reset_joint_indices,
             self.reset_joint_values)
+        self.is_gripper_open = True # TODO(avi): Clean this up
+
         # TODO(avi): Generalize this to more than one object
         bullet.reset_object(self.duck_id, self.object_position, self.object_orientation)
         bullet.step_simulation(self.num_sim_steps_reset)
@@ -125,13 +132,20 @@ class Widow250Env(gym.Env, Serializable):
         elif self.control_mode == 'discrete_gripper':
             if gripper_action > 0.5:
                 num_sim_steps = self.num_sim_steps_discrete_action
-                target_gripper_state = [0.036, -0.036]
+                target_gripper_state = GRIPPER_OPEN_STATE
+                self.is_gripper_open = True  # TODO(avi): Clean this up
+
             elif gripper_action < -0.5:
                 num_sim_steps = self.num_sim_steps_discrete_action
-                target_gripper_state = [0.0, 0.0]
+                target_gripper_state = GRIPPER_CLOSED_STATE
+                self.is_gripper_open = False  # TODO(avi): Clean this up
             else:
                 num_sim_steps = self.num_sim_steps
-                target_gripper_state = gripper_state
+                if self.is_gripper_open:
+                    target_gripper_state = GRIPPER_OPEN_STATE
+                else:
+                    target_gripper_state = GRIPPER_CLOSED_STATE
+                # target_gripper_state = gripper_state
         else:
             raise NotImplementedError
 
@@ -151,9 +165,7 @@ class Widow250Env(gym.Env, Serializable):
         return self.get_observation(), reward, done, info
 
     def get_observation(self):
-        joint_states, _ = bullet.get_joint_states(self.robot_id,
-                                                  self.movable_joints)
-        gripper_tips_distance = [0.]  # FIXME(avi)
+        gripper_state = self.get_gripper_state()
         ee_pos, ee_quat = bullet.get_link_state(
             self.robot_id, self.end_effector_index)
         if self.observation_mode == 'pixels':
@@ -161,7 +173,7 @@ class Widow250Env(gym.Env, Serializable):
             image_observation = np.float32(image_observation.flatten()) / 255.0
             observation = {
                 'state': np.concatenate(
-                    (ee_pos, ee_quat, gripper_tips_distance)),
+                    (ee_pos, ee_quat, gripper_state)),
                 'image': image_observation
             }
         else:
@@ -194,7 +206,7 @@ class Widow250Env(gym.Env, Serializable):
             self.image_length = (self.observation_img_dim ** 2) * 3
             img_space = gym.spaces.Box(0, 1, (self.image_length,),
                                        dtype=np.float32)
-            robot_state_dim = 8  # XYZ + QUAT + GRIPPER
+            robot_state_dim = 9  # XYZ + QUAT + GRIPPER_STATE
             obs_bound = 100
             obs_high = np.ones(robot_state_dim) * obs_bound
             state_space = gym.spaces.Box(-obs_high, obs_high)
@@ -203,6 +215,12 @@ class Widow250Env(gym.Env, Serializable):
         else:
             raise NotImplementedError
 
+    def get_gripper_state(self):
+        joint_states, _ = bullet.get_joint_states(self.robot_id,
+                                                  self.movable_joints)
+        gripper_state = np.asarray(joint_states[-2:])
+        return gripper_state
+
 
 if __name__ == "__main__":
     env = Widow250Env(gui=True)
@@ -210,7 +228,7 @@ if __name__ == "__main__":
 
     for i in range(20):
         print(i)
-        env.step(np.asarray([-0.1, 0., 0.0, 0., 0., 0., 0.]))
+        env.step(np.asarray([-0.05, 0., 0., 0., 0., 0.5, 0.]))
         time.sleep(0.1)
 
     env.reset()

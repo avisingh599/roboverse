@@ -81,7 +81,7 @@ def reset_object(body_id, position, orientation):
 def get_object_position(body_id):
     object_position, object_orientation = \
         p.getBasePositionAndOrientation(body_id)
-    return object_position, object_orientation
+    return np.asarray(object_position), np.asarray(object_orientation)
 
 
 def step_simulation(num_sim_steps):
