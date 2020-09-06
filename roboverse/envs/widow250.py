@@ -12,13 +12,16 @@ RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 10, 11]
 class Widow250Env(gym.Env, Serializable):
 
     def __init__(self,
-                 observation_mode='pixels',
                  control_mode='continuous',
+                 observation_mode='pixels',
                  observation_img_dim=48,
                  num_sim_steps=10,
+                 num_sim_steps_reset=50,
                  num_sim_steps_discrete_action=75,
                  transpose_image=True,
                  gui=False,
+                 ee_pos_high=(0.8, .4, -0.1),
+                 ee_pos_low=(.4, -.2, -.34),
                  camera_target_pos=(0.6, 0.0, -0.4),
                  camera_distance=0.5,
                  camera_roll=0.0,
@@ -27,13 +30,20 @@ class Widow250Env(gym.Env, Serializable):
                  use_vr=False,
                  ):
 
-        self.observation_mode = observation_mode
         self.control_mode = control_mode
+        self.observation_mode = observation_mode
         self.observation_img_dim = observation_img_dim
+
         self.num_sim_steps = num_sim_steps
+        self.num_sim_steps_reset = num_sim_steps_reset
         self.num_sim_steps_discrete_action = num_sim_steps_discrete_action
+
         self.transpose_image = transpose_image
         self.gui = gui
+
+        self.ee_pos_high = ee_pos_high
+        self.ee_pos_low = ee_pos_low
+
         self.use_vr = use_vr
         if self.use_vr:
             bullet.connect_headless_vr(self.gui)
@@ -62,6 +72,9 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
+        self.object_position = (.65, 0.2, -.3)
+        self.object_orientation = (0, 0, 0.707107, 0.707107)
+
         self.xyz_action_scale = 1.0
         self.abc_action_scale = 20.0
         self.gripper_action_scale = 20.0
@@ -75,6 +88,7 @@ class Widow250Env(gym.Env, Serializable):
         from roboverse.envs import objects
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
+        self.tray_id = objects.tray()
         self.duck_id = objects.duck()
 
     def reset(self):
@@ -82,7 +96,9 @@ class Widow250Env(gym.Env, Serializable):
             self.robot_id,
             self.reset_joint_indices,
             self.reset_joint_values)
-        # TODO(avi): reset objects
+        # TODO(avi): Generalize this to more than one object
+        bullet.reset_object(self.duck_id, self.object_position, self.object_orientation)
+        bullet.step_simulation(self.num_sim_steps_reset)
         return self.get_observation()
 
     def step(self, action):
@@ -99,6 +115,7 @@ class Widow250Env(gym.Env, Serializable):
         gripper_state = np.asarray([joint_states[-2], joint_states[-1]])
 
         target_ee_pos = ee_pos + self.xyz_action_scale * xyz_action
+        target_ee_pos = np.clip(target_ee_pos, self.ee_pos_low, self.ee_pos_high)
         ee_deg = bullet.quat_to_deg(ee_quat)
         target_ee_deg = ee_deg + self.abc_action_scale * abc_action
         target_ee_quat = bullet.deg_to_quat(target_ee_deg)
@@ -191,15 +208,16 @@ if __name__ == "__main__":
     env = Widow250Env(gui=True)
     import time
 
-    for i in range(25):
+    for i in range(20):
         print(i)
-        env.step(np.asarray([0., 0., -0.1, 0., 0., 0., 0.]))
+        env.step(np.asarray([-0.1, 0., 0.0, 0., 0., 0., 0.]))
         time.sleep(0.1)
 
     env.reset()
+    time.sleep(1)
     for _ in range(25):
         env.step(np.asarray([0., 0., 0., 0., 0., 0., 0.6]))
         time.sleep(0.1)
 
     env.reset()
-
+    import IPython; IPython.embed()

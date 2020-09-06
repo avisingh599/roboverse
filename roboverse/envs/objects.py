@@ -16,13 +16,22 @@ def table():
     return table_id
 
 
-def duck(base_position=(.65, 0.2, -.4)):
+def duck(base_position=(.65, 0.2, -.3)):
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
     duck_id = p.loadURDF('duck_vhacd.urdf',
                          basePosition=base_position,
                          baseOrientation=[0, 0, 0.707107, 0.707107],
                          globalScaling=0.8)
     return duck_id
+
+
+def tray(base_position=(.60, 0.2, -.37)):
+    p.setAdditionalSearchPath(pybullet_data.getDataPath())
+    tray_id = p.loadURDF('tray/tray.urdf',
+                         basePosition=base_position,
+                         baseOrientation=[0, 0, 0.707107, 0.707107],
+                         globalScaling=0.5)
+    return tray_id
 
 
 def widow250():

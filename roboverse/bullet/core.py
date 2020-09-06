@@ -18,6 +18,7 @@ def connect_headless(gui=False):
                                  cameraTargetPosition=[0.6, 0, -0.4])
     p.setGravity(0, 0, GRAVITY)
 
+
 def connect_headless_vr(gui=False):
     if gui:
         cid = p.connect(p.SHARED_MEMORY)
