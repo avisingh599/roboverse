@@ -7,6 +7,8 @@ import roboverse.bullet as bullet
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0.036, -0.036]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 10, 11]
+GRIPPER_LIMITS_LOW = [0., -0.036]
+GRIPPER_LIMITS_HIGH = [0.036, 0.]
 
 
 class Widow250Env(gym.Env, Serializable):
@@ -115,7 +117,6 @@ class Widow250Env(gym.Env, Serializable):
         gripper_state = np.asarray([joint_states[-2], joint_states[-1]])
 
         target_ee_pos = ee_pos + self.xyz_action_scale * xyz_action
-        target_ee_pos = np.clip(target_ee_pos, self.ee_pos_low, self.ee_pos_high)
         ee_deg = bullet.quat_to_deg(ee_quat)
         target_ee_deg = ee_deg + self.abc_action_scale * abc_action
         target_ee_quat = bullet.deg_to_quat(target_ee_deg)
@@ -130,7 +131,7 @@ class Widow250Env(gym.Env, Serializable):
             if gripper_action > 0.5:
                 num_sim_steps = self.num_sim_steps_discrete_action
                 target_gripper_state = [0.036, -0.036]
-            elif gripper_action < 0.5:
+            elif gripper_action < -0.5:
                 num_sim_steps = self.num_sim_steps_discrete_action
                 target_gripper_state = [0.0, 0.0]
             else:
@@ -138,6 +139,10 @@ class Widow250Env(gym.Env, Serializable):
                 target_gripper_state = gripper_state
         else:
             raise NotImplementedError
+
+        target_ee_pos = np.clip(target_ee_pos, self.ee_pos_low, self.ee_pos_high)
+        target_gripper_state = np.clip(target_gripper_state, GRIPPER_LIMITS_LOW,
+                                       GRIPPER_LIMITS_HIGH)
 
         bullet.apply_action_ik(
             target_ee_pos, target_ee_quat, target_gripper_state,
