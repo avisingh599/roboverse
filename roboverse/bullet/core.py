@@ -41,3 +41,11 @@ def setup_headless(timestep=1./240, solver_iterations=150, gravity=-10):
     p.setTimeStep(timestep)
     p.setGravity(0, 0, gravity)
     p.stepSimulation()
+
+
+def setup_headless_vr(timestep=1./240, solver_iterations=150, gravity=-10):
+    p.setPhysicsEngineParameter(numSolverIterations=solver_iterations)
+    p.setTimeStep(timestep)
+    p.setGravity(0, 0, gravity)
+    p.setRealTimeSimulation(False)
+    p.stepSimulation()
