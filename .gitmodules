@@ -1,0 +1,3 @@
+[submodule "roboverse/assets/bullet-objects"]
+	path = roboverse/assets/bullet-objects
+	url = https://github.com/Alacarter/bullet-objects.git

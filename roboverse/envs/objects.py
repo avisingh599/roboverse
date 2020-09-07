@@ -2,9 +2,12 @@ import pybullet_data
 import pybullet as p
 import os
 import roboverse.bullet as bullet
+import importlib.util
+import numpy as np
 
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
+SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 
 
 def table():
@@ -35,9 +38,10 @@ def tray(base_position=(.60, 0.3, -.37)):
 
 
 def widow250():
-    widow250_path = os.path.join(ASSET_PATH, 'interbotix_descriptions/urdf/wx250s.urdf')
+    widow250_path = os.path.join(ASSET_PATH,
+                                 'interbotix_descriptions/urdf/wx250s.urdf')
     widow250_id = p.loadURDF(widow250_path,
                              basePosition=[0.6, 0, -0.4],
-                             baseOrientation=bullet.deg_to_quat([180., 180., 180])
+                             baseOrientation=bullet.deg_to_quat([0., 0., 0])
                              )
     return widow250_id
