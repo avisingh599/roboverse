@@ -33,10 +33,10 @@ class Widow250Env(gym.Env, Serializable):
                  gui=False,
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
-                 camera_target_pos=(0.6, 0.0, -0.4),
-                 camera_distance=0.5,
+                 camera_target_pos=(0.6, 0.15, -0.6),
+                 camera_distance=0.6,
                  camera_roll=0.0,
-                 camera_pitch=-40,
+                 camera_pitch=-60,
                  camera_yaw=180,
                  use_vr=False,
                  ):
@@ -87,8 +87,6 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
-
-
         self.xyz_action_scale = 1.0
         self.abc_action_scale = 20.0
         self.gripper_action_scale = 20.0
@@ -104,13 +102,16 @@ class Widow250Env(gym.Env, Serializable):
         from roboverse.envs import objects
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
-        self.tray_id = objects.tray(base_position=self.object_position)
+        self.tray_id = objects.tray()
         # TODO(avi): Generalize this to more than one object
         self.duck_id = objects.duck()
 
     def reset(self):
         bullet.reset()
-        bullet.setup_headless()
+        if self.use_vr:
+            bullet.setup_headless_vr()
+        else:
+            bullet.setup_headless()
         self._load_meshes()
         bullet.reset_robot(
             self.robot_id,
