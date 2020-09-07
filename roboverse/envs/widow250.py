@@ -288,7 +288,7 @@ class Widow250Env(gym.Env, Serializable):
             self.image_length = (self.observation_img_dim ** 2) * 3
             img_space = gym.spaces.Box(0, 1, (self.image_length,),
                                        dtype=np.float32)
-            robot_state_dim = 9  # XYZ + QUAT + GRIPPER_STATE
+            robot_state_dim = 10  # XYZ + QUAT + GRIPPER_STATE
             obs_bound = 100
             obs_high = np.ones(robot_state_dim) * obs_bound
             state_space = gym.spaces.Box(-obs_high, obs_high)
