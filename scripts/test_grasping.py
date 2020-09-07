@@ -23,7 +23,7 @@ if __name__ == "__main__":
             print(j)
 
             ee_pos, _ = bullet.get_link_state(env.robot_id, env.end_effector_index)
-            object_pos, _ = bullet.get_object_position(env.duck_id)
+            object_pos, _ = bullet.get_object_position(env.objects[env.target_object])
 
             object_lifted = object_pos[2] > height_thresh
 

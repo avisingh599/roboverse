@@ -8,6 +8,36 @@ CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
 SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 
+MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 100
+
+
+def generate_object_positions(object_position_low, object_position_high,
+                              num_objects, min_distance=0.07):
+    object_positions = np.random.uniform(
+        low=object_position_low, high=object_position_high)
+    object_positions = np.reshape(object_positions, (1, 3))
+    max_attempts = MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS
+    i = 0
+    while object_positions.shape[0] < num_objects:
+        i += 1
+        object_position_candidate = np.random.uniform(
+            low=object_position_low, high=object_position_high)
+        object_position_candidate = np.reshape(
+            object_position_candidate, (1, 3))
+        min_distance_so_far = []
+        for o in object_positions:
+            dist = np.linalg.norm(o - object_position_candidate)
+            min_distance_so_far.append(dist)
+        min_distance_so_far = np.array(min_distance_so_far)
+        if (min_distance_so_far > min_distance).any():
+            object_positions = np.concatenate(
+                (object_positions, object_position_candidate), axis=0)
+
+        if i > max_attempts:
+            ValueError('Min distance could not be assured')
+
+    return object_positions
+
 
 def import_metadata(asset_path):
     metadata_spec = importlib.util.spec_from_file_location(

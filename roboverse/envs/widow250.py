@@ -28,33 +28,38 @@ class Widow250Env(gym.Env, Serializable):
                  control_mode='continuous',
                  observation_mode='pixels',
                  observation_img_dim=48,
+                 transpose_image=True,
+
                  object_names=('beer_bottle', 'gatorade'),
                  object_scales=(0.75, 0.75),
-                 object_pos_high=(.66, .4, -.20),
-                 object_pos_low=(.64, .2, -.20),
+                 object_position_high=(.66, .4, -.20),
+                 object_position_low=(.64, .2, -.20),
+                 target_object='gatorade',
+
                  num_sim_steps=10,
                  num_sim_steps_reset=50,
                  num_sim_steps_discrete_action=75,
-                 transpose_image=True,
-                 gui=False,
+
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
+
                  camera_target_pos=(0.6, 0.0, -0.4),
                  camera_distance=0.5,
                  camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
+                 gui=False,
                  ):
 
         self.control_mode = control_mode
         self.observation_mode = observation_mode
         self.observation_img_dim = observation_img_dim
+        self.transpose_image = transpose_image
 
         self.num_sim_steps = num_sim_steps
         self.num_sim_steps_reset = num_sim_steps_reset
         self.num_sim_steps_discrete_action = num_sim_steps_discrete_action
 
-        self.transpose_image = transpose_image
         self.gui = gui
 
         # TODO(avi): Add limits to ee orientation as well
@@ -64,27 +69,26 @@ class Widow250Env(gym.Env, Serializable):
         bullet.connect_headless(self.gui)
 
         # object stuff
+        assert  target_object in object_names
         assert len(object_names) == len(object_scales)
-        self.object_pos_high = [object_pos_high] * len(object_names)
-        self.object_pos_low = [object_pos_low] * len(object_names)
-        assert len(self.object_pos_high) == len(self.object_pos_low) == len(object_names)
+        self.num_objects = len(object_names)
+        self.object_position_high = list(object_position_high)
+        self.object_position_low = list(object_position_low)
         self.object_names = object_names
-        self.objects = {}
+        self.target_object = target_object
         self.object_scales = object_scales
         self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
             self.object_names, self.object_scales)
-        self.pos_high_map, self.pos_low_map = object_utils.set_pos_high_low_maps(
-            self.object_names, self.object_pos_high, self.object_pos_low)
-
-        # TODO(avi) To be removed
-        self.object_position = (.65, 0.3, -.3)
-        self.object_orientation = (0, 0, 0.707107, 0.707107)
-
         self._load_meshes()
+
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
         self.end_effector_index = END_EFFECTOR_INDEX
         self.reset_joint_values = RESET_JOINT_VALUES
         self.reset_joint_indices = RESET_JOINT_INDICES
+
+        self.xyz_action_scale = 1.0
+        self.abc_action_scale = 20.0
+        self.gripper_action_scale = 20.0
 
         self.camera_target_pos = camera_target_pos
         self.camera_distance = camera_distance
@@ -102,10 +106,6 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
-        self.xyz_action_scale = 1.0
-        self.abc_action_scale = 20.0
-        self.gripper_action_scale = 20.0
-
         self._set_action_space()
         self._set_observation_space()
 
@@ -117,16 +117,19 @@ class Widow250Env(gym.Env, Serializable):
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
         self.tray_id = objects.tray()
-        # TODO(avi): Generalize this to more than one object
-        self.duck_id = objects.duck()
-        for object_name in self.object_names:
-            self.load_object(object_name)
 
-    def load_object(self, name, quat=[1, 1, 0, 0]):
-        pos = np.random.uniform(self.pos_high_map[name], self.pos_low_map[name])
-        self.objects[name] = object_utils.load_shapenet_object(
-            self.object_path_dict[name], self.scaling_map[name],
-            pos, quat=quat)
+        self.objects = {}
+        object_positions = object_utils.generate_object_positions(
+            self.object_position_low, self.object_position_high,
+            self.num_objects,
+        )
+        for object_name, object_position in zip(self.object_names,
+                                                object_positions):
+            self.objects[object_name] = object_utils.load_shapenet_object(
+                self.object_path_dict[object_name], self.scaling_map[object_name],
+                object_position, quat=(1, 1, 0, 0))
+
+            bullet.step_simulation(self.num_sim_steps_reset)
 
     def reset(self):
         bullet.reset()
@@ -265,6 +268,9 @@ if __name__ == "__main__":
     env = Widow250Env(gui=True)
     import time
 
+    env.reset()
+    import IPython; IPython.embed()
+
     for i in range(20):
         print(i)
         env.step(np.asarray([-0.05, 0., 0., 0., 0., 0.5, 0.]))
@@ -277,4 +283,3 @@ if __name__ == "__main__":
         time.sleep(0.1)
 
     env.reset()
-    import IPython; IPython.embed()
