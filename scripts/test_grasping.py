@@ -1,15 +1,19 @@
 import numpy as np
 import time
 
+import roboverse
 from roboverse.envs.widow250 import Widow250Env
 import roboverse.bullet as bullet
 
 EPSILON = 0.1
 
 if __name__ == "__main__":
-    env = Widow250Env(gui=True,
-                      control_mode='discrete_gripper',
-                      target_object='beer_bottle')
+    # env = Widow250Env(gui=True,
+    #                   control_mode='discrete_gripper',
+    #                   target_object='beer_bottle')
+    # env = roboverse.make('Widow250Grasp-v0', gui=True)
+    env = roboverse.make('Widow250MultiTaskGrasp-v0', gui=True)
+
     height_thresh = -0.20
 
     scripted_traj_len = 30

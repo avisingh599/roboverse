@@ -17,10 +17,10 @@ JOINT_RANGE = []
 for upper, lower in zip(JOINT_LIMIT_LOWER, JOINT_LIMIT_UPPER):
     JOINT_RANGE.append(upper - lower)
 
-GRIPPER_LIMITS_LOW = [0., -0.036]
-GRIPPER_LIMITS_HIGH = [0.036, 0.]
+GRIPPER_LIMITS_LOW = JOINT_LIMIT_LOWER[-2:]
+GRIPPER_LIMITS_HIGH = JOINT_LIMIT_UPPER[-2:]
 GRIPPER_OPEN_STATE = [0.036, -0.036]
-GRIPPER_CLOSED_STATE = [0., 0.]
+GRIPPER_CLOSED_STATE = [0.015, -0.015]
 
 
 class Widow250Env(gym.Env, Serializable):
@@ -33,9 +33,10 @@ class Widow250Env(gym.Env, Serializable):
 
                  object_names=('beer_bottle', 'gatorade'),
                  object_scales=(0.75, 0.75),
-                 object_position_high=(.66, .4, -.20),
-                 object_position_low=(.64, .2, -.20),
+                 object_position_high=(.66, .45, -.20),
+                 object_position_low=(.64, .25, -.20),
                  target_object='gatorade',
+                 load_tray=True,
 
                  num_sim_steps=10,
                  num_sim_steps_reset=50,
@@ -86,6 +87,7 @@ class Widow250Env(gym.Env, Serializable):
         # object stuff
         assert target_object in object_names
         assert len(object_names) == len(object_scales)
+        self.load_tray = load_tray
         self.num_objects = len(object_names)
         self.object_position_high = list(object_position_high)
         self.object_position_low = list(object_position_low)
@@ -131,7 +133,9 @@ class Widow250Env(gym.Env, Serializable):
     def _load_meshes(self):
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
-        self.tray_id = objects.tray()
+
+        if self.load_tray:
+            self.tray_id = objects.tray()
 
         self.objects = {}
         object_positions = object_utils.generate_object_positions(
