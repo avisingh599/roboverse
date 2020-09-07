@@ -7,7 +7,9 @@ import roboverse.bullet as bullet
 EPSILON = 0.1
 
 if __name__ == "__main__":
-    env = Widow250Env(gui=True, control_mode='discrete_gripper')
+    env = Widow250Env(gui=True,
+                      control_mode='discrete_gripper',
+                      target_object='beer_bottle')
     height_thresh = -0.20
 
     scripted_traj_len = 30
@@ -20,7 +22,6 @@ if __name__ == "__main__":
         rewards = []
 
         for j in range(scripted_traj_len):
-            print(j)
 
             ee_pos, _ = bullet.get_link_state(env.robot_id, env.end_effector_index)
             object_pos, _ = bullet.get_object_position(env.objects[env.target_object])
@@ -28,7 +29,6 @@ if __name__ == "__main__":
             object_lifted = object_pos[2] > height_thresh
 
             object_gripper_dist = np.linalg.norm(object_pos - ee_pos)
-            print(object_gripper_dist)
             theta_action = 0.
             # theta_action = np.random.uniform()
             # print(object_gripper_dist)
@@ -60,5 +60,5 @@ if __name__ == "__main__":
             action = np.clip(action, -1 + EPSILON, 1 - EPSILON)
             obs, rew, done, info = env.step(action)
             time.sleep(0.1)
-
+            print(rew)
             rewards.append(rew)

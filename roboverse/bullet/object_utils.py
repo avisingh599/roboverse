@@ -3,12 +3,35 @@ import pybullet as p
 import os
 import importlib.util
 import numpy as np
+from .control import get_object_position, get_link_state
 
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
 SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 
 MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 100
+
+
+def check_grasp(object_name,
+                object_id_map,
+                robot_id,
+                end_effector_index,
+                grasp_success_height_threshold,
+                grasp_success_object_gripper_threshold,
+                ):
+    object_pos, _ = get_object_position(object_id_map[object_name])
+    object_height = object_pos[2]
+    success = False
+    if object_height > grasp_success_height_threshold:
+        ee_pos, _ = get_link_state(
+            robot_id, end_effector_index)
+        object_gripper_distance = np.linalg.norm(
+            object_pos - ee_pos)
+        if object_gripper_distance < \
+                grasp_success_object_gripper_threshold:
+            success = True
+
+    return success
 
 
 def generate_object_positions(object_position_low, object_position_high,

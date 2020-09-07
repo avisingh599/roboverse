@@ -10,11 +10,12 @@ END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 5, 7, 10, 11]
 GUESS = 3.14  # TODO(avi) This is a guess, need to verify what joint this is
-JOINT_LIMIT_LOWER = [-3.14, -1.88, -1.60, -3.14, -2.14, -3.14, -GUESS, 0.015, -0.037]
+JOINT_LIMIT_LOWER = [-3.14, -1.88, -1.60, -3.14, -2.14, -3.14, -GUESS, 0.015,
+                     -0.037]
 JOINT_LIMIT_UPPER = [3.14, 1.99, 2.14, 3.14, 1.74, 3.14, GUESS, 0.037, -0.015]
 JOINT_RANGE = []
 for upper, lower in zip(JOINT_LIMIT_LOWER, JOINT_LIMIT_UPPER):
-    JOINT_RANGE.append(upper-lower)
+    JOINT_RANGE.append(upper - lower)
 
 GRIPPER_LIMITS_LOW = [0., -0.036]
 GRIPPER_LIMITS_HIGH = [0.036, 0.]
@@ -40,6 +41,10 @@ class Widow250Env(gym.Env, Serializable):
                  num_sim_steps_reset=50,
                  num_sim_steps_discrete_action=75,
 
+                 reward_type='grasping',
+                 grasp_success_height_threshold=-0.25,
+                 grasp_success_object_gripper_threshold=0.1,
+
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
                  camera_target_pos=(0.6, 0.2, -0.4),
@@ -61,6 +66,11 @@ class Widow250Env(gym.Env, Serializable):
         self.num_sim_steps_reset = num_sim_steps_reset
         self.num_sim_steps_discrete_action = num_sim_steps_discrete_action
 
+        self.reward_type = reward_type
+        self.grasp_success_height_threshold = grasp_success_height_threshold
+        self.grasp_success_object_gripper_threshold = \
+            grasp_success_object_gripper_threshold
+
         self.gui = gui
 
         # TODO(avi): Add limits to ee orientation as well
@@ -74,7 +84,7 @@ class Widow250Env(gym.Env, Serializable):
             bullet.connect_headless(self.gui)
 
         # object stuff
-        assert  target_object in object_names
+        assert target_object in object_names
         assert len(object_names) == len(object_scales)
         self.num_objects = len(object_names)
         self.object_position_high = list(object_position_high)
@@ -131,7 +141,8 @@ class Widow250Env(gym.Env, Serializable):
         for object_name, object_position in zip(self.object_names,
                                                 object_positions):
             self.objects[object_name] = object_utils.load_shapenet_object(
-                self.object_path_dict[object_name], self.scaling_map[object_name],
+                self.object_path_dict[object_name],
+                self.scaling_map[object_name],
                 object_position, quat=(1, 1, 0, 0))
 
             bullet.step_simulation(self.num_sim_steps_reset)
@@ -192,7 +203,8 @@ class Widow250Env(gym.Env, Serializable):
         else:
             raise NotImplementedError
 
-        target_ee_pos = np.clip(target_ee_pos, self.ee_pos_low, self.ee_pos_high)
+        target_ee_pos = np.clip(target_ee_pos, self.ee_pos_low,
+                                self.ee_pos_high)
         target_gripper_state = np.clip(target_gripper_state, GRIPPER_LIMITS_LOW,
                                        GRIPPER_LIMITS_HIGH)
 
@@ -229,10 +241,28 @@ class Widow250Env(gym.Env, Serializable):
         return observation
 
     def get_reward(self, info):
-        pass
+        if self.reward_type == 'grasping':
+            reward = float(info['grasp_success_target'])
+        else:
+            raise NotImplementedError
+        return reward
 
     def get_info(self):
-        pass
+
+        info = {'grasp_success': False}
+        for object_name in self.object_names:
+            grasp_success = object_utils.check_grasp(
+                object_name, self.objects, self.robot_id,
+                self.end_effector_index, self.grasp_success_height_threshold,
+                self.grasp_success_object_gripper_threshold)
+            if grasp_success:
+                info['grasp_success'] = True
+
+        info['grasp_success_target'] = object_utils.check_grasp(
+            self.target_object, self.objects, self.robot_id,
+            self.end_effector_index, self.grasp_success_height_threshold,
+            self.grasp_success_object_gripper_threshold)
+        return info
 
     def render_obs(self):
         img, depth, segmentation = bullet.render(
