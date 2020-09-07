@@ -65,7 +65,8 @@ class Widow250Env(gym.Env, Serializable):
         assert len(object_names) == len(scalings)
         self.pos_high_list = [(.86, .2, -.20)] * 2
         self.pos_low_list = [(.84, -.15, -.20)] * 2
-        assert len(self.pos_high_list) == len(self.pos_low_list) == len(object_names)
+        assert (len(self.pos_high_list) == len(self.pos_low_list) ==
+                len(object_names))
         self.object_names = object_names
         self.objects = {}
         self.scalings = scalings
@@ -100,8 +101,6 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
-
-
         self.xyz_action_scale = 1.0
         self.abc_action_scale = 20.0
         self.gripper_action_scale = 20.0
@@ -116,9 +115,12 @@ class Widow250Env(gym.Env, Serializable):
     def _load_meshes(self):
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
-        self.tray_id = objects.tray(base_position=self.object_position)
+        # self.tray_id = objects.tray(base_position=self.object_position)
         # TODO(avi): Generalize this to more than one object
-        self.duck_id = objects.duck()
+        # self.duck_id = objects.duck()
+        self._bottom_drawer_id = objects.drawer_with_handle()
+        object_utils.open_drawer(self._bottom_drawer_id)
+        object_utils.close_drawer(self._bottom_drawer_id)
         for object_name in self.object_names:
             self.load_object(object_name)
 
@@ -277,4 +279,4 @@ if __name__ == "__main__":
         time.sleep(0.1)
 
     env.reset()
-    import IPython; IPython.embed()
+    # import IPython; IPython.embed()
