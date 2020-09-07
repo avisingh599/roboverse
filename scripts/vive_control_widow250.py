@@ -19,6 +19,7 @@ OBJECT_NAME = "lego"
 num_timesteps = 35
 # =========================================================
 
+
 def collect_one_trajectory(env):
 
     prev_vr_theta = 0
@@ -34,7 +35,7 @@ def collect_one_trajectory(env):
         return trigger
 
     # get VR controller output at one timestamp
-    def get_VR_output():
+    def get_vr_output():
         global trigger
         nonlocal prev_vr_theta
         ee_pos, ee_theta = bullet.get_link_state(
@@ -55,7 +56,9 @@ def collect_one_trajectory(env):
             cont_orient = e[ORIENTATION]
             cont_orient = bullet.quat_to_deg(list(cont_orient))
 
-        action = [cont_pos[0] - ee_pos[0], cont_pos[1] - ee_pos[1], cont_pos[2] - ee_pos[2]]
+        action = [cont_pos[0] - ee_pos[0],
+                  cont_pos[1] - ee_pos[1],
+                  cont_pos[2] - ee_pos[2]]
         action = np.array(action) / 2
 
         grip = trigger
@@ -93,7 +96,7 @@ def collect_one_trajectory(env):
 
     # Collect a fixed length of trajectory
     for i in range(num_timesteps):
-        action = get_VR_output()
+        action = get_vr_output()
         print("action: ", action)
         observation = env.get_observation()
         traj["observations"].append(observation)
@@ -116,19 +119,20 @@ def collect_one_trajectory(env):
     return accept, images, traj
 
 
-trigger = 0.8
-ORIENTATION_ENABLED = True
-data = []
-EPSILON = 0.005
+if __name__ == "__main__":
+    trigger = 0.8
+    ORIENTATION_ENABLED = True
+    data = []
+    EPSILON = 0.005
 
-env = Widow250Env(gui=True, use_vr=True, control_mode='discrete_gripper')
-env.reset()
+    env = Widow250Env(gui=True, use_vr=True, control_mode='discrete_gripper')
+    env.reset()
 
-for j in tqdm(range(10)):
-    success, images, traj = collect_one_trajectory(env)
-    while success != 'y' and success != 'Y':
-        print("failed for trajectory {}, collect again".format(j))
+    for j in tqdm(range(10)):
         success, images, traj = collect_one_trajectory(env)
-    data.append(traj)
-path = os.path.join(__file__, "../..", "vr_demos_success_test.npy")
-np.save(path, data)
+        while success != 'y' and success != 'Y':
+            print("failed for trajectory {}, collect again".format(j))
+            success, images, traj = collect_one_trajectory(env)
+        data.append(traj)
+    path = os.path.join(__file__, "../..", "vr_demos_success_test.npy")
+    np.save(path, data)
