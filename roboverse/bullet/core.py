@@ -16,6 +16,22 @@ def connect_headless(gui=False):
                                  cameraTargetPosition=[0.6, 0, -0.4])
 
 
+def connect_headless_vr(gui=False):
+    if gui:
+        cid = p.connect(p.SHARED_MEMORY)
+        if cid < 0:
+            p.connect(p.GUI)
+    else:
+        p.connect(p.DIRECT)
+
+    p.resetDebugVisualizerCamera(cameraDistance=0.8,
+                                 cameraYaw=180,
+                                 cameraPitch=-40,
+                                 cameraTargetPosition=[0.6, 0, -0.4])
+    p.setRealTimeSimulation(False)
+    p.stepSimulation()
+
+
 def reset():
     p.resetSimulation()
 
@@ -24,4 +40,5 @@ def setup_headless(timestep=1./240, solver_iterations=150, gravity=-10):
     p.setPhysicsEngineParameter(numSolverIterations=solver_iterations)
     p.setTimeStep(timestep)
     p.setGravity(0, 0, gravity)
+    p.setRealTimeSimulation(False)
     p.stepSimulation()
