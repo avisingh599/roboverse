@@ -39,11 +39,12 @@ class Widow250Env(gym.Env, Serializable):
                  gui=False,
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
-                 camera_target_pos=(0.6, 0.0, -0.4),
+                 camera_target_pos=(0.6, 0.2, -0.4),
                  camera_distance=0.5,
                  camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
+                 use_vr=False,
                  ):
 
         self.control_mode = control_mode
@@ -61,7 +62,11 @@ class Widow250Env(gym.Env, Serializable):
         self.ee_pos_high = ee_pos_high
         self.ee_pos_low = ee_pos_low
 
-        bullet.connect_headless(self.gui)
+        self.use_vr = use_vr
+        if self.use_vr:
+            bullet.connect_headless_vr(self.gui)
+        else:
+            bullet.connect_headless(self.gui)
 
         # object stuff
         assert len(object_names) == len(object_scales)
@@ -130,7 +135,10 @@ class Widow250Env(gym.Env, Serializable):
 
     def reset(self):
         bullet.reset()
-        bullet.setup_headless()
+        if self.use_vr:
+            bullet.setup_headless_vr()
+        else:
+            bullet.setup_headless()
         self._load_meshes()
         bullet.reset_robot(
             self.robot_id,
