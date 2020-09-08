@@ -50,13 +50,14 @@ class Widow250Env(gym.Env, Serializable):
 
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
-                 camera_target_pos=(0.6, 0.2, -0.4),
+                 camera_target_pos=(0.6, 0.2, -0.3),
                  camera_distance=0.5,
                  camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
 
                  gui=False,
+                 in_vr_replay=False,
                  ):
 
         self.control_mode = control_mode
@@ -97,6 +98,7 @@ class Widow250Env(gym.Env, Serializable):
             self.object_orientations[object_name] = orientation
         self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
             self.object_names, self.object_scales)
+        self.in_vr_replay = in_vr_replay
         self._load_meshes()
 
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
@@ -141,10 +143,14 @@ class Widow250Env(gym.Env, Serializable):
             self.tray_id = objects.tray()
 
         self.objects = {}
-        object_positions = object_utils.generate_object_positions(
-            self.object_position_low, self.object_position_high,
-            self.num_objects,
-        )
+        if self.in_vr_replay:
+            object_positions = self.original_object_positions
+        else:
+            object_positions = object_utils.generate_object_positions(
+                self.object_position_low, self.object_position_high,
+                self.num_objects,
+            )
+            self.original_object_positions = object_positions
         for object_name, object_position in zip(self.object_names,
                                                 object_positions):
             self.objects[object_name] = object_utils.load_shapenet_object(
