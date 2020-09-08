@@ -62,7 +62,7 @@ def collect_one_trajectory(env, num_timesteps):
         action = [cont_pos[0] - ee_pos[0],
                   cont_pos[1] - ee_pos[1],
                   cont_pos[2] - ee_pos[2]]
-        action = np.array(action)
+        action = np.array(action) * 1.2  # to make grasp success < 20 timesteps
 
         grip = trigger
         for _ in range(2):
@@ -71,11 +71,11 @@ def collect_one_trajectory(env, num_timesteps):
 
         action = np.append(action, wrist_theta)
         action = np.append(action, grip)
-
+        action = np.append(action, 0)
         # ===========================================================
         # Add noise during actual data collection
         noise = 0.02
-        noise_scalings = [noise] * 3 + [0.1 * noise] * 3 + [noise]
+        noise_scalings = [noise] * 3 + [0.1 * noise] * 3 + [noise] * 2
         action += np.random.normal(scale=noise_scalings)
         # ===========================================================
 
@@ -148,7 +148,6 @@ if __name__ == "__main__":
     data = []
     env = roboverse.make(args.env_name,
                          gui=True,
-                         use_vr=True,
                          control_mode='discrete_gripper')
     env.reset()
 
