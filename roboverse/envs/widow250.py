@@ -50,6 +50,10 @@ class Widow250Env(gym.Env, Serializable):
                  grasp_success_height_threshold=-0.25,
                  grasp_success_object_gripper_threshold=0.1,
 
+                 xyz_action_scale=1.0,
+                 abc_action_scale=20.0,
+                 gripper_action_scale=20.0,
+
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
                  camera_target_pos=(0.6, 0.2, -0.3),
@@ -108,9 +112,9 @@ class Widow250Env(gym.Env, Serializable):
         self.reset_joint_values = RESET_JOINT_VALUES
         self.reset_joint_indices = RESET_JOINT_INDICES
 
-        self.xyz_action_scale = 1.0
-        self.abc_action_scale = 20.0
-        self.gripper_action_scale = 20.0
+        self.xyz_action_scale = xyz_action_scale
+        self.abc_action_scale = abc_action_scale
+        self.gripper_action_scale = gripper_action_scale
 
         self.camera_target_pos = camera_target_pos
         self.camera_distance = camera_distance

@@ -34,6 +34,7 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'object_position_high': (.50, .40, -.20),
                    'object_position_low': (.70, .20, -.20),
+                   'xyz_action_scale': 0.2,
                    }
     },
 )
