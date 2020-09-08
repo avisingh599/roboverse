@@ -19,6 +19,7 @@ def connect_headless(gui=False):
 
 
 def reset():
+    p.setRealTimeSimulation(False)
     p.resetSimulation()
 
 
