@@ -8,6 +8,7 @@ from roboverse.bullet import object_utils
 
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
+RESET_JOINT_VALUES_GRIPPER_CLOSED = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.015, -0.015]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 5, 7, 10, 11]
 GUESS = 3.14  # TODO(avi) This is a guess, need to verify what joint this is
 JOINT_LIMIT_LOWER = [-3.14, -1.88, -1.60, -3.14, -2.14, -3.14, -GUESS, 0.015,
@@ -55,7 +56,6 @@ class Widow250Env(gym.Env, Serializable):
                  camera_yaw=180,
 
                  gui=False,
-                 use_vr=False,
                  ):
 
         self.control_mode = control_mode
@@ -78,11 +78,7 @@ class Widow250Env(gym.Env, Serializable):
         self.ee_pos_high = ee_pos_high
         self.ee_pos_low = ee_pos_low
 
-        self.use_vr = use_vr
-        if self.use_vr:
-            bullet.connect_headless_vr(self.gui)
-        else:
-            bullet.connect_headless(self.gui)
+        bullet.connect_headless(self.gui)
 
         # object stuff
         assert target_object in object_names
@@ -129,6 +125,8 @@ class Widow250Env(gym.Env, Serializable):
         self.is_gripper_open = True  # TODO(avi): Clean this up
 
         self.reset()
+        self.ee_pos_init, self.ee_quat_init = bullet.get_link_state(
+            self.robot_id, self.end_effector_index)
 
     def _load_meshes(self):
         self.table_id = objects.table()
