@@ -8,6 +8,7 @@ from roboverse.bullet import object_utils
 
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
+RESET_JOINT_VALUES_GRIPPER_CLOSED = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.015, -0.015]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 5, 7, 10, 11]
 GUESS = 3.14  # TODO(avi) This is a guess, need to verify what joint this is
 JOINT_LIMIT_LOWER = [-3.14, -1.88, -1.60, -3.14, -2.14, -3.14, -GUESS, 0.015,
@@ -33,6 +34,7 @@ class Widow250Env(gym.Env, Serializable):
 
                  object_names=('beer_bottle', 'gatorade'),
                  object_scales=(0.75, 0.75),
+                 object_orientations=((0, 0, 1, 0), (0, 0, 1, 0)),
                  object_position_high=(.66, .45, -.20),
                  object_position_low=(.64, .25, -.20),
                  target_object='gatorade',
@@ -55,7 +57,6 @@ class Widow250Env(gym.Env, Serializable):
                  camera_yaw=180,
 
                  gui=False,
-                 use_vr=False,
                  in_vr_replay=False,
                  ):
 
@@ -79,12 +80,7 @@ class Widow250Env(gym.Env, Serializable):
         self.ee_pos_high = ee_pos_high
         self.ee_pos_low = ee_pos_low
 
-        self.use_vr = use_vr
-        if self.use_vr:
-            bullet.connect_headless_vr(self.gui)
-        else:
-            bullet.connect_headless(self.gui)
-        self.in_vr_replay = in_vr_replay
+        bullet.connect_headless(self.gui)
 
         # object stuff
         assert target_object in object_names
@@ -96,8 +92,13 @@ class Widow250Env(gym.Env, Serializable):
         self.object_names = object_names
         self.target_object = target_object
         self.object_scales = object_scales
+        self.object_orientations = dict()
+        for orientation, object_name in \
+                zip(object_orientations, self.object_names):
+            self.object_orientations[object_name] = orientation
         self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
             self.object_names, self.object_scales)
+        self.in_vr_replay = in_vr_replay
         self._load_meshes()
 
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
@@ -131,6 +132,8 @@ class Widow250Env(gym.Env, Serializable):
         self.is_gripper_open = True  # TODO(avi): Clean this up
 
         self.reset()
+        self.ee_pos_init, self.ee_quat_init = bullet.get_link_state(
+            self.robot_id, self.end_effector_index)
 
     def _load_meshes(self):
         self.table_id = objects.table()
@@ -153,7 +156,8 @@ class Widow250Env(gym.Env, Serializable):
             self.objects[object_name] = object_utils.load_shapenet_object(
                 self.object_path_dict[object_name],
                 self.scaling_map[object_name],
-                object_position, quat=[0, 0, 1, 0])
+                object_position,
+                quat=self.object_orientations[object_name])
 
             bullet.step_simulation(self.num_sim_steps_reset)
 
