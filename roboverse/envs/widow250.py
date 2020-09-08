@@ -23,6 +23,8 @@ GRIPPER_LIMITS_HIGH = JOINT_LIMIT_UPPER[-2:]
 GRIPPER_OPEN_STATE = [0.036, -0.036]
 GRIPPER_CLOSED_STATE = [0.015, -0.015]
 
+ACTION_DIM = 8
+
 
 class Widow250Env(gym.Env, Serializable):
 
@@ -288,7 +290,7 @@ class Widow250Env(gym.Env, Serializable):
         return img
 
     def _set_action_space(self):
-        self.action_dim = 7
+        self.action_dim = ACTION_DIM
         act_bound = 1
         act_high = np.ones(self.action_dim) * act_bound
         self.action_space = gym.spaces.Box(-act_high, act_high)
