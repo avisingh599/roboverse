@@ -34,6 +34,7 @@ class Widow250Env(gym.Env, Serializable):
 
                  object_names=('beer_bottle', 'gatorade'),
                  object_scales=(0.75, 0.75),
+                 object_orientations=((0, 0, 1, 0), (0, 0, 1, 0)),
                  object_position_high=(.66, .45, -.20),
                  object_position_low=(.64, .25, -.20),
                  target_object='gatorade',
@@ -90,6 +91,10 @@ class Widow250Env(gym.Env, Serializable):
         self.object_names = object_names
         self.target_object = target_object
         self.object_scales = object_scales
+        self.object_orientations = dict()
+        for orientation, object_name in \
+                zip(object_orientations, self.object_names):
+            self.object_orientations[object_name] = orientation
         self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
             self.object_names, self.object_scales)
         self._load_meshes()
@@ -145,7 +150,8 @@ class Widow250Env(gym.Env, Serializable):
             self.objects[object_name] = object_utils.load_shapenet_object(
                 self.object_path_dict[object_name],
                 self.scaling_map[object_name],
-                object_position, quat=(1, 1, 0, 0))
+                object_position,
+                quat=self.object_orientations[object_name])
 
             bullet.step_simulation(self.num_sim_steps_reset)
 
