@@ -35,8 +35,8 @@ class Widow250Env(gym.Env, Serializable):
                  object_names=('beer_bottle', 'gatorade'),
                  object_scales=(0.75, 0.75),
                  object_orientations=((0, 0, 1, 0), (0, 0, 1, 0)),
-                 object_position_high=(.66, .45, -.20),
-                 object_position_low=(.64, .25, -.20),
+                 object_position_high=(.65, .45, -.20),
+                 object_position_low=(.45, .25, -.20),
                  target_object='gatorade',
                  load_tray=True,
 
@@ -50,7 +50,7 @@ class Widow250Env(gym.Env, Serializable):
 
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
-                 camera_target_pos=(0.6, 0.2, -0.4),
+                 camera_target_pos=(0.6, 0.2, -0.3),
                  camera_distance=0.5,
                  camera_roll=0.0,
                  camera_pitch=-40,

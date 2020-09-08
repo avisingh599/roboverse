@@ -19,8 +19,8 @@ ENVIRONMENT_SPECS = (
                    'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
-                   'object_position_high': (.45, .40, -.20),
-                   'object_position_low':  (.65, .20, -.20),
+                   'object_position_high': (.50, .40, -.20),
+                   'object_position_low':  (.70, .20, -.20),
                    }
     },
 )
