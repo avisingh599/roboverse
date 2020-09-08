@@ -56,6 +56,7 @@ class Widow250Env(gym.Env, Serializable):
 
                  gui=False,
                  use_vr=False,
+                 in_vr_replay=False,
                  ):
 
         self.control_mode = control_mode
@@ -83,6 +84,7 @@ class Widow250Env(gym.Env, Serializable):
             bullet.connect_headless_vr(self.gui)
         else:
             bullet.connect_headless(self.gui)
+        self.in_vr_replay = in_vr_replay
 
         # object stuff
         assert target_object in object_names
@@ -138,16 +140,20 @@ class Widow250Env(gym.Env, Serializable):
             self.tray_id = objects.tray()
 
         self.objects = {}
-        object_positions = object_utils.generate_object_positions(
-            self.object_position_low, self.object_position_high,
-            self.num_objects,
-        )
+        if self.in_vr_replay:
+            object_positions = self.original_object_positions
+        else:
+            object_positions = object_utils.generate_object_positions(
+                self.object_position_low, self.object_position_high,
+                self.num_objects,
+            )
+            self.original_object_positions = object_positions
         for object_name, object_position in zip(self.object_names,
                                                 object_positions):
             self.objects[object_name] = object_utils.load_shapenet_object(
                 self.object_path_dict[object_name],
                 self.scaling_map[object_name],
-                object_position, quat=(1, 1, 0, 0))
+                object_position, quat=[0, 0, 1, 0])
 
             bullet.step_simulation(self.num_sim_steps_reset)
 

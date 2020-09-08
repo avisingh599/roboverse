@@ -15,10 +15,12 @@ ENVIRONMENT_SPECS = (
         'entry_point': 'roboverse.envs.widow250:Widow250Env',
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
-                   'target_object': 'beer_bottle',
+                   'object_names': ('shed', 'bullet_vase'),
+                   'object_scales': (0.7, 0.6),
+                   'target_object': 'shed',
                    'load_tray': False,
-                   'object_position_high': (.66, .35, -.20),
-                   'object_position_low':  (.64, .20, -.20),
+                   'object_position_high': (.45, .40, -.20),
+                   'object_position_low':  (.65, .20, -.20),
                    }
     },
 )
