@@ -8,6 +8,7 @@ ENVIRONMENT_SPECS = (
                    'control_mode': 'discrete_gripper',
                    'target_object': 'beer_bottle',
                    'load_tray': True,
+                   'xyz_action_scale': 0.2,
                    }
     },
     {
@@ -15,12 +16,13 @@ ENVIRONMENT_SPECS = (
         'entry_point': 'roboverse.envs.widow250:Widow250Env',
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
-                   'object_names': ('shed', 'bullet_vase'),
+                   'object_names': ('shed', 'two_handled_vase'),
                    'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
-                   'object_position_high': (.50, .40, -.20),
-                   'object_position_low':  (.70, .20, -.20),
+                   'object_position_high': (.68, .25, -.20),
+                   'object_position_low': (.53, .15, -.20),
+                   'xyz_action_scale': 0.2,
                    }
     },
     {
@@ -32,8 +34,8 @@ ENVIRONMENT_SPECS = (
                    'object_scales': (0.7,),
                    'target_object': 'shed',
                    'load_tray': False,
-                   'object_position_high': (.50, .40, -.20),
-                   'object_position_low': (.70, .20, -.20),
+                   'object_position_high': (.68, .25, -.20),
+                   'object_position_low': (.53, .15, -.20),
                    'xyz_action_scale': 0.2,
                    }
     },

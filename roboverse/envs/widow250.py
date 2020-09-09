@@ -56,8 +56,8 @@ class Widow250Env(gym.Env, Serializable):
 
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
-                 camera_target_pos=(0.6, 0.2, -0.3),
-                 camera_distance=0.5,
+                 camera_target_pos=(0.6, 0.2, -0.26),
+                 camera_distance=0.22,
                  camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
