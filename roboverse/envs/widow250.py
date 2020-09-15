@@ -97,13 +97,13 @@ class Widow250Env(gym.Env, Serializable):
         self.object_position_low = list(object_position_low)
         self.object_names = object_names
         self.target_object = target_object
-        self.object_scales = object_scales
+        self.object_scales = dict()
         self.object_orientations = dict()
-        for orientation, object_name in \
-                zip(object_orientations, self.object_names):
+        for orientation, object_scale, object_name in \
+                zip(object_orientations, object_scales, self.object_names):
             self.object_orientations[object_name] = orientation
-        self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
-            self.object_names, self.object_scales)
+            self.object_scales[object_name] = object_scale
+
         self.in_vr_replay = in_vr_replay
         self._load_meshes()
 
@@ -160,11 +160,10 @@ class Widow250Env(gym.Env, Serializable):
         for object_name, object_position in zip(self.object_names,
                                                 object_positions):
             self.objects[object_name] = object_utils.load_shapenet_object(
-                self.object_path_dict[object_name],
-                self.scaling_map[object_name],
+                object_name,
                 object_position,
-                quat=self.object_orientations[object_name])
-
+                object_quat=self.object_orientations[object_name],
+                scale=self.object_scales[object_name])
             bullet.step_simulation(self.num_sim_steps_reset)
 
     def reset(self):
