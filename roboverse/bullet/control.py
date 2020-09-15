@@ -1,5 +1,6 @@
 import pybullet as p
 import numpy as np
+import time
 
 
 def get_joint_states(body_id, joint_indices):
@@ -24,6 +25,17 @@ def get_movable_joints(body_id):
 def get_link_state(body_id, link_index):
     position, orientation, _, _, _, _ = p.getLinkState(body_id, link_index)
     return np.asarray(position), np.asarray(orientation)
+
+
+def get_joint_info(body_id, joint_id, key):
+    keys = ["jointIndex", "jointName", "jointType", "qIndex", "uIndex",
+            "flags", "jointDamping", "jointFriction", "jointLowerLimit",
+            "jointUpperLimit", "jointMaxForce", "jointMaxVelocity", "linkName",
+            "jointAxis", "parentFramePos", "parentFrameOrn", "parentIndex"]
+    value = p.getJointInfo(body_id, joint_id)[keys.index(key)]
+    if isinstance(value, bytes):
+        value = value.decode('utf-8')
+    return value
 
 
 def apply_action_ik(target_ee_pos, target_ee_quat, target_gripper_state,
@@ -89,9 +101,11 @@ def get_object_position(body_id):
     return np.asarray(object_position), np.asarray(object_orientation)
 
 
-def step_simulation(num_sim_steps):
+def step_simulation(num_sim_steps, t_sleep=0.0):
     for _ in range(num_sim_steps):
         p.stepSimulation()
+        if t_sleep:
+            time.sleep(t_sleep)
 
 
 def quat_to_deg(quat):

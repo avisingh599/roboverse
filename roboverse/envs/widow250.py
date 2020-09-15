@@ -364,12 +364,26 @@ class Widow250PickPlaceEnv(Widow250Env):
         return info
 
 
+class Widow250DrawerEnv(Widow250Env):
+
+    def __init__(self, **kwargs):
+        super(Widow250DrawerEnv, self).__init__(load_tray=False, **kwargs)
+
+    def _load_meshes(self):
+        super(Widow250DrawerEnv, self)._load_meshes()
+        self.objects["drawer"] = object_utils.load_object(
+            "drawer", (0.7, 0.3, -.35), (0, 0, 0.707107, 0.707107), scale=0.1)
+        # Open and close testing.
+        object_utils.open_drawer(self.objects['drawer'])
+        object_utils.close_drawer(self.objects['drawer'])
+
+
 if __name__ == "__main__":
-    env = Widow250Env(gui=True)
+    env = Widow250DrawerEnv(gui=True)
     import time
 
     env.reset()
-    import IPython; IPython.embed()
+    # import IPython; IPython.embed()
 
     for i in range(20):
         print(i)
