@@ -9,6 +9,11 @@ CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
 SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 
+"""
+NOTE: Use this file only for core objects, add others to bullet/object_utils.py
+This file will likely be deprecated in the future. 
+"""
+
 
 def table():
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
@@ -17,15 +22,6 @@ def table():
                           baseOrientation=[0, 0, 0.707107, 0.707107],
                           globalScaling=1.0)
     return table_id
-
-
-def duck(base_position=(.65, 0.3, -.3)):
-    p.setAdditionalSearchPath(pybullet_data.getDataPath())
-    duck_id = p.loadURDF('duck_vhacd.urdf',
-                         basePosition=base_position,
-                         baseOrientation=[0, 0, 0.707107, 0.707107],
-                         globalScaling=0.8)
-    return duck_id
 
 
 def tray(base_position=(.60, 0.3, -.37)):

@@ -79,6 +79,20 @@ def import_shapenet_metadata():
 shapenet_obj_path_map, shapenet_path_scaling_map = import_shapenet_metadata()
 
 
+def load_object(object_name, object_position, object_quat, scale=1.0):
+    if object_name in shapenet_obj_path_map.keys():
+        return load_shapenet_object(object_name, object_position,
+                                    object_quat=object_quat, scale=scale)
+    elif object_name in BULLET_OBJECT_SPECS.keys():
+        return load_bullet_object(object_name,
+                                  basePosition=object_position,
+                                  baseOrientation=object_quat,
+                                  globalScaling=scale)
+    else:
+        print(object_name)
+        raise NotImplementedError
+
+
 def load_shapenet_object(object_name, object_position,
                             object_quat=(1, -1, 0, 0),  scale=1.0):
     object_path = shapenet_obj_path_map[object_name]
@@ -101,3 +115,23 @@ def load_shapenet_object(object_name, object_position,
     body = p.createMultiBody(0.05, collisionid, visualid)
     p.resetBasePositionAndOrientation(body, object_position, object_quat)
     return body
+
+
+def load_bullet_object(object_name, **kwargs):
+    p.setAdditionalSearchPath(pybullet_data.getDataPath())
+    object_specs = BULLET_OBJECT_SPECS[object_name]
+    object_specs.update(**kwargs)
+    object_id = p.loadURDF(**object_specs)
+    print(object_specs['globalScaling'])
+    return object_id
+
+
+# TODO(avi) Maybe move this to a different file
+BULLET_OBJECT_SPECS = dict(
+   duck=dict(
+       fileName='duck_vhacd.urdf',
+       basePosition=(.65, 0.3, -.3),
+       baseOrientation=(0, 0, 0.707107, 0.707107),
+       globalScaling=0.8,
+   )
+)

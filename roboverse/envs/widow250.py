@@ -159,7 +159,7 @@ class Widow250Env(gym.Env, Serializable):
             self.original_object_positions = object_positions
         for object_name, object_position in zip(self.object_names,
                                                 object_positions):
-            self.objects[object_name] = object_utils.load_shapenet_object(
+            self.objects[object_name] = object_utils.load_object(
                 object_name,
                 object_position,
                 object_quat=self.object_orientations[object_name],
