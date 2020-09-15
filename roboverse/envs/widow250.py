@@ -8,18 +8,22 @@ from roboverse.bullet import object_utils
 
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
+RESET_JOINT_VALUES_GRIPPER_CLOSED = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.015, -0.015]
 RESET_JOINT_INDICES = [0, 1, 2, 3, 4, 5, 7, 10, 11]
 GUESS = 3.14  # TODO(avi) This is a guess, need to verify what joint this is
-JOINT_LIMIT_LOWER = [-3.14, -1.88, -1.60, -3.14, -2.14, -3.14, -GUESS, 0.015, -0.037]
+JOINT_LIMIT_LOWER = [-3.14, -1.88, -1.60, -3.14, -2.14, -3.14, -GUESS, 0.015,
+                     -0.037]
 JOINT_LIMIT_UPPER = [3.14, 1.99, 2.14, 3.14, 1.74, 3.14, GUESS, 0.037, -0.015]
 JOINT_RANGE = []
 for upper, lower in zip(JOINT_LIMIT_LOWER, JOINT_LIMIT_UPPER):
-    JOINT_RANGE.append(upper-lower)
+    JOINT_RANGE.append(upper - lower)
 
-GRIPPER_LIMITS_LOW = [0., -0.036]
-GRIPPER_LIMITS_HIGH = [0.036, 0.]
+GRIPPER_LIMITS_LOW = JOINT_LIMIT_LOWER[-2:]
+GRIPPER_LIMITS_HIGH = JOINT_LIMIT_UPPER[-2:]
 GRIPPER_OPEN_STATE = [0.036, -0.036]
-GRIPPER_CLOSED_STATE = [0., 0.]
+GRIPPER_CLOSED_STATE = [0.015, -0.015]
+
+ACTION_DIM = 8
 
 
 class Widow250Env(gym.Env, Serializable):
@@ -28,31 +32,54 @@ class Widow250Env(gym.Env, Serializable):
                  control_mode='continuous',
                  observation_mode='pixels',
                  observation_img_dim=48,
-                 object_names=['beer_bottle', 'gatorade'],
-                 scalings=[0.75, 0.5],
+                 transpose_image=True,
+
+                 object_names=('beer_bottle', 'gatorade'),
+                 object_scales=(0.75, 0.75),
+                 object_orientations=((0, 0, 1, 0), (0, 0, 1, 0)),
+                 object_position_high=(.66, .45, -.20),
+                 object_position_low=(.64, .25, -.20),
+                 target_object='gatorade',
+                 load_tray=True,
+
                  num_sim_steps=10,
                  num_sim_steps_reset=50,
                  num_sim_steps_discrete_action=75,
-                 transpose_image=True,
-                 gui=False,
+
+                 reward_type='grasping',
+                 grasp_success_height_threshold=-0.25,
+                 grasp_success_object_gripper_threshold=0.1,
+
+                 xyz_action_scale=1.0,
+                 abc_action_scale=20.0,
+                 gripper_action_scale=20.0,
+
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
-                 camera_target_pos=(0.6, 0.0, -0.4),
-                 camera_distance=0.5,
+                 camera_target_pos=(0.6, 0.2, -0.26),
+                 camera_distance=0.22,
                  camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
+
+                 gui=False,
+                 in_vr_replay=False,
                  ):
 
         self.control_mode = control_mode
         self.observation_mode = observation_mode
         self.observation_img_dim = observation_img_dim
+        self.transpose_image = transpose_image
 
         self.num_sim_steps = num_sim_steps
         self.num_sim_steps_reset = num_sim_steps_reset
         self.num_sim_steps_discrete_action = num_sim_steps_discrete_action
 
-        self.transpose_image = transpose_image
+        self.reward_type = reward_type
+        self.grasp_success_height_threshold = grasp_success_height_threshold
+        self.grasp_success_object_gripper_threshold = \
+            grasp_success_object_gripper_threshold
+
         self.gui = gui
 
         # TODO(avi): Add limits to ee orientation as well
@@ -62,27 +89,32 @@ class Widow250Env(gym.Env, Serializable):
         bullet.connect_headless(self.gui)
 
         # object stuff
-        assert len(object_names) == len(scalings)
-        self.pos_high_list = [(.86, .2, -.20)] * 2
-        self.pos_low_list = [(.84, -.15, -.20)] * 2
-        assert len(self.pos_high_list) == len(self.pos_low_list) == len(object_names)
+        assert target_object in object_names
+        assert len(object_names) == len(object_scales)
+        self.load_tray = load_tray
+        self.num_objects = len(object_names)
+        self.object_position_high = list(object_position_high)
+        self.object_position_low = list(object_position_low)
         self.object_names = object_names
-        self.objects = {}
-        self.scalings = scalings
-        self.object_path_dict, self.scaling_map = object_utils.set_obj_scalings(
-            self.object_names, self.scalings)
-        self.pos_high_map, self.pos_low_map = object_utils.set_pos_high_low_maps(
-            self.object_names, self.pos_high_list, self.pos_low_list)
+        self.target_object = target_object
+        self.object_scales = dict()
+        self.object_orientations = dict()
+        for orientation, object_scale, object_name in \
+                zip(object_orientations, object_scales, self.object_names):
+            self.object_orientations[object_name] = orientation
+            self.object_scales[object_name] = object_scale
 
-        # TODO(avi) To be removed
-        self.object_position = (.65, 0.3, -.3)
-        self.object_orientation = (0, 0, 0.707107, 0.707107)
-
+        self.in_vr_replay = in_vr_replay
         self._load_meshes()
+
         self.movable_joints = bullet.get_movable_joints(self.robot_id)
         self.end_effector_index = END_EFFECTOR_INDEX
         self.reset_joint_values = RESET_JOINT_VALUES
         self.reset_joint_indices = RESET_JOINT_INDICES
+
+        self.xyz_action_scale = xyz_action_scale
+        self.abc_action_scale = abc_action_scale
+        self.gripper_action_scale = gripper_action_scale
 
         self.camera_target_pos = camera_target_pos
         self.camera_distance = camera_distance
@@ -100,33 +132,39 @@ class Widow250Env(gym.Env, Serializable):
         self._projection_matrix_obs = bullet.get_projection_matrix(
             self.observation_img_dim, self.observation_img_dim)
 
-
-
-        self.xyz_action_scale = 1.0
-        self.abc_action_scale = 20.0
-        self.gripper_action_scale = 20.0
-
         self._set_action_space()
         self._set_observation_space()
 
         self.is_gripper_open = True  # TODO(avi): Clean this up
 
         self.reset()
+        self.ee_pos_init, self.ee_quat_init = bullet.get_link_state(
+            self.robot_id, self.end_effector_index)
 
     def _load_meshes(self):
         self.table_id = objects.table()
         self.robot_id = objects.widow250()
-        self.tray_id = objects.tray(base_position=self.object_position)
-        # TODO(avi): Generalize this to more than one object
-        self.duck_id = objects.duck()
-        for object_name in self.object_names:
-            self.load_object(object_name)
 
-    def load_object(self, name, quat=[1, 1, 0, 0]):
-        pos = np.random.uniform(self.pos_high_map[name], self.pos_low_map[name])
-        self.objects[name] = object_utils.load_shapenet_object(
-            self.object_path_dict[name], self.scaling_map[name],
-            pos, quat=quat)
+        if self.load_tray:
+            self.tray_id = objects.tray()
+
+        self.objects = {}
+        if self.in_vr_replay:
+            object_positions = self.original_object_positions
+        else:
+            object_positions = object_utils.generate_object_positions(
+                self.object_position_low, self.object_position_high,
+                self.num_objects,
+            )
+            self.original_object_positions = object_positions
+        for object_name, object_position in zip(self.object_names,
+                                                object_positions):
+            self.objects[object_name] = object_utils.load_object(
+                object_name,
+                object_position,
+                object_quat=self.object_orientations[object_name],
+                scale=self.object_scales[object_name])
+            bullet.step_simulation(self.num_sim_steps_reset)
 
     def reset(self):
         bullet.reset()
@@ -184,7 +222,8 @@ class Widow250Env(gym.Env, Serializable):
         else:
             raise NotImplementedError
 
-        target_ee_pos = np.clip(target_ee_pos, self.ee_pos_low, self.ee_pos_high)
+        target_ee_pos = np.clip(target_ee_pos, self.ee_pos_low,
+                                self.ee_pos_high)
         target_gripper_state = np.clip(target_gripper_state, GRIPPER_LIMITS_LOW,
                                        GRIPPER_LIMITS_HIGH)
 
@@ -205,6 +244,7 @@ class Widow250Env(gym.Env, Serializable):
 
     def get_observation(self):
         gripper_state = self.get_gripper_state()
+        gripper_binary_state = [float(self.is_gripper_open)]
         ee_pos, ee_quat = bullet.get_link_state(
             self.robot_id, self.end_effector_index)
         if self.observation_mode == 'pixels':
@@ -212,7 +252,7 @@ class Widow250Env(gym.Env, Serializable):
             image_observation = np.float32(image_observation.flatten()) / 255.0
             observation = {
                 'state': np.concatenate(
-                    (ee_pos, ee_quat, gripper_state)),
+                    (ee_pos, ee_quat, gripper_state, gripper_binary_state)),
                 'image': image_observation
             }
         else:
@@ -221,10 +261,28 @@ class Widow250Env(gym.Env, Serializable):
         return observation
 
     def get_reward(self, info):
-        pass
+        if self.reward_type == 'grasping':
+            reward = float(info['grasp_success_target'])
+        else:
+            raise NotImplementedError
+        return reward
 
     def get_info(self):
-        pass
+
+        info = {'grasp_success': False}
+        for object_name in self.object_names:
+            grasp_success = object_utils.check_grasp(
+                object_name, self.objects, self.robot_id,
+                self.end_effector_index, self.grasp_success_height_threshold,
+                self.grasp_success_object_gripper_threshold)
+            if grasp_success:
+                info['grasp_success'] = True
+
+        info['grasp_success_target'] = object_utils.check_grasp(
+            self.target_object, self.objects, self.robot_id,
+            self.end_effector_index, self.grasp_success_height_threshold,
+            self.grasp_success_object_gripper_threshold)
+        return info
 
     def render_obs(self):
         img, depth, segmentation = bullet.render(
@@ -235,7 +293,7 @@ class Widow250Env(gym.Env, Serializable):
         return img
 
     def _set_action_space(self):
-        self.action_dim = 7
+        self.action_dim = ACTION_DIM
         act_bound = 1
         act_high = np.ones(self.action_dim) * act_bound
         self.action_space = gym.spaces.Box(-act_high, act_high)
@@ -245,7 +303,7 @@ class Widow250Env(gym.Env, Serializable):
             self.image_length = (self.observation_img_dim ** 2) * 3
             img_space = gym.spaces.Box(0, 1, (self.image_length,),
                                        dtype=np.float32)
-            robot_state_dim = 9  # XYZ + QUAT + GRIPPER_STATE
+            robot_state_dim = 10  # XYZ + QUAT + GRIPPER_STATE
             obs_bound = 100
             obs_high = np.ones(robot_state_dim) * obs_bound
             state_space = gym.spaces.Box(-obs_high, obs_high)
@@ -261,9 +319,57 @@ class Widow250Env(gym.Env, Serializable):
         return gripper_state
 
 
+class Widow250PickPlaceEnv(Widow250Env):
+
+    def __init__(self,
+                 container_name='bowl_small',
+                 container_position=(.72, 0.23, -.35),
+                 container_orientation=(0, 0, 0.707107, 0.707107),
+                 container_scale=0.07,
+
+                 place_success_height_threshold=-0.32,
+                 place_success_radius_threshold=0.03,
+
+                 **kwargs
+                 ):
+        self.container_name = container_name
+        self.container_position = container_position
+        self.container_orientation = container_orientation
+        self.container_scale = container_scale
+
+        self.place_success_height_threshold = place_success_height_threshold
+        self.place_success_radius_threshold = place_success_radius_threshold
+
+        super(Widow250PickPlaceEnv, self).__init__(**kwargs)
+
+    def _load_meshes(self):
+        super(Widow250PickPlaceEnv, self)._load_meshes()
+        object_utils.load_object(self.container_name,
+                                 self.container_position,
+                                 self.container_orientation,
+                                 self.container_scale)
+
+    def get_reward(self, info):
+        reward = float(info['place_success_target'])
+        return reward
+
+    def get_info(self):
+        info = super(Widow250PickPlaceEnv, self).get_info()
+
+        info['place_success_target'] = object_utils.check_in_container(
+            self.target_object, self.objects, self.container_position,
+            self.place_success_height_threshold,
+            self.place_success_radius_threshold)
+
+        return info
+
+
 if __name__ == "__main__":
     env = Widow250Env(gui=True)
     import time
+
+    env.reset()
+    import IPython; IPython.embed()
 
     for i in range(20):
         print(i)
@@ -277,4 +383,3 @@ if __name__ == "__main__":
         time.sleep(0.1)
 
     env.reset()
-    import IPython; IPython.embed()

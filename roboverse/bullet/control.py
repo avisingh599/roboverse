@@ -23,7 +23,7 @@ def get_movable_joints(body_id):
 
 def get_link_state(body_id, link_index):
     position, orientation, _, _, _, _ = p.getLinkState(body_id, link_index)
-    return position, orientation
+    return np.asarray(position), np.asarray(orientation)
 
 
 def apply_action_ik(target_ee_pos, target_ee_quat, target_gripper_state,
