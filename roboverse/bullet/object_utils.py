@@ -8,6 +8,7 @@ from .control import get_object_position, get_link_state
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
 SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
+BASE_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects')
 
 MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 100
 SHAPENET_SCALE = 0.5
@@ -128,10 +129,16 @@ def load_bullet_object(object_name, **kwargs):
 
 # TODO(avi) Maybe move this to a different file
 BULLET_OBJECT_SPECS = dict(
-   duck=dict(
-       fileName='duck_vhacd.urdf',
-       basePosition=(.65, 0.3, -.3),
-       baseOrientation=(0, 0, 0.707107, 0.707107),
-       globalScaling=0.8,
-   )
+    duck=dict(
+        fileName='duck_vhacd.urdf',
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    bowl_small=dict(
+        fileName=os.path.join(BASE_ASSET_PATH, 'bowl/bowl.urdf'),
+        basePosition=(.72, 0.23, -.35),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.07,
+    )
 )

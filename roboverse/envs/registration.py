@@ -39,6 +39,28 @@ ENVIRONMENT_SPECS = (
                    'xyz_action_scale': 0.2,
                    }
     },
+    {
+        'id': 'Widow250PickPlace-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.20),
+                   'object_position_high': (.59, .27, -.20),
+
+                   'container_name': 'bowl_small',
+                   'container_position': (.72, 0.23, -.35),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
 )
 
 
