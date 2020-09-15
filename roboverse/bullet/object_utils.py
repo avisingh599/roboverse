@@ -3,7 +3,6 @@ import pybullet as p
 import os
 import importlib.util
 import numpy as np
-from roboverse.bullet.drawer_utils import *
 
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
