@@ -12,8 +12,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--data-save-path", type=str)
 args = parser.parse_args()
 
+if osp.exists(NFS_PATH):
+    parent_dir = osp.join(NFS_PATH, args.data_save_path)
+else:
+    parent_dir = osp.join(__file__, "../..", "data", args.data_save_path)
+print(parent_dir)
 all_files = []
-for root, dirs, files in os.walk(args.data_save_path):
+for root, dirs, files in os.walk(parent_dir):
     for f in files:
         f_path = os.path.join(root, f)
         print(f_path)
@@ -21,11 +26,9 @@ for root, dirs, files in os.walk(args.data_save_path):
         all_files.append(data)
 
 all_data = np.concatenate(all_files, axis=0)
-if osp.exists(NFS_PATH):
-    parent_dir = osp.join(NFS_PATH)
-else:
-    parent_dir = osp.join(__file__, "../..", "data")
 
-save_all_path = os.path.join(parent_dir, args.data_save_path,
-                             "{}_{}.npy".format(args.data_save_path, len(all_data)))
+save_all_path = os.path.join(parent_dir,
+                             "{}_{}.npy".format(args.data_save_path,
+                                                len(all_data)))
 np.save(save_all_path, all_data)
+

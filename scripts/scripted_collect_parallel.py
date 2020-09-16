@@ -61,12 +61,9 @@ if __name__ == "__main__":
 
     exit_codes = [p.wait() for p in subprocesses]
 
-    data_save_path = os.path.join(__file__, "../..", 'data', save_directory)
-    data_save_path = os.path.abspath(data_save_path)
-
     merge_command = ['python',
                      'scripts/combine_trajectories.py',
-                     '-d{}'.format(data_save_path)]
+                     '-d{}'.format(save_directory)]
 
     subprocess.call(merge_command)
 

@@ -36,7 +36,7 @@ def main(args):
 
     timestamp = get_timestamp()
     if osp.exists(NFS_PATH):
-        data_save_path = osp.join(NFS_PATH, args.data_save_directory)
+        data_save_path = osp.join(NFS_PATH, args.save_directory)
     else:
         data_save_path = osp.join(__file__, "../..", "data", args.save_directory)
     data_save_path = osp.abspath(data_save_path)
