@@ -203,12 +203,12 @@ class Widow250Env(gym.Env, Serializable):
                                     self.gripper_action_scale * gripper_action]
 
         elif self.control_mode == 'discrete_gripper':
-            if gripper_action > 0.5:
+            if gripper_action > 0.5 and not self.is_gripper_open:
                 num_sim_steps = self.num_sim_steps_discrete_action
                 target_gripper_state = GRIPPER_OPEN_STATE
                 self.is_gripper_open = True  # TODO(avi): Clean this up
 
-            elif gripper_action < -0.5:
+            elif gripper_action < -0.5 and self.is_gripper_open:
                 num_sim_steps = self.num_sim_steps_discrete_action
                 target_gripper_state = GRIPPER_CLOSED_STATE
                 self.is_gripper_open = False  # TODO(avi): Clean this up
