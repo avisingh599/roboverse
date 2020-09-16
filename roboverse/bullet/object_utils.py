@@ -14,6 +14,25 @@ MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 100
 SHAPENET_SCALE = 0.5
 
 
+def check_in_container(object_name,
+                       object_id_map,
+                       container_pos,
+                       place_success_height_threshold,
+                       place_success_radius_threshold,
+                       ):
+    object_pos, _ = get_object_position(object_id_map[object_name])
+    object_height = object_pos[2]
+    object_xy = object_pos[:2]
+    container_center_xy = container_pos[:2]
+    success = False
+    if object_height < place_success_height_threshold:
+        object_container_distance = np.linalg.norm(object_xy - container_center_xy)
+        if object_container_distance < place_success_radius_threshold:
+            success = True
+
+    return success
+
+
 def check_grasp(object_name,
                 object_id_map,
                 robot_id,
