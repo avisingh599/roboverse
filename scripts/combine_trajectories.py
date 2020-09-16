@@ -16,7 +16,9 @@ if osp.exists(NFS_PATH):
     parent_dir = osp.join(NFS_PATH, args.data_save_path)
 else:
     parent_dir = osp.join(__file__, "../..", "data", args.data_save_path)
-print(parent_dir)
+
+parent_dir = osp.abspath(parent_dir)
+
 all_files = []
 for root, dirs, files in os.walk(parent_dir):
     for f in files:
