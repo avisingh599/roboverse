@@ -142,7 +142,6 @@ def load_bullet_object(object_name, **kwargs):
     object_specs = BULLET_OBJECT_SPECS[object_name]
     object_specs.update(**kwargs)
     object_id = p.loadURDF(**object_specs)
-    print(object_specs['globalScaling'])
     return object_id
 
 
