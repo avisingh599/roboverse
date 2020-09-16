@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import os
+import os.path as osp
 import roboverse
 import roboverse.bullet as bullet
 from roboverse.policies.pick_place import PickPlace
@@ -8,14 +9,11 @@ import argparse
 import datetime
 from tqdm import tqdm
 
+from roboverse.utils import get_timestamp
 EPSILON = 0.1
 
-
-def get_timestamp(divider='-', datetime_divider='T'):
-    now = datetime.datetime.now()
-    return now.strftime(
-        '%Y{d}%m{d}%dT%H{d}%M{d}%S'
-        ''.format(d=divider, dtd=datetime_divider))
+# TODO(avi): Clean this up
+NFS_PATH = '/nfs/kun1/users/avi/imitation_datasets/'
 
 
 def add_transition(traj, observation, action, reward, info, agent_info, done,
@@ -37,9 +35,12 @@ def add_transition(traj, observation, action, reward, info, agent_info, done,
 def main(args):
 
     timestamp = get_timestamp()
-    data_save_path = os.path.join(__file__, "../..", 'data', args.save_directory)
-    data_save_path = os.path.abspath(data_save_path)
-    if not os.path.exists(data_save_path):
+    if osp.exists(NFS_PATH):
+        data_save_path = osp.join(NFS_PATH, args.data_save_directory)
+    else:
+        data_save_path = osp.join(__file__, "../..", "data", args.save_directory)
+    data_save_path = osp.abspath(data_save_path)
+    if not osp.exists(data_save_path):
         os.makedirs(data_save_path)
 
     env = roboverse.make(args.env_name,
@@ -77,7 +78,7 @@ def main(args):
             # In case we need to pad actions by 1 for easier realNVP modelling
             if env_action_dim - action.shape[0] == 1:
                 action = np.append(action, 0)
-            action += np.random.normal(scale=0.1, size=(env_action_dim,))
+            action += np.random.normal(scale=args.noise, size=(env_action_dim,))
             action = np.clip(action, -1 + EPSILON, 1 - EPSILON)
             observation = env.get_observation()
             next_observation, reward, done, info = env.step(action)
@@ -101,8 +102,8 @@ def main(args):
             print("success rate: {}".format(num_success/(i+1)))
 
     print("number of successful trajectories: ", len(data))
-    path = os.path.join(data_save_path, "scripted_{}_{}_{}.npy".format(
-        args.env_name, args.task_name, timestamp))
+    path = osp.join(data_save_path, "scripted_{}_{}.npy".format(
+        args.env_name, timestamp))
     print(path)
     np.save(path, data)
 
@@ -113,11 +114,10 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--num-trajectories", type=int, required=True)
     parser.add_argument("-t", "--num-timesteps", type=int, required=True)
     parser.add_argument("-e", "--env-name", type=str, required=True)
-    parser.add_argument("-k", "--task-name", type=str, required=True)
     parser.add_argument("--gui", action='store_true', default=False)
     parser.add_argument("-o", "--target-object", type=str)
-    parser.add_argument("--non-zero-gripper", action='store_true', default=False)
     parser.add_argument("-d", "--save-directory", type=str, default="")
+    parser.add_argument("--noise", type=float, default=0.1)
     args = parser.parse_args()
 
     main(args)
