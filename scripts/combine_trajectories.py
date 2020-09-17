@@ -1,6 +1,4 @@
-import pickle
 import argparse
-import roboverse
 import os
 import numpy as np
 import os.path as osp
@@ -32,5 +30,6 @@ all_data = np.concatenate(all_files, axis=0)
 save_all_path = os.path.join(parent_dir,
                              "{}_{}.npy".format(args.data_save_path,
                                                 len(all_data)))
+print(save_all_path)
 np.save(save_all_path, all_data)
 
