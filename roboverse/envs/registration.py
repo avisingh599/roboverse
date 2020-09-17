@@ -41,7 +41,7 @@ ENVIRONMENT_SPECS = (
     },
     {
         'id': 'Widow250PickPlace-v0',
-        'entry_point': 'roboverse.envs.widow250:Widow250PickPlaceEnv',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
@@ -61,6 +61,18 @@ ENVIRONMENT_SPECS = (
                    'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
+    {
+        'id': 'Widow250Drawer-v0',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerEnv',
+        'kwargs': {'reward_type': 'opening',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('ball',),
+                   'object_scales': (0.75,),
+                   'target_object': 'ball',
+                   'load_tray': False,
+                   }
+    }
 )
 
 

@@ -18,6 +18,10 @@ def connect_headless(gui=False):
     p.stepSimulation()
 
 
+def disconnect():
+    p.disconnect()
+
+
 def reset():
     p.setRealTimeSimulation(False)
     p.resetSimulation()
