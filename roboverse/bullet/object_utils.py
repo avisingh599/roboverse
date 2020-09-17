@@ -11,7 +11,7 @@ ASSET_PATH = os.path.join(CUR_PATH, '../assets')
 SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 BASE_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects')
 
-MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 100
+MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 200
 SHAPENET_SCALE = 0.5
 
 
@@ -84,7 +84,7 @@ def generate_object_positions(object_position_low, object_position_high,
                 (object_positions, object_position_candidate), axis=0)
 
         if i > max_attempts:
-            ValueError('Min distance could not be assured')
+            raise ValueError('Min distance could not be assured')
 
     return object_positions
 
@@ -174,6 +174,27 @@ BULLET_OBJECT_SPECS = dict(
     ),
     tray=dict(
         fileName='tray/tray.urdf',
+        basePosition=(.7, 0.2, -.35),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.25,
+    ),
+    open_box=dict(
+        fileName=os.path.join(
+            BASE_ASSET_PATH, 'box_open_top/box_open_top.urdf'),
+        basePosition=(.7, 0.2, -.35),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.25,
+    ),
+    cube=dict(
+        fileName=os.path.join(
+            BASE_ASSET_PATH, 'cube/cube.urdf'),
+        basePosition=(.7, 0.2, -.35),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.05,
+    ),
+    spam=dict(
+        fileName=os.path.join(
+            BASE_ASSET_PATH, 'spam/spam.urdf'),
         basePosition=(.7, 0.2, -.35),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.25,
