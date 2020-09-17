@@ -172,4 +172,10 @@ BULLET_OBJECT_SPECS = dict(
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.1,
     ),
+    tray=dict(
+        fileName='tray/tray.urdf',
+        basePosition=(.7, 0.2, -.35),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.25,
+    ),
 )

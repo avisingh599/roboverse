@@ -12,6 +12,7 @@ class Widow250PickPlaceEnv(Widow250Env):
                  container_position_z=-0.35,
                  container_orientation=(0, 0, 0.707107, 0.707107),
                  container_scale=0.07,
+                 min_distance_from_object=0.1,
 
                  place_success_height_threshold=-0.32,
                  place_success_radius_threshold=0.03,
@@ -24,6 +25,7 @@ class Widow250PickPlaceEnv(Widow250Env):
         self.container_position_z = container_position_z
         self.container_orientation = container_orientation
         self.container_scale = container_scale
+        self.min_distance_from_object = min_distance_from_object
 
         self.place_success_height_threshold = place_success_height_threshold
         self.place_success_radius_threshold = place_success_radius_threshold
@@ -43,7 +45,7 @@ class Widow250PickPlaceEnv(Widow250Env):
             self.container_position_low,
             self.container_position_high,
             len(self.object_names) +1,  # +1 is for the container itself
-            min_distance=0.1,
+            min_distance=self.min_distance_from_object,
             current_positions=self.original_object_positions,
         )[-1, :]
 
@@ -72,27 +74,6 @@ class Widow250PickPlaceEnv(Widow250Env):
 if __name__ == "__main__":
 
     # Fixed container position
-    # env = Widow250PickPlaceEnv(
-    #     reward_type='pick_place',
-    #     control_mode='discrete_gripper',
-    #     object_names=('shed',),
-    #     object_scales=(0.7,),
-    #     target_object='shed',
-    #     load_tray=False,
-    #     object_position_low=(.49, .18, -.20),
-    #     object_position_high=(.59, .27, -.20),
-    #
-    #     container_name='bowl_small',
-    #     container_position_low=(.72, 0.23, -.35),
-    #     container_position_high=(.72, 0.23, -.35),
-    #     container_orientation=(0, 0, 0.707107, 0.707107),
-    #     container_scale=0.07,
-    #
-    #     camera_distance=0.29,
-    #     camera_target_pos=(0.6, 0.2, -0.28),
-    #     gui=True
-    # )
-
     env = Widow250PickPlaceEnv(
         reward_type='pick_place',
         control_mode='discrete_gripper',
@@ -100,19 +81,41 @@ if __name__ == "__main__":
         object_scales=(0.7,),
         target_object='shed',
         load_tray=False,
-        object_position_low=(.5, .18, -.25),
-        object_position_high=(.7, .27, -.25),
+        object_position_low=(.49, .18, -.20),
+        object_position_high=(.59, .27, -.20),
 
-        container_name='bowl_small',
-        container_position_low=(.5, 0.26, -.25),
-        container_position_high=(.7, 0.26, -.25),
+        container_name='tray',
+        container_position_low=(.72, 0.23, -.20),
+        container_position_high=(.72, 0.23, -.20),
+        container_position_z=-0.37,
         container_orientation=(0, 0, 0.707107, 0.707107),
-        container_scale=0.07,
+        container_scale=0.18,
 
         camera_distance=0.29,
         camera_target_pos=(0.6, 0.2, -0.28),
         gui=True
     )
+
+    # env = Widow250PickPlaceEnv(
+    #     reward_type='pick_place',
+    #     control_mode='discrete_gripper',
+    #     object_names=('shed',),
+    #     object_scales=(0.7,),
+    #     target_object='shed',
+    #     load_tray=False,
+    #     object_position_low=(.5, .18, -.25),
+    #     object_position_high=(.7, .27, -.25),
+    #
+    #     container_name='bowl_small',
+    #     container_position_low=(.5, 0.26, -.25),
+    #     container_position_high=(.7, 0.26, -.25),
+    #     container_orientation=(0, 0, 0.707107, 0.707107),
+    #     container_scale=0.07,
+    #
+    #     camera_distance=0.29,
+    #     camera_target_pos=(0.6, 0.2, -0.28),
+    #     gui=True
+    # )
 
     import time
     for _ in range(10):
