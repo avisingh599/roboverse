@@ -57,10 +57,15 @@ def check_grasp(object_name,
 
 
 def generate_object_positions(object_position_low, object_position_high,
-                              num_objects, min_distance=0.07):
-    object_positions = np.random.uniform(
-        low=object_position_low, high=object_position_high)
-    object_positions = np.reshape(object_positions, (1, 3))
+                              num_objects, min_distance=0.07,
+                              current_positions=None):
+    if current_positions is None:
+        object_positions = np.random.uniform(
+            low=object_position_low, high=object_position_high)
+        object_positions = np.reshape(object_positions, (1, 3))
+    else:
+        object_positions = current_positions
+
     max_attempts = MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS
     i = 0
     while object_positions.shape[0] < num_objects:

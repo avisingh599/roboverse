@@ -49,11 +49,62 @@ ENVIRONMENT_SPECS = (
                    'object_scales': (0.7,),
                    'target_object': 'shed',
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.20),
-                   'object_position_high': (.59, .27, -.20),
+                   'object_position_low': (.49, .18, -.25),
+                   'object_position_high': (.59, .27, -.25),
 
                    'container_name': 'bowl_small',
-                   'container_position': (.72, 0.23, -.35),
+                   'container_position_low': (.72, 0.23, -.25),
+                   'container_position_high': (.72, 0.23, -.25),
+
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBowl-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.25),
+                   'object_position_high': (.59, .27, -.25),
+
+                   'container_name': 'bowl_small',
+                   'container_position_low': (.72, 0.23, -.25),
+                   'container_position_high': (.72, 0.23, -.25),
+
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBowlRandomBowlPosition-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.25),
+                   'object_position_high': (.7, .27, -.25),
+
+                   'container_name': 'bowl_small',
+                   'container_position_low': (.5, 0.26, -.25),
+                   'container_position_high': (.7, 0.26, -.25),
+                   'container_position_z': -0.35,
+
                    'container_orientation': (0, 0, 0.707107, 0.707107),
                    'container_scale': 0.07,
 
