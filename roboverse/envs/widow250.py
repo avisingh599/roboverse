@@ -50,7 +50,7 @@ class Widow250Env(gym.Env, Serializable):
                  grasp_success_height_threshold=-0.25,
                  grasp_success_object_gripper_threshold=0.1,
 
-                 xyz_action_scale=1.0,
+                 xyz_action_scale=0.2,
                  abc_action_scale=20.0,
                  gripper_action_scale=20.0,
 
