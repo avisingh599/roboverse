@@ -4,6 +4,7 @@ import os
 import importlib.util
 import numpy as np
 from .control import get_object_position, get_link_state
+from roboverse.bullet.drawer_utils import *
 
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
@@ -114,7 +115,7 @@ def load_object(object_name, object_position, object_quat, scale=1.0):
 
 
 def load_shapenet_object(object_name, object_position,
-                            object_quat=(1, -1, 0, 0),  scale=1.0):
+                         object_quat=(1, -1, 0, 0),  scale=1.0):
     object_path = shapenet_obj_path_map[object_name]
     path = object_path.split('/')
     dir_name = path[-2]
@@ -158,5 +159,12 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.72, 0.23, -.35),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.07,
-    )
+    ),
+    drawer=dict(
+        fileName=os.path.join(
+            BASE_ASSET_PATH, 'drawer/drawer_with_tray_inside.urdf'),
+        basePosition=(.7, 0.2, -.35),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.1,
+    ),
 )

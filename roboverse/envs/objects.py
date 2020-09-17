@@ -2,8 +2,6 @@ import pybullet_data
 import pybullet as p
 import os
 import roboverse.bullet as bullet
-import importlib.util
-import numpy as np
 
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
@@ -11,7 +9,7 @@ SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 
 """
 NOTE: Use this file only for core objects, add others to bullet/object_utils.py
-This file will likely be deprecated in the future. 
+This file will likely be deprecated in the future.
 """
 
 
