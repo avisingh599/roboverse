@@ -38,7 +38,7 @@ def slide_drawer(drawer, direction):
 
     # Wait a little before closing
     wait_ts = 30  # 0 if direction == -1 else 30
-    control.step_simulation(wait_ts, t_sleep=0.01)
+    control.step_simulation(wait_ts)
 
     p.setJointMotorControl2(
         drawer,
@@ -50,7 +50,7 @@ def slide_drawer(drawer, direction):
 
     drawer_pos = get_drawer_bottom_pos(drawer)
 
-    control.step_simulation(num_ts, t_sleep=0.01)
+    control.step_simulation(num_ts)
     p.setJointMotorControl2(
         drawer,
         drawer_frame_joint_idx,
