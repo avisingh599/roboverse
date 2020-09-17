@@ -101,11 +101,9 @@ def get_object_position(body_id):
     return np.asarray(object_position), np.asarray(object_orientation)
 
 
-def step_simulation(num_sim_steps, t_sleep=0.0):
+def step_simulation(num_sim_steps):
     for _ in range(num_sim_steps):
         p.stepSimulation()
-        if t_sleep:
-            time.sleep(t_sleep)
 
 
 def quat_to_deg(quat):
