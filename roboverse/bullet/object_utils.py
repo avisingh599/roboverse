@@ -10,6 +10,7 @@ CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
 SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 BASE_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects')
+BULLET3_ASSET_PATH = os.path.join(BASE_ASSET_PATH, 'bullet3')
 
 MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 200
 SHAPENET_SCALE = 0.5
@@ -251,5 +252,40 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.7, 0.2, -.35),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.25,
+    ),
+    pan_tefal=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'dinnerware/pan_tefal.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    table_top=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'table/table2.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    table_square=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'table_square/table_square.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    torus=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'torus/torus.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    cube_concave=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'cube_concave.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
     ),
 )
