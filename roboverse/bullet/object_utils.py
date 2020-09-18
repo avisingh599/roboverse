@@ -204,6 +204,9 @@ def load_bullet_object(object_name, **kwargs):
     return object_id
 
 
+BULLET_FOLDER_PATH = "/home/huihanl/bullet3/data/"
+DINNERWARE_PATH = os.path.join(BULLET_FOLDER_PATH, 'dinnerware')
+
 # TODO(avi) Maybe move this to a different file
 BULLET_OBJECT_SPECS = dict(
     duck=dict(
@@ -251,5 +254,40 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.7, 0.2, -.35),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.25,
+    ),
+    pan_tefal=dict(
+        fileName=os.path.join(
+            DINNERWARE_PATH, 'pan_tefal.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    table_top=dict(
+        fileName=os.path.join(
+            BULLET_FOLDER_PATH, 'table/table2.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    table_square=dict(
+        fileName=os.path.join(
+            BULLET_FOLDER_PATH, 'table_square/table_square.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    torus=dict(
+        fileName=os.path.join(
+            BULLET_FOLDER_PATH, 'torus/torus.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    cube_concave=dict(
+        fileName=os.path.join(
+            BULLET_FOLDER_PATH, 'cube_concave.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
     ),
 )
