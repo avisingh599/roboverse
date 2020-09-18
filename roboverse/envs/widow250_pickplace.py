@@ -1,6 +1,7 @@
 from roboverse.envs.widow250 import Widow250Env
 from roboverse.bullet import object_utils
 import roboverse.bullet as bullet
+from roboverse.envs import objects
 
 
 class Widow250PickPlaceEnv(Widow250Env):
@@ -33,28 +34,55 @@ class Widow250PickPlaceEnv(Widow250Env):
         super(Widow250PickPlaceEnv, self).__init__(**kwargs)
 
     def _load_meshes(self):
-        super(Widow250PickPlaceEnv, self)._load_meshes()
+        self.table_id = objects.table()
+        self.robot_id = objects.widow250()
+        self.objects = {}
+
         """
         TODO(avi) This needs to be cleaned up, generate function should only 
                   take in (x,y) positions instead. 
         """
-        assert self.container_position_low[2] == \
-               self.original_object_positions[0, 2]
+        assert self.container_position_low[2] == self.object_position_low[2]
 
-        self.container_position = object_utils.generate_object_positions(
-            self.container_position_low,
-            self.container_position_high,
-            len(self.object_names) +1,  # +1 is for the container itself
-            min_distance=self.min_distance_from_object,
-            current_positions=self.original_object_positions,
-        )[-1, :]
+        if self.num_objects == 2:
+            self.container_position, self.original_object_positions = \
+                object_utils.generate_object_positions_v2(
+                    self.object_position_low, self.object_position_high,
+                    self.container_position_low, self.container_position_high,
+                    min_distance_small_obj=0.07,
+                    min_distance_large_obj=self.min_distance_from_object,
+                )
+        else:
+            object_positions = object_utils.generate_object_positions(
+                self.object_position_low, self.object_position_high,
+                self.num_objects,
+            )
+            # TODO(avi) This variable below needs a better name
+            self.original_object_positions = object_positions
+            self.container_position = object_utils.generate_object_positions(
+                self.container_position_low,
+                self.container_position_high,
+                len(self.object_names) +1,  # +1 is for the container itself
+                min_distance=self.min_distance_from_object,
+                current_positions=self.original_object_positions,
+            )[-1, :]
 
+        # TODO(avi) Need to clean up
         self.container_position[-1] = self.container_position_z
         self.container_id = object_utils.load_object(self.container_name,
                                                      self.container_position,
                                                      self.container_orientation,
                                                      self.container_scale)
         bullet.step_simulation(self.num_sim_steps_reset)
+
+        for object_name, object_position in zip(self.object_names,
+                                                self.original_object_positions):
+            self.objects[object_name] = object_utils.load_object(
+                object_name,
+                object_position,
+                object_quat=self.object_orientations[object_name],
+                scale=self.object_scales[object_name])
+            bullet.step_simulation(self.num_sim_steps_reset)
 
     def get_reward(self, info):
         reward = float(info['place_success_target'])
@@ -77,19 +105,19 @@ if __name__ == "__main__":
     env = Widow250PickPlaceEnv(
         reward_type='pick_place',
         control_mode='discrete_gripper',
-        object_names=('shed',),
-        object_scales=(0.7,),
+        object_names=('shed', 'two_handled_vase'),
+        object_scales=(0.7, 0.6),
         target_object='shed',
         load_tray=False,
         object_position_low=(.49, .18, -.20),
         object_position_high=(.59, .27, -.20),
 
-        container_name='tray',
+        container_name='cube',
         container_position_low=(.72, 0.23, -.20),
         container_position_high=(.72, 0.23, -.20),
-        container_position_z=-0.37,
+        container_position_z=-0.34,
         container_orientation=(0, 0, 0.707107, 0.707107),
-        container_scale=0.18,
+        container_scale=0.05,
 
         camera_distance=0.29,
         camera_target_pos=(0.6, 0.2, -0.28),

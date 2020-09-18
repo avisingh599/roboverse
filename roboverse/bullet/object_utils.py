@@ -56,6 +56,36 @@ def check_grasp(object_name,
     return success
 
 
+def generate_object_positions_v2(
+        small_object_position_low, small_object_position_high,
+        large_object_position_low, large_object_position_high,
+        min_distance_small_obj=0.07, min_distance_large_obj=0.1):
+
+    valid = False
+    max_attempts = MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS
+    i = 0
+    while not valid:
+        large_object_position = np.random.uniform(
+                low=large_object_position_low, high=large_object_position_high)
+        # large_object_position = np.reshape(large_object_position, (1, 3))
+
+        small_object_positions = []
+        for _ in range(2):
+            small_object_position = np.random.uniform(
+                low=small_object_position_low, high=small_object_position_high)
+            small_object_positions.append(small_object_position)
+
+        valid_1 = np.linalg.norm(small_object_positions[0] - small_object_positions[1]) > min_distance_small_obj
+        valid_2 = np.linalg.norm(small_object_positions[0] - large_object_position) > min_distance_large_obj
+        valid_3 = np.linalg.norm(small_object_positions[1] - large_object_position) > min_distance_large_obj
+
+        valid = valid_1 and valid_2 and valid_3
+        if i > max_attempts:
+            raise ValueError('Min distance could not be assured')
+
+    return large_object_position, small_object_positions
+
+
 def generate_object_positions(object_position_low, object_position_high,
                               num_objects, min_distance=0.07,
                               current_positions=None):
