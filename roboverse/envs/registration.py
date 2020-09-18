@@ -113,7 +113,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250Drawer-v0',
+        'id': 'Widow250DrawerOpen-v0',
         'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerEnv',
         'kwargs': {'reward_type': 'opening',
                    'control_mode': 'discrete_gripper',

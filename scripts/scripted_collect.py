@@ -3,10 +3,8 @@ import time
 import os
 import os.path as osp
 import roboverse
-import roboverse.bullet as bullet
-from roboverse.policies.pick_place import PickPlace
+from roboverse.envs.env_policy_list import instantiate_policy_class
 import argparse
-import datetime
 from tqdm import tqdm
 
 from roboverse.utils import get_timestamp
@@ -51,7 +49,7 @@ def main(args):
     env_action_dim = env.action_space.shape[0]
 
     data = []
-    policy = PickPlace(env)
+    policy = instantiate_policy_class(args.env_name, env)
     num_success = 0
 
     for i in tqdm(range(args.num_trajectories)):
@@ -84,7 +82,7 @@ def main(args):
             next_observation, reward, done, info = env.step(action)
             add_transition(traj, observation,  action, reward, info, agent_info,
                            done, next_observation, img_dim)
-
+            print("reward", reward)
             if reward and num_steps < 0:
                 num_steps = j
 
