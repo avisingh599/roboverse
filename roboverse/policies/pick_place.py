@@ -13,18 +13,21 @@ class PickPlace:
 
     def reset(self):
         # self.dist_thresh = 0.06 + np.random.normal(scale=0.01)
+        self.object_to_target = self.env.object_names[
+            np.random.randint(self.env.num_objects)]
         self.pick_point = bullet.get_object_position(
-            self.env.objects[self.env.target_object])[0]
+            self.env.objects[self.object_to_target])[0]
         self.pick_point[2] = -0.32
         self.drop_point = self.env.container_position
         self.drop_point[2] = -0.2
         self.place_attempted = False
 
+
     def get_action(self):
         ee_pos, _ = bullet.get_link_state(
             self.env.robot_id, self.env.end_effector_index)
         object_pos, _ = bullet.get_object_position(
-            self.env.objects[self.env.target_object])
+            self.env.objects[self.object_to_target])
         object_lifted = object_pos[2] > self.pick_height_thresh_noisy
         gripper_pickpoint_dist = np.linalg.norm(self.pick_point - ee_pos)
         gripper_droppoint_dist = np.linalg.norm(self.drop_point - ee_pos)
@@ -82,12 +85,14 @@ class PickPlaceOld:
     def reset(self):
         self.dist_thresh = 0.06 + np.random.normal(scale=0.01)
         self.place_attempted = False
+        self.object_to_target = self.env.object_names[
+            np.random.randint(self.env.num_objects)]
 
     def get_action(self):
         ee_pos, _ = bullet.get_link_state(
             self.env.robot_id, self.env.end_effector_index)
         object_pos, _ = bullet.get_object_position(
-            self.env.objects[self.env.target_object])
+            self.env.objects[self.object_to_target])
         object_lifted = object_pos[2] > self.pick_height_thresh_noisy
         object_gripper_dist = np.linalg.norm(object_pos - ee_pos)
 

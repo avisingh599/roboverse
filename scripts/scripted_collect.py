@@ -85,14 +85,14 @@ def main(args):
             add_transition(traj, observation,  action, reward, info, agent_info,
                            done, next_observation, img_dim)
 
-            if reward and num_steps < 0:
+            if info['place_success'] and num_steps < 0:
                 num_steps = j
 
             rewards.append(reward)
             if done:
                 break
 
-        if rewards[-1] > 0.:
+        if info['place_success']:
             if args.gui:
                 print("num_timesteps: ", num_steps)
             data.append(traj)

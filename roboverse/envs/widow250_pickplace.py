@@ -52,14 +52,15 @@ class Widow250PickPlaceEnv(Widow250Env):
                     min_distance_small_obj=0.07,
                     min_distance_large_obj=self.min_distance_from_object,
                 )
-        else:
-
+        elif self.num_objects == 1:
             self.container_position, self.original_object_positions = \
                 object_utils.generate_object_positions_single(
                     self.object_position_low, self.object_position_high,
                     self.container_position_low, self.container_position_high,
                     min_distance_large_obj=self.min_distance_from_object,
                 )
+        else:
+            raise NotImplementedError
 
         # TODO(avi) Need to clean up
         self.container_position[-1] = self.container_position_z
@@ -84,6 +85,15 @@ class Widow250PickPlaceEnv(Widow250Env):
 
     def get_info(self):
         info = super(Widow250PickPlaceEnv, self).get_info()
+
+        info['place_success'] = False
+        for object_name in self.object_names:
+            place_success = object_utils.check_in_container(
+                object_name, self.objects, self.container_position,
+                self.place_success_height_threshold,
+                self.place_success_radius_threshold)
+            if place_success:
+                info['place_success'] = place_success
 
         info['place_success_target'] = object_utils.check_in_container(
             self.target_object, self.objects, self.container_position,
