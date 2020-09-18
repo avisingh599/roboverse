@@ -1,7 +1,7 @@
 from roboverse.policies import *
 
 PICK_PLACE_ENVS = ["Widow250PickPlace-v0"]
-DRAWER_OPENING_ENVS = ["Widow250DrawerOpen-v0"]
+DRAWER_OPENING_ENVS = ["Widow250DrawerOpen-v0", "Widow250DrawerRandomizedOpen-v0"]
 
 
 env_to_policy_map = {

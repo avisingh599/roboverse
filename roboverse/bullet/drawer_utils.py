@@ -38,6 +38,14 @@ def get_drawer_handle_pos(drawer):
     return np.array(handle_pos)
 
 
+def get_drawer_opened_percentage(
+        left_opening, min_x_pos, max_x_pos, drawer_x_pos):
+    if left_opening:
+        return (drawer_x_pos - min_x_pos) / (max_x_pos - min_x_pos)
+    else:
+        return (max_x_pos - drawer_x_pos) / (max_x_pos - min_x_pos)
+
+
 def slide_drawer(drawer, direction):
     assert direction in [-1, 1]
     # -1 = open; 1 = close
@@ -64,6 +72,7 @@ def slide_drawer(drawer, direction):
     drawer_pos = get_drawer_bottom_pos(drawer)
 
     control.step_simulation(num_ts)
+
     p.setJointMotorControl2(
         drawer,
         drawer_frame_joint_idx,
