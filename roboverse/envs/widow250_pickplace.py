@@ -53,19 +53,13 @@ class Widow250PickPlaceEnv(Widow250Env):
                     min_distance_large_obj=self.min_distance_from_object,
                 )
         else:
-            object_positions = object_utils.generate_object_positions(
-                self.object_position_low, self.object_position_high,
-                self.num_objects,
-            )
-            # TODO(avi) This variable below needs a better name
-            self.original_object_positions = object_positions
-            self.container_position = object_utils.generate_object_positions(
-                self.container_position_low,
-                self.container_position_high,
-                len(self.object_names) +1,  # +1 is for the container itself
-                min_distance=self.min_distance_from_object,
-                current_positions=self.original_object_positions,
-            )[-1, :]
+
+            self.container_position, self.original_object_positions = \
+                object_utils.generate_object_positions_single(
+                    self.object_position_low, self.object_position_high,
+                    self.container_position_low, self.container_position_high,
+                    min_distance_large_obj=self.min_distance_from_object,
+                )
 
         # TODO(avi) Need to clean up
         self.container_position[-1] = self.container_position_z
