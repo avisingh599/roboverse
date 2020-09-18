@@ -10,6 +10,7 @@ CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
 SHAPENET_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects/ShapeNetCore')
 BASE_ASSET_PATH = os.path.join(ASSET_PATH, 'bullet-objects')
+BULLET3_ASSET_PATH = os.path.join(BASE_ASSET_PATH, 'bullet3')
 
 MAX_ATTEMPTS_TO_GENERATE_OBJECT_POSITIONS = 200
 SHAPENET_SCALE = 0.5
@@ -204,9 +205,6 @@ def load_bullet_object(object_name, **kwargs):
     return object_id
 
 
-BULLET_FOLDER_PATH = "/home/huihanl/bullet3/data/"
-DINNERWARE_PATH = os.path.join(BULLET_FOLDER_PATH, 'dinnerware')
-
 # TODO(avi) Maybe move this to a different file
 BULLET_OBJECT_SPECS = dict(
     duck=dict(
@@ -257,35 +255,35 @@ BULLET_OBJECT_SPECS = dict(
     ),
     pan_tefal=dict(
         fileName=os.path.join(
-            DINNERWARE_PATH, 'pan_tefal.urdf'),
+            BULLET3_ASSET_PATH, 'dinnerware/pan_tefal.urdf'),
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
     ),
     table_top=dict(
         fileName=os.path.join(
-            BULLET_FOLDER_PATH, 'table/table2.urdf'),
+            BULLET3_ASSET_PATH, 'table/table2.urdf'),
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
     ),
     table_square=dict(
         fileName=os.path.join(
-            BULLET_FOLDER_PATH, 'table_square/table_square.urdf'),
+            BULLET3_ASSET_PATH, 'table_square/table_square.urdf'),
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
     ),
     torus=dict(
         fileName=os.path.join(
-            BULLET_FOLDER_PATH, 'torus/torus.urdf'),
+            BULLET3_ASSET_PATH, 'torus/torus.urdf'),
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
     ),
     cube_concave=dict(
         fileName=os.path.join(
-            BULLET_FOLDER_PATH, 'cube_concave.urdf'),
+            BULLET3_ASSET_PATH, 'cube_concave.urdf'),
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
