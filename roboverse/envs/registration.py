@@ -443,7 +443,7 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'torus',
                    'container_position_low': (.50, 0.22, -.25),
                    'container_position_high': (.70, 0.26, -.25),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_orientation': (1, 1, 1, 1),
                    'container_scale': 0.15,
                    'container_position_z': -0.35,
                    'place_success_radius_threshold': 0.05,
