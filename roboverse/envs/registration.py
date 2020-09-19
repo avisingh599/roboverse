@@ -1,5 +1,5 @@
 import gym
-from roboverse.assets.shapenet_object_lists import TRAIN_OBJECTS, TEST_OBJECTS
+from roboverse.assets.shapenet_object_lists import GRASP_TRAIN_OBJECTS, GRASP_TEST_OBJECTS
 
 ENVIRONMENT_SPECS = (
     {
@@ -32,13 +32,13 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
 
-                   'possible_train_objects': TRAIN_OBJECTS,
-                   'possible_test_objects': TEST_OBJECTS,
+                   'possible_train_objects': GRASP_TRAIN_OBJECTS,
+                   'possible_test_objects': GRASP_TEST_OBJECTS,
                    'num_objects': 2,
 
                    'load_tray': False,
-                   'object_position_high': (.68, .25, -.20),
-                   'object_position_low': (.53, .15, -.20),
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
                    'xyz_action_scale': 0.2,
                    }
     },
@@ -163,12 +163,12 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'possible_train_objects': TRAIN_OBJECTS,
-                   'possible_test_objects': TEST_OBJECTS,
+                   'possible_train_objects': GRASP_TRAIN_OBJECTS,
+                   'possible_test_objects': GRASP_TEST_OBJECTS,
                    'num_objects': 2,
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.25),
-                   'object_position_high': (.7, .27, -.25),
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
                    'container_position_low': (.5, 0.26, -.25),
