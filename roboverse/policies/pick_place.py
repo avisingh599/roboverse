@@ -22,7 +22,6 @@ class PickPlace:
         self.drop_point[2] = -0.2
         self.place_attempted = False
 
-
     def get_action(self):
         ee_pos, _ = bullet.get_link_state(
             self.env.robot_id, self.env.end_effector_index)
