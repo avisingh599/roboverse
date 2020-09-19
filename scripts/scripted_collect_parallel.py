@@ -27,6 +27,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-e", "--env", type=str, required=True)
+    parser.add_argument("-pl", "--policy-name", type=str, required=True)
+    parser.add_argument("-a", "--accept-trajectory-key", type=str, required=True)
     parser.add_argument("-n", "--num-trajectories", type=int, required=True)
     parser.add_argument("-t", "--num-timesteps", type=int, required=True)
     parser.add_argument("-d", "--data-save-directory", type=str, required=True)
@@ -47,6 +49,8 @@ if __name__ == "__main__":
     script_name = "scripted_collect.py"
     command = ['python',
                'scripts/{}'.format(script_name),
+               '--policy-name={}'.format(args.policy_name),
+               '-a{}'.format(args.accept_trajectory_key),
                '-e{}'.format(args.env),
                '-n {}'.format(num_trajectories_per_thread),
                '-t {}'.format(args.num_timesteps),

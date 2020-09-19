@@ -4,7 +4,7 @@ import os
 import os.path as osp
 import roboverse
 import roboverse.bullet as bullet
-from roboverse.policies.pick_place import PickPlace
+from roboverse.policies import policies
 import argparse
 import datetime
 from tqdm import tqdm
@@ -51,11 +51,17 @@ def main(args):
     env_action_dim = env.action_space.shape[0]
 
     data = []
-    policy = PickPlace(env)
+    assert args.policy_name in policies.keys()
+    policy_class = policies[args.policy_name]
+    policy = policy_class(env)
     num_success = 0
+    num_attempts = 0
+    accept_trajectory_key = args.accept_trajectory_key
 
-    for i in tqdm(range(args.num_trajectories)):
+    progress_bar = tqdm(total=args.num_trajectories)
 
+    while num_success < args.num_trajectories:
+        num_attempts += 1
         rewards = []
 
         env.reset()
@@ -85,21 +91,24 @@ def main(args):
             add_transition(traj, observation,  action, reward, info, agent_info,
                            done, next_observation, img_dim)
 
-            if info['place_success'] and num_steps < 0:
+            if info[accept_trajectory_key] and num_steps < 0:
                 num_steps = j
 
             rewards.append(reward)
             if done:
                 break
 
-        if info['place_success']:
+        if info[accept_trajectory_key]:
             if args.gui:
                 print("num_timesteps: ", num_steps)
             data.append(traj)
             num_success += 1
+            progress_bar.update(1)
 
         if args.gui:
-            print("success rate: {}".format(num_success/(i+1)))
+            print("success rate: {}".format(num_success/(num_attempts)))
+
+    progress_bar.close()
 
     print("number of successful trajectories: ", len(data))
     path = osp.join(data_save_path, "scripted_{}_{}.npy".format(
@@ -111,9 +120,11 @@ def main(args):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("-e", "--env-name", type=str, required=True)
+    parser.add_argument("-pl", "--policy-name", type=str, required=True)
+    parser.add_argument("-a", "--accept-trajectory-key", type=str, required=True)
     parser.add_argument("-n", "--num-trajectories", type=int, required=True)
     parser.add_argument("-t", "--num-timesteps", type=int, required=True)
-    parser.add_argument("-e", "--env-name", type=str, required=True)
     parser.add_argument("--gui", action='store_true', default=False)
     parser.add_argument("-o", "--target-object", type=str)
     parser.add_argument("-d", "--save-directory", type=str, default="")
