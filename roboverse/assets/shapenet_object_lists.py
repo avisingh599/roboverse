@@ -171,3 +171,7 @@ OBJECT_ORIENTATIONS = {
     'aero_cylinder': (0, 0, 1, 0),
     'grill_trash_can': (0, 0, 1, 0),
 }
+
+GRASP_OFFSETS = {
+    'bunsen_burner': (0, 0.01, 0.0)
+}

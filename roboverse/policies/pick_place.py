@@ -1,14 +1,19 @@
 import numpy as np
 import roboverse.bullet as bullet
 
+from roboverse.assets.shapenet_object_lists import GRASP_OFFSETS
+
 
 class PickPlace:
 
-    def __init__(self, env, pick_height_thresh=-0.31):
+    def __init__(self, env, pick_height_thresh=-0.31, xyz_action_scale=7.0,
+                 pick_point_noise=0.00, drop_point_noise=0.00):
         self.env = env
         self.pick_height_thresh_noisy = pick_height_thresh \
                                             + np.random.normal(scale=0.01)
-        self.xyz_action_scale = 7.0
+        self.xyz_action_scale = xyz_action_scale
+        self.pick_point_noise = pick_point_noise
+        self.drop_point_noise = drop_point_noise
         self.reset()
 
     def reset(self):
@@ -17,6 +22,8 @@ class PickPlace:
             np.random.randint(self.env.num_objects)]
         self.pick_point = bullet.get_object_position(
             self.env.objects[self.object_to_target])[0]
+        if self.object_to_target in GRASP_OFFSETS.keys():
+            self.pick_point += np.asarray(GRASP_OFFSETS[self.object_to_target])
         self.pick_point[2] = -0.32
         self.drop_point = self.env.container_position
         self.drop_point[2] = -0.2

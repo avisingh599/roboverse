@@ -1,13 +1,17 @@
 import numpy as np
 import roboverse.bullet as bullet
 
+from roboverse.assets.shapenet_object_lists import GRASP_OFFSETS
+
 
 class Grasp:
 
-    def __init__(self, env, pick_height_thresh=-0.23):
+    def __init__(self, env, pick_height_thresh=-0.23, xyz_action_scale=7.0,
+                 pick_point_noise=0.00):
         self.env = env
         self.pick_height_thresh = pick_height_thresh
-        self.xyz_action_scale = 7.0
+        self.xyz_action_scale = xyz_action_scale
+        self.pick_point_noise = pick_point_noise
         self.reset()
 
     def reset(self):
@@ -15,8 +19,10 @@ class Grasp:
         self.object_to_target = self.env.object_names[
             np.random.randint(self.env.num_objects)]
         self.pick_point = bullet.get_object_position(
-            self.env.objects[self.object_to_target])[0] +\
-                          np.random.normal(scale=0.01, size=(3,))
+            self.env.objects[self.object_to_target])[0]
+        if self.object_to_target in GRASP_OFFSETS.keys():
+            self.pick_point += np.asarray(GRASP_OFFSETS[self.object_to_target])
+        self.pick_point += np.random.normal(scale=self.pick_point_noise, size=(3,))
         self.pick_point[2] = -0.32 + np.random.normal(scale=0.01)
 
     def get_action(self):
@@ -39,7 +45,7 @@ class Grasp:
             action_gripper = [0.0]
         elif self.env.is_gripper_open:
             # near the object enough, performs grasping action
-            action_xyz = (self.pick_point  - ee_pos) * self.xyz_action_scale
+            action_xyz = (self.pick_point - ee_pos) * self.xyz_action_scale
             action_angles = [0., 0., 0.]
             action_gripper = [-0.7]
         elif not object_lifted:
