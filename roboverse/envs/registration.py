@@ -83,7 +83,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInBowl-v0',
+        'id': 'Widow250SinglePutInBowl-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -108,7 +108,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInBowlRandomBowlPosition-v0',
+        'id': 'Widow250SinglePutInBowlRandomBowlPosition-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -133,7 +133,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250MultiPutInBowlRandomBowlPosition-v0',
+        'id': 'Widow250PutInBowlRandomBowlPosition-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -188,8 +188,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -213,8 +213,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -239,8 +239,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -265,8 +265,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -291,8 +291,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -318,8 +318,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -345,8 +345,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -371,8 +371,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -397,8 +397,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -423,8 +423,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -449,8 +449,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -475,8 +475,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -501,8 +501,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -528,8 +528,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -555,8 +555,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -581,8 +581,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -607,8 +607,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -634,8 +634,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -661,8 +661,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
@@ -688,8 +688,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'object_names': ('shed',),
-                   'object_scales': (0.7,),
+                   'object_names': ('shed', 'two_handled_vase'),
+                   'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
