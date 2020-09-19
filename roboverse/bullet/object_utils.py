@@ -288,4 +288,25 @@ BULLET_OBJECT_SPECS = dict(
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
     ),
+    plate=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'dinnerware/plate.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    husky=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'husky/husky.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
+    marble_cube=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'marble_cube.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+    ),
 )
