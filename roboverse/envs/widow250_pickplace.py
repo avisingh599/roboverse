@@ -2,6 +2,7 @@ from roboverse.envs.widow250 import Widow250Env
 from roboverse.bullet import object_utils
 import roboverse.bullet as bullet
 from roboverse.envs import objects
+from .multi_object import MultiObjectEnv
 
 
 class Widow250PickPlaceEnv(Widow250Env):
@@ -101,6 +102,10 @@ class Widow250PickPlaceEnv(Widow250Env):
             self.place_success_radius_threshold)
 
         return info
+
+
+class Widow250PickPlaceMultiObjectEnv(MultiObjectEnv, Widow250PickPlaceEnv):
+    """Grasping Env but with a random object each time."""
 
 
 if __name__ == "__main__":

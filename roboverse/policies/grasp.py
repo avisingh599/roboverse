@@ -51,7 +51,7 @@ class Grasp:
             # Hold
             action_xyz = (0., 0., 0.)
             action_angles = [0., 0., 0.]
-            action_gripper = [-0.7]
+            action_gripper = [0.]
 
         agent_info = dict(done=done)
         action = np.concatenate((action_xyz, action_angles, action_gripper))
