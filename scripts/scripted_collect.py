@@ -109,8 +109,7 @@ def main(args):
             print("success rate: {}".format(num_success/(num_attempts)))
 
     progress_bar.close()
-
-    print("number of successful trajectories: ", len(data))
+    print("success rate: {}".format(num_success / (num_attempts)))
     path = osp.join(data_save_path, "scripted_{}_{}.npy".format(
         args.env_name, timestamp))
     print(path)
