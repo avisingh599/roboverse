@@ -1,5 +1,6 @@
 import gym
-from roboverse.assets.shapenet_object_lists import GRASP_TRAIN_OBJECTS, GRASP_TEST_OBJECTS
+from roboverse.assets.shapenet_object_lists \
+    import GRASP_TRAIN_OBJECTS, GRASP_TEST_OBJECTS, PICK_PLACE_TRAIN_OBJECTS, PICK_PLACE_TEST_OBJECTS
 
 ENVIRONMENT_SPECS = (
     {
@@ -163,8 +164,8 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'possible_train_objects': GRASP_TRAIN_OBJECTS,
-                   'possible_test_objects': GRASP_TEST_OBJECTS,
+                   'possible_train_objects': PICK_PLACE_TRAIN_OBJECTS,
+                   'possible_test_objects': PICK_PLACE_TEST_OBJECTS,
                    'num_objects': 2,
                    'load_tray': False,
                    'object_position_low': (.5, .18, -.30),

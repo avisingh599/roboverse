@@ -85,6 +85,47 @@ GRASP_TRAIN_OBJECTS = [
     'two_layered_lampshade',
 ]
 
+PICK_PLACE_TRAIN_OBJECTS = [
+    'conic_cup',
+    'sack_vase',
+    'fountain_vase',
+    'shed',
+    'circular_table',
+    'hex_deep_bowl',
+    'smushed_dumbbell',
+    'square_prism_bin',
+    'narrow_tray',
+    # New objects:
+    'colunnade_top',
+    'stalagcite_chunk',
+    'bongo_drum_bowl',
+    'pacifier_vase',
+    'beehive_funnel',
+    'crooked_lid_trash_can',
+    'toilet_bowl',
+    'pepsi_bottle',
+    'two_handled_vase',
+    'tongue_chair',
+    'thick_wood_chair',
+    'modern_canoe',
+    'pear_ringed_vase',
+    'short_handle_cup',
+    'curved_handle_cup',
+    'bullet_vase',
+    'glass_half_gallon',
+    'flat_bottom_sack_vase',
+    'teepee',
+    'trapezoidal_bin',
+    'vintage_canoe',
+    'bathtub',
+    'flowery_half_donut',
+    't_cup',
+    'cookie_circular_lidless_tin',
+    'box_sofa',
+    'baseball_cap',
+    'two_layered_lampshade',
+]
+
 OBJECT_SCALINGS = {
     'conic_cup': 0.6,
     'ball': 1.0,
@@ -158,6 +199,19 @@ TEST_OBJECTS = [
 ]
 
 GRASP_TEST_OBJECTS = [
+    'conic_bin',
+    'jar',
+    'bunsen_burner',
+    'long_vase',
+    # New objects:
+    'ringed_cup_oversized_base',
+    'square_rod_embellishment',
+    'elliptical_capsule',
+    'aero_cylinder',
+    'grill_trash_can',
+]
+
+PICK_PLACE_TEST_OBJECTS = [
     'conic_bin',
     'jar',
     'bunsen_burner',
