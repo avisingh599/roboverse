@@ -39,6 +39,9 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.68, .25, -.20),
                    'object_position_low': (.53, .15, -.20),
                    'xyz_action_scale': 0.2,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -54,6 +57,44 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.68, .25, -.30),
                    'object_position_low': (.53, .15, -.30),
                    'xyz_action_scale': 0.2,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250MultiThreeObjectGraspTrain-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250MultiObjectEnv',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'possible_objects': GRASP_TRAIN_OBJECTS,
+                   'num_objects': 3,
+
+                   'load_tray': False,
+                   'object_position_high': (.7, .25, -.20),
+                   'object_position_low': (.5, .15, -.20),
+                   'xyz_action_scale': 0.2,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250MultiThreeObjectGraspTest-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250MultiObjectEnv',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+
+                   'possible_objects': GRASP_TEST_OBJECTS,
+                   'num_objects': 3,
+
+                   'load_tray': False,
+                   'object_position_high': (.7, .25, -.30),
+                   'object_position_low': (.5, .15, -.30),
+                   'xyz_action_scale': 0.2,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
