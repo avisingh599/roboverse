@@ -73,8 +73,8 @@ CONTAINER_CONFIGS = {
     },
     'plate_tefal': {
         'container_name': 'pan_tefal',
-        'container_position_low': (.50, 0.22, -.25),
-        'container_position_high': (.70, 0.24, -.25),
+        'container_position_low': (.50, 0.22, -.30),
+        'container_position_high': (.70, 0.24, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.4,
         'container_position_z': -0.35,
@@ -84,8 +84,8 @@ CONTAINER_CONFIGS = {
     },
     'husky': {
         'container_name': 'husky',
-        'container_position_low': (.50, 0.22, -.25),
-        'container_position_high': (.70, 0.26, -.25),
+        'container_position_low': (.50, 0.22, -.30),
+        'container_position_high': (.70, 0.26, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.13,
         'container_position_z': -0.35,
