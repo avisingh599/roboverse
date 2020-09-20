@@ -107,15 +107,15 @@ def main(args):
             env, policy, args.num_timesteps, args.noise,
             accept_trajectory_key)
 
-        if args.gui:
-            print("success rate: {}".format(num_success/(num_attempts)))
-
         if success:
             if args.gui:
                 print("num_timesteps: ", num_steps)
             data.append(traj)
             num_success += 1
             progress_bar.update(1)
+
+        if args.gui:
+            print("success rate: {}".format(num_success/(num_attempts)))
 
     progress_bar.close()
     print("success rate: {}".format(num_success / (num_attempts)))
