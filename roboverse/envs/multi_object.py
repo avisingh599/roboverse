@@ -10,23 +10,11 @@ class MultiObjectEnv:
     every time the env resets.
     """
     def __init__(self,
-                 # *args,
                  num_objects=1,
-                 use_test_objects=False,
-                 possible_train_objects=TRAIN_OBJECTS[:10],
-                 possible_test_objects=TEST_OBJECTS[:10],
+                 possible_objects=TRAIN_OBJECTS[:10],
                  **kwargs):
-
-        self.use_test_objects = use_test_objects  # True when doing evaluation
-
-        assert isinstance(possible_train_objects, list)
-        assert isinstance(possible_test_objects, list)
-
-        if self.use_test_objects:
-            self.possible_objects = np.asarray(possible_test_objects)
-        else:
-            self.possible_objects = np.asarray(possible_train_objects)
-
+        assert isinstance(possible_objects, list)
+        self.possible_objects = np.asarray(possible_objects)
         super().__init__(**kwargs)
         self.num_objects = num_objects
 
@@ -34,6 +22,7 @@ class MultiObjectEnv:
         chosen_obj_idx = np.random.randint(0, len(self.possible_objects),
                                            size=self.num_objects)
         self.object_names = tuple(self.possible_objects[chosen_obj_idx])
+
         self.object_scales = dict()
         self.object_orientations = dict()
         for object_name in self.object_names:

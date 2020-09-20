@@ -27,13 +27,27 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250MultiObjectGrasp-v0',
+        'id': 'Widow250MultiObjectGraspTrain-v0',
         'entry_point': 'roboverse.envs.widow250:Widow250MultiObjectEnv',
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
 
-                   'possible_train_objects': TRAIN_OBJECTS,
-                   'possible_test_objects': TEST_OBJECTS,
+                   'possible_objects': TRAIN_OBJECTS,
+                   'num_objects': 2,
+
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.20),
+                   'object_position_low': (.53, .15, -.20),
+                   'xyz_action_scale': 0.2,
+                   }
+    },
+    {
+        'id': 'Widow250MultiObjectGraspTest-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250MultiObjectEnv',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+
+                   'possible_objects': TEST_OBJECTS,
                    'num_objects': 2,
 
                    'load_tray': False,
