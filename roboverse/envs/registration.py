@@ -67,11 +67,60 @@ ENVIRONMENT_SPECS = (
         'entry_point': 'roboverse.envs.widow250:Widow250Env',
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
-                   'object_names': ('jar', 'gatorade'),
-                   'object_scales': (0.8, 0.7),
-                   'object_orientations': ((0, 0.707, 0, 0.707), (0, 0, 1, 0)),
+                   'object_names': ('square_rod_embellishment',
+                                    'grill_trash_can'),
+                   'object_scales': (0.6, 0.5),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
 
-                   'target_object': 'jar',
+                   'target_object': 'square_rod_embellishment',
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
+                   }
+    },
+    {
+        'id': 'Widow250GraspTwoTestRL2-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'object_names': ('shed', 'sack_vase'),
+                   'object_scales': (0.6, 0.6),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
+                   }
+    },
+    {
+        'id': 'Widow250GraspTwoTestRL3-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'object_names': ('two_handled_vase',
+                                    'thick_wood_chair',),
+                   'object_scales': (0.45, 0.4),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0, 1, 0)),
+
+                   'target_object': 'two_handled_vase',
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
+                   }
+    },
+    {
+        'id': 'Widow250GraspTwoTestRL4-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'object_names': ('curved_handle_cup',
+                                    'baseball_cap',),
+                   'object_scales': (0.5, 0.5),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, -0.707, 0.707, 0)),
+
+                   'target_object': 'curved_handle_cup',
                    'load_tray': False,
                    'object_position_high': (.68, .25, -.30),
                    'object_position_low': (.53, .15, -.30),
@@ -129,12 +178,51 @@ ENVIRONMENT_SPECS = (
         'entry_point': 'roboverse.envs.widow250:Widow250Env',
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
-                   'object_names': ('conic_bin', 'jar', 'gatorade'),
-                   'object_scales': (0.4, 0.8, 0.7),
-                   'object_orientations': ((0, 0.707, 0.707, 0),
-                                           (0, 0.707, 0, 0.707), (0, 0, 1, 0)),
+                   'object_names': ('square_rod_embellishment',
+                                    'grill_trash_can',
+                                    'shed',),
+                   'object_scales': (0.6, 0.5, 0.6),
+                   'object_orientations': ((0, 0, 1, 0),
+                                           (0, 0.707, 0.707, 0), (0, 0, 1, 0)),
 
-                   'target_object': 'jar',
+                   'target_object': 'square_rod_embellishment',
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
+                   }
+    },
+    {
+        'id': 'Widow250GraspThreeTestRL2-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'object_names': ('sack_vase',
+                                    'two_handled_vase',
+                                    'thick_wood_chair'),
+                   'object_scales': (0.6, 0.45, 0.4),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, 0, 1, 0), (0, 0, 1, 0)),
+
+                   'target_object': 'sack_vase',
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
+                   }
+    },
+    {
+        'id': 'Widow250GraspThreeTestRL3-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'object_names': ('curved_handle_cup',
+                                    'baseball_cap',
+                                    'elliptical_capsule'),
+                   'object_scales': (0.5, 0.5, 0.6),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, -0.707, 0.707, 0),
+                                           (0.5, 0.5, 0.5, 0.5)),
+
+                   'target_object': 'curved_handle_cup',
                    'load_tray': False,
                    'object_position_high': (.68, .25, -.30),
                    'object_position_low': (.53, .15, -.30),
@@ -287,6 +375,118 @@ ENVIRONMENT_SPECS = (
 
                    'possible_objects': PICK_PLACE_TEST_OBJECTS,
                    'num_objects': 2,
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'bowl_small',
+                   'container_position_low': (.5, 0.26, -.25),
+                   'container_position_high': (.7, 0.26, -.25),
+                   'container_position_z': -0.35,
+
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBowlRandomBowlPositionTestRL1-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('square_rod_embellishment',
+                                    'grill_trash_can'),
+                   'object_scales': (0.6, 0.5),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'square_rod_embellishment',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'bowl_small',
+                   'container_position_low': (.5, 0.26, -.25),
+                   'container_position_high': (.7, 0.26, -.25),
+                   'container_position_z': -0.35,
+
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBowlRandomBowlPositionTestRL2-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed', 'sack_vase'),
+                   'object_scales': (0.6, 0.6),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'shed',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'bowl_small',
+                   'container_position_low': (.5, 0.26, -.25),
+                   'container_position_high': (.7, 0.26, -.25),
+                   'container_position_z': -0.35,
+
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBowlRandomBowlPositionTestRL3-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('two_handled_vase',
+                                    'thick_wood_chair',),
+                   'object_scales': (0.45, 0.4),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0, 1, 0)),
+                   'target_object': 'two_handled_vase',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'bowl_small',
+                   'container_position_low': (.5, 0.26, -.25),
+                   'container_position_high': (.7, 0.26, -.25),
+                   'container_position_z': -0.35,
+
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBowlRandomBowlPositionTestRL4-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('curved_handle_cup',
+                                    'baseball_cap',),
+                   'object_scales': (0.5, 0.5),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, -0.707, 0.707, 0)),
+                   'target_object': 'curved_handle_cup',
+
                    'load_tray': False,
                    'object_position_low': (.5, .18, -.30),
                    'object_position_high': (.7, .27, -.30),
@@ -498,6 +698,148 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
                    'object_position_high': (.69, .27, -.25),
+
+                   'container_name': 'pan_tefal',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.24, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.4,
+                   'container_position_z': -0.35,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.09,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250MultiObjectPutInPanTefalRandomPanTefalPositionTrain-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
+                   'num_objects': 2,
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'pan_tefal',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.24, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.4,
+                   'container_position_z': -0.35,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.09,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+
+    {
+        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL1-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('square_rod_embellishment',
+                                    'grill_trash_can'),
+                   'object_scales': (0.6, 0.5),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'square_rod_embellishment',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'pan_tefal',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.24, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.4,
+                   'container_position_z': -0.35,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.09,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL2-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed', 'sack_vase'),
+                   'object_scales': (0.6, 0.6),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'shed',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'pan_tefal',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.24, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.4,
+                   'container_position_z': -0.35,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.09,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL3-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('two_handled_vase',
+                                    'thick_wood_chair',),
+                   'object_scales': (0.45, 0.4),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0, 1, 0)),
+                   'target_object': 'two_handled_vase',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'pan_tefal',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.24, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.4,
+                   'container_position_z': -0.35,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.09,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL4-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('curved_handle_cup',
+                                    'baseball_cap',),
+                   'object_scales': (0.5, 0.5),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, -0.707, 0.707, 0)),
+                   'target_object': 'curved_handle_cup',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'pan_tefal',
                    'container_position_low': (.50, 0.22, -.25),
@@ -815,6 +1157,152 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'object_position_low': (.49, .18, -.25),
                    'object_position_high': (.69, .27, -.25),
+
+                   'container_name': 'marble_cube',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.26, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+                   'container_position_z': -0.35,
+                   'place_success_height_threshold': -0.23,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.10,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250MultiObjectPutOnMarbleCubeRandomMarbleCubePositionTrain-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
+                   'num_objects': 2,
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'marble_cube',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.26, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+                   'container_position_z': -0.35,
+                   'place_success_height_threshold': -0.23,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.10,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL1-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('square_rod_embellishment',
+                                    'grill_trash_can'),
+                   'object_scales': (0.6, 0.5),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'square_rod_embellishment',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'marble_cube',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.26, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+                   'container_position_z': -0.35,
+                   'place_success_height_threshold': -0.23,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.10,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL2-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed', 'sack_vase'),
+                   'object_scales': (0.6, 0.6),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'shed',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'marble_cube',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.26, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+                   'container_position_z': -0.35,
+                   'place_success_height_threshold': -0.23,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.10,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL3-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('two_handled_vase',
+                                    'thick_wood_chair',),
+                   'object_scales': (0.45, 0.4),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0, 1, 0)),
+                   'target_object': 'two_handled_vase',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'marble_cube',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.26, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+                   'container_position_z': -0.35,
+                   'place_success_height_threshold': -0.23,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.10,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL4-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('curved_handle_cup',
+                                    'baseball_cap',),
+                   'object_scales': (0.5, 0.5),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, -0.707, 0.707, 0)),
+                   'target_object': 'curved_handle_cup',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'marble_cube',
                    'container_position_low': (.50, 0.22, -.25),

@@ -47,7 +47,6 @@ TRAIN_OBJECTS = [
 GRASP_TRAIN_OBJECTS = [
     'conic_cup',
     'fountain_vase',
-    'shed',
     'circular_table',
     'hex_deep_bowl',
     'smushed_dumbbell',
@@ -87,7 +86,6 @@ GRASP_TRAIN_OBJECTS = [
 PICK_PLACE_TRAIN_OBJECTS = [
     'conic_cup',
     'fountain_vase',
-    'shed',
     'circular_table',
     'hex_deep_bowl',
     'smushed_dumbbell',
@@ -195,24 +193,26 @@ TEST_OBJECTS = [
 
 GRASP_TEST_OBJECTS = [
     'square_rod_embellishment',
-    'elliptical_capsule',
     'grill_trash_can',
+    'shed',
     'sack_vase',
     'two_handled_vase',
     'thick_wood_chair',
     'curved_handle_cup',
     'baseball_cap',
+    'elliptical_capsule',
 ]
 
 PICK_PLACE_TEST_OBJECTS = [
     'square_rod_embellishment',
-    'elliptical_capsule',
     'grill_trash_can',
+    'shed',
     'sack_vase',
     'two_handled_vase',
     'thick_wood_chair',
     'curved_handle_cup',
     'baseball_cap',
+    'elliptical_capsule',
 ]
 
 OBJECT_ORIENTATIONS = {
