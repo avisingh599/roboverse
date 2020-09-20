@@ -1,4 +1,42 @@
-# TODO(avi): These lists should be converted to a dictionary.
+TRAIN_CONTAINERS = [
+    'plate',
+    'cube_concave',
+    'table_top'
+]
+
+CONTAINER_CONFIGS = {
+    'plate': {
+        'container_position_low': (.72, 0.23, -.25),
+        'container_position_high': (.72, 0.23, -.25),
+        'container_orientation': (0, 0, 0.707107, 0.707107),
+        'container_scale': 0.46,
+        'container_position_z': -0.35,
+        'place_success_height_threshold': -0.32,
+        'place_success_radius_threshold': 0.04,
+        'min_distance_from_object': 0.10,
+    },
+    'cube_concave': {
+        'container_position_low': (.72, 0.23, -.25),
+        'container_position_high': (.72, 0.23, -.25),
+        'container_orientation': (0, 0, 0.707107, 0.707107),
+        'container_scale': 0.06,
+        'container_position_z': -0.35,
+        'place_success_height_threshold': -0.23,
+        'place_success_radius_threshold': 0.04,
+        'min_distance_from_object': 0.10,
+    },
+    'table_top': {
+        'container_name': 'table_top',
+        'container_position_low': (.72, 0.23, -.25),
+        'container_position_high': (.72, 0.23, -.25),
+        'container_orientation': (0, 0, 0.707107, 0.707107),
+        'container_scale': 0.15,
+        'container_position_z': -0.35,
+        'place_success_height_threshold': -0.32,
+        'place_success_radius_threshold': 0.05,
+        'min_distance_from_object': 0.09,
+    }
+}
 
 TRAIN_OBJECTS = [
     'conic_cup',
