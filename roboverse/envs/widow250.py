@@ -5,6 +5,7 @@ from roboverse.bullet.serializable import Serializable
 import roboverse.bullet as bullet
 from roboverse.envs import objects
 from roboverse.bullet import object_utils
+from .multi_object import MultiObjectEnv
 
 END_EFFECTOR_INDEX = 8
 RESET_JOINT_VALUES = [1.57, -0.6, -0.6, 0, -1.57, 0., 0., 0.036, -0.036]
@@ -56,8 +57,8 @@ class Widow250Env(gym.Env, Serializable):
 
                  ee_pos_high=(0.8, .4, -0.1),
                  ee_pos_low=(.4, -.2, -.34),
-                 camera_target_pos=(0.6, 0.2, -0.26),
-                 camera_distance=0.22,
+                 camera_target_pos=(0.6, 0.2, -0.28),
+                 camera_distance=0.29,
                  camera_roll=0.0,
                  camera_pitch=-40,
                  camera_yaw=180,
@@ -320,6 +321,10 @@ class Widow250Env(gym.Env, Serializable):
 
     def close(self):
         bullet.disconnect()
+
+
+class Widow250MultiObjectEnv(MultiObjectEnv, Widow250Env):
+    """Grasping Env but with a random object each time."""
 
 
 if __name__ == "__main__":

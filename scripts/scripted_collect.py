@@ -3,7 +3,7 @@ import time
 import os
 import os.path as osp
 import roboverse
-from roboverse.envs.env_policy_list import instantiate_policy_class
+from roboverse.policies import policies
 import argparse
 from tqdm import tqdm
 
@@ -49,11 +49,17 @@ def main(args):
     env_action_dim = env.action_space.shape[0]
 
     data = []
-    policy = instantiate_policy_class(args.env_name, env)
+    assert args.policy_name in policies.keys()
+    policy_class = policies[args.policy_name]
+    policy = policy_class(env)
     num_success = 0
+    num_attempts = 0
+    accept_trajectory_key = args.accept_trajectory_key
 
-    for i in tqdm(range(args.num_trajectories)):
+    progress_bar = tqdm(total=args.num_trajectories)
 
+    while num_success < args.num_trajectories:
+        num_attempts += 1
         rewards = []
 
         env.reset()
@@ -82,24 +88,26 @@ def main(args):
             next_observation, reward, done, info = env.step(action)
             add_transition(traj, observation,  action, reward, info, agent_info,
                            done, next_observation, img_dim)
-            print("reward", reward)
-            if reward and num_steps < 0:
+
+            if info[accept_trajectory_key] and num_steps < 0:
                 num_steps = j
 
             rewards.append(reward)
             if done:
                 break
 
-        if rewards[-1] > 0.:
+        if info[accept_trajectory_key]:
             if args.gui:
                 print("num_timesteps: ", num_steps)
             data.append(traj)
             num_success += 1
+            progress_bar.update(1)
 
         if args.gui:
-            print("success rate: {}".format(num_success/(i+1)))
+            print("success rate: {}".format(num_success/(num_attempts)))
 
-    print("number of successful trajectories: ", len(data))
+    progress_bar.close()
+    print("success rate: {}".format(num_success / (num_attempts)))
     path = osp.join(data_save_path, "scripted_{}_{}.npy".format(
         args.env_name, timestamp))
     print(path)
@@ -109,9 +117,11 @@ def main(args):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("-e", "--env-name", type=str, required=True)
+    parser.add_argument("-pl", "--policy-name", type=str, required=True)
+    parser.add_argument("-a", "--accept-trajectory-key", type=str, required=True)
     parser.add_argument("-n", "--num-trajectories", type=int, required=True)
     parser.add_argument("-t", "--num-timesteps", type=int, required=True)
-    parser.add_argument("-e", "--env-name", type=str, required=True)
     parser.add_argument("--gui", action='store_true', default=False)
     parser.add_argument("-o", "--target-object", type=str)
     parser.add_argument("-d", "--save-directory", type=str, default="")
