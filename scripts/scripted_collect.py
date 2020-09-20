@@ -30,6 +30,52 @@ def add_transition(traj, observation, action, reward, info, agent_info, done,
     return traj
 
 
+def collect_one_traj(env, policy, num_timesteps, noise,
+                     accept_trajectory_key):
+    num_steps = -1
+    rewards = []
+    success = False
+    img_dim = env.observation_img_dim
+    env.reset()
+    policy.reset()
+    time.sleep(1)
+    traj = dict(
+        observations=[],
+        actions=[],
+        rewards=[],
+        next_observations=[],
+        terminals=[],
+        agent_infos=[],
+        env_infos=[],
+    )
+    for j in range(num_timesteps):
+
+        action, agent_info = policy.get_action()
+
+        # In case we need to pad actions by 1 for easier realNVP modelling
+        env_action_dim = env.action_space.shape[0]
+        if env_action_dim - action.shape[0] == 1:
+            action = np.append(action, 0)
+        action += np.random.normal(scale=noise, size=(env_action_dim,))
+        action = np.clip(action, -1 + EPSILON, 1 - EPSILON)
+        observation = env.get_observation()
+        next_observation, reward, done, info = env.step(action)
+        add_transition(traj, observation,  action, reward, info, agent_info,
+                       done, next_observation, img_dim)
+
+        if info[accept_trajectory_key] and num_steps < 0:
+            num_steps = j
+
+        rewards.append(reward)
+        if done:
+            break
+
+    if info[accept_trajectory_key]:
+        success = True
+
+    return traj, success, num_steps
+
+
 def main(args):
 
     timestamp = get_timestamp()
@@ -44,9 +90,6 @@ def main(args):
     env = roboverse.make(args.env_name,
                          gui=args.gui,
                          transpose_image=False)
-    img_dim = env.observation_img_dim
-
-    env_action_dim = env.action_space.shape[0]
 
     data = []
     assert args.policy_name in policies.keys()
@@ -60,51 +103,19 @@ def main(args):
 
     while num_success < args.num_trajectories:
         num_attempts += 1
-        rewards = []
+        traj, success, num_steps = collect_one_traj(
+            env, policy, args.num_timesteps, args.noise,
+            accept_trajectory_key)
 
-        env.reset()
-        policy.reset()
-        time.sleep(1)
-        traj = dict(
-            observations=[],
-            actions=[],
-            rewards=[],
-            next_observations=[],
-            terminals=[],
-            agent_infos=[],
-            env_infos=[],
-        )
-        num_steps = -1
-        for j in range(args.num_timesteps):
+        if args.gui:
+            print("success rate: {}".format(num_success/(num_attempts)))
 
-            action, agent_info = policy.get_action()
-
-            # In case we need to pad actions by 1 for easier realNVP modelling
-            if env_action_dim - action.shape[0] == 1:
-                action = np.append(action, 0)
-            action += np.random.normal(scale=args.noise, size=(env_action_dim,))
-            action = np.clip(action, -1 + EPSILON, 1 - EPSILON)
-            observation = env.get_observation()
-            next_observation, reward, done, info = env.step(action)
-            add_transition(traj, observation,  action, reward, info, agent_info,
-                           done, next_observation, img_dim)
-
-            if info[accept_trajectory_key] and num_steps < 0:
-                num_steps = j
-
-            rewards.append(reward)
-            if done:
-                break
-
-        if info[accept_trajectory_key]:
+        if success:
             if args.gui:
                 print("num_timesteps: ", num_steps)
             data.append(traj)
             num_success += 1
             progress_bar.update(1)
-
-        if args.gui:
-            print("success rate: {}".format(num_success/(num_attempts)))
 
     progress_bar.close()
     print("success rate: {}".format(num_success / (num_attempts)))
