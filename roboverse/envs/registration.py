@@ -77,6 +77,12 @@ ENVIRONMENT_SPECS = (
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
+
+                   # Next three entries are ignored
+                   'object_names': ('beer_bottle', 'gatorade', 'shed'),
+                   'object_scales': (0.7, 0.6, 0.8),
+                   'object_orientations': (
+                       (0, 0, 1, 0), (0, 0, 1, 0), (0, 0, 1, 0)),
                    }
     },
     {
@@ -95,6 +101,12 @@ ENVIRONMENT_SPECS = (
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
+
+                   # Next three entries are ignored
+                   'object_names': ('beer_bottle', 'gatorade', 'shed'),
+                   'object_scales': (0.7, 0.6, 0.8),
+                   'object_orientations': (
+                        (0, 0, 1, 0), (0, 0, 1, 0), (0, 0, 1, 0)),
                    }
     },
     {
