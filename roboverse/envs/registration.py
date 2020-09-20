@@ -1,6 +1,7 @@
 import gym
 from roboverse.assets.shapenet_object_lists \
-    import GRASP_TRAIN_OBJECTS, GRASP_TEST_OBJECTS, PICK_PLACE_TRAIN_OBJECTS, PICK_PLACE_TEST_OBJECTS
+    import GRASP_TRAIN_OBJECTS, GRASP_TEST_OBJECTS, PICK_PLACE_TRAIN_OBJECTS, \
+    PICK_PLACE_TEST_OBJECTS, TRAIN_CONTAINERS
 
 ENVIRONMENT_SPECS = (
     {
@@ -266,6 +267,26 @@ ENVIRONMENT_SPECS = (
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PickPlaceMultiObjectMultiContainerTrain-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectMultiContainerEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.25),
+                   'object_position_high': (.59, .27, -.25),
+                   'num_objects': 2,
+
+                   # the below is ignored
+                   'container_position_low': (.72, 0.23, -.25),
+                   'container_position_high': (.72, 0.23, -.25),
+
+                   'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
+                   'possible_containers': TRAIN_CONTAINERS,
+
                    }
     },
     {
@@ -1173,32 +1194,6 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250MultiObjectPutOnMarbleCubeRandomMarbleCubePositionTrain-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
-                   'num_objects': 2,
-                   'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
-                   'container_name': 'marble_cube',
-                   'container_position_low': (.50, 0.22, -.25),
-                   'container_position_high': (.70, 0.26, -.25),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
         'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL1-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
@@ -1318,10 +1313,35 @@ ENVIRONMENT_SPECS = (
                    'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
+    {
+        'id': 'Widow250MultiObjectPutOnMarbleCubeRandomMarbleCubePositionTrain-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
 
+                   'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
+                   'num_objects': 2,
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'marble_cube',
+                   'container_position_low': (.50, 0.22, -.25),
+                   'container_position_high': (.70, 0.26, -.25),
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+                   'container_position_z': -0.35,
+                   'place_success_height_threshold': -0.23,
+                   'place_success_radius_threshold': 0.04,
+                   'min_distance_from_object': 0.10,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
     # Drawer environments
     {
-        'id': 'Widow250Drawer-v0',
+        'id': 'Widow250DrawerOpen-v0',
         'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerEnv',
         'kwargs': {'reward_type': 'opening',
                    'control_mode': 'discrete_gripper',
@@ -1331,7 +1351,26 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'ball',
                    'load_tray': False,
                    }
-    }
+    },
+    {
+        'id': 'Widow250DrawerRandomizedOpen-v0',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerRandomizedEnv',
+        'kwargs': {'reward_type': 'opening',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('ball',),
+                   'object_scales': (0.75,),
+                   'target_object': 'ball',
+                   'load_tray': False,
+                   }
+    },
+    {
+        'id': 'Widow250ButtonPress-v0',
+        'entry_point': 'roboverse.envs.widow250_button:Widow250ButtonEnv',
+        'kwargs': {'control_mode': 'discrete_gripper',
+                   'load_tray': False,
+                   }
+    },
 )
 
 

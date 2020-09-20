@@ -1,6 +1,5 @@
 import pybullet as p
 import numpy as np
-import time
 
 
 def get_joint_states(body_id, joint_indices):

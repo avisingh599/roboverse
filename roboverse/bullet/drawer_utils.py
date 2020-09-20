@@ -19,10 +19,31 @@ def get_drawer_base_joint(drawer):
     return drawer_frame_joint_idx
 
 
+def get_drawer_handle_link(drawer):
+    link_names = [bullet.get_joint_info(drawer, j, 'linkName')
+                  for j in range(bullet.p.getNumJoints(drawer))]
+    handle_link_idx = link_names.index('handle_r')
+    return handle_link_idx
+
+
 def get_drawer_bottom_pos(drawer):
     drawer_bottom_pos, _ = bullet.get_link_state(
         drawer, get_drawer_base_joint(drawer))
     return np.array(drawer_bottom_pos)
+
+
+def get_drawer_handle_pos(drawer):
+    handle_pos, _ = bullet.get_link_state(
+        drawer, get_drawer_handle_link(drawer))
+    return np.array(handle_pos)
+
+
+def get_drawer_opened_percentage(
+        left_opening, min_x_pos, max_x_pos, drawer_x_pos):
+    if left_opening:
+        return (drawer_x_pos - min_x_pos) / (max_x_pos - min_x_pos)
+    else:
+        return (max_x_pos - drawer_x_pos) / (max_x_pos - min_x_pos)
 
 
 def slide_drawer(drawer, direction):
@@ -51,6 +72,7 @@ def slide_drawer(drawer, direction):
     drawer_pos = get_drawer_bottom_pos(drawer)
 
     control.step_simulation(num_ts)
+
     p.setJointMotorControl2(
         drawer,
         drawer_frame_joint_idx,
