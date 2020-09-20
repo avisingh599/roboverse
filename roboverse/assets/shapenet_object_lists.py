@@ -46,7 +46,6 @@ TRAIN_OBJECTS = [
 
 GRASP_TRAIN_OBJECTS = [
     'conic_cup',
-    'sack_vase',
     'fountain_vase',
     'shed',
     'circular_table',
@@ -54,7 +53,6 @@ GRASP_TRAIN_OBJECTS = [
     'smushed_dumbbell',
     'square_prism_bin',
     'narrow_tray',
-    # New objects:
     'colunnade_top',
     'stalagcite_chunk',
     'bongo_drum_bowl',
@@ -63,17 +61,13 @@ GRASP_TRAIN_OBJECTS = [
     'crooked_lid_trash_can',
     'toilet_bowl',
     'pepsi_bottle',
-    'two_handled_vase',
     'tongue_chair',
-    'thick_wood_chair',
     'modern_canoe',
     'pear_ringed_vase',
     'short_handle_cup',
-    'curved_handle_cup',
     'bullet_vase',
     'glass_half_gallon',
     'flat_bottom_sack_vase',
-    'teepee',
     'trapezoidal_bin',
     'vintage_canoe',
     'bathtub',
@@ -81,13 +75,17 @@ GRASP_TRAIN_OBJECTS = [
     't_cup',
     'cookie_circular_lidless_tin',
     'box_sofa',
-    'baseball_cap',
     'two_layered_lampshade',
+    'conic_bin',
+    'jar',
+    'bunsen_burner',
+    'long_vase',
+    'ringed_cup_oversized_base',
+    'aero_cylinder',
 ]
 
 PICK_PLACE_TRAIN_OBJECTS = [
     'conic_cup',
-    'sack_vase',
     'fountain_vase',
     'shed',
     'circular_table',
@@ -95,7 +93,6 @@ PICK_PLACE_TRAIN_OBJECTS = [
     'smushed_dumbbell',
     'square_prism_bin',
     'narrow_tray',
-    # New objects:
     'colunnade_top',
     'stalagcite_chunk',
     'bongo_drum_bowl',
@@ -104,17 +101,13 @@ PICK_PLACE_TRAIN_OBJECTS = [
     'crooked_lid_trash_can',
     'toilet_bowl',
     'pepsi_bottle',
-    'two_handled_vase',
     'tongue_chair',
-    'thick_wood_chair',
     'modern_canoe',
     'pear_ringed_vase',
     'short_handle_cup',
-    'curved_handle_cup',
     'bullet_vase',
     'glass_half_gallon',
     'flat_bottom_sack_vase',
-    'teepee',
     'trapezoidal_bin',
     'vintage_canoe',
     'bathtub',
@@ -122,21 +115,23 @@ PICK_PLACE_TRAIN_OBJECTS = [
     't_cup',
     'cookie_circular_lidless_tin',
     'box_sofa',
-    'baseball_cap',
     'two_layered_lampshade',
+    'conic_bin',
+    'jar',
+    'aero_cylinder',
 ]
 
 OBJECT_SCALINGS = {
     'conic_cup': 0.6,
     'ball': 1.0,
     'sack_vase': 0.6,
-    'fountain_vase': 0.6,
+    'fountain_vase': 0.4,
     'shed': 0.6,
     'circular_table': 0.4,
     'hex_deep_bowl': 0.4,
     'smushed_dumbbell': 0.6,
     'square_prism_bin': 0.7,
-    'narrow_tray': 0.4,
+    'narrow_tray': 0.35,
     # New objects:
     'colunnade_top': 0.5,
     'stalagcite_chunk': 0.6,
@@ -147,12 +142,12 @@ OBJECT_SCALINGS = {
     'double_l_faucet': 0.6,
     'toilet_bowl': 0.4,
     'pepsi_bottle': 0.65,
-    'two_handled_vase': 0.4,
+    'two_handled_vase': 0.45,
 
     'tongue_chair': 0.5,
     'oil_tanker': 1.0,
     'thick_wood_chair': 0.4,
-    'modern_canoe': 1.0,
+    'modern_canoe': 0.9,
     'pear_ringed_vase': 0.65,
     'short_handle_cup': 0.5,
     'curved_handle_cup': 0.5,
@@ -175,13 +170,13 @@ OBJECT_SCALINGS = {
     'jar': 0.8,
     'gatorade': 0.7,
     'bunsen_burner': 0.6,
-    'long_vase': 0.6,
+    'long_vase': 0.5,
     # New objects:
-    'ringed_cup_oversized_base': 0.6,
+    'ringed_cup_oversized_base': 0.5,
     'square_rod_embellishment': 0.6,
     'elliptical_capsule': 0.6,
     'aero_cylinder': 0.5,
-    'grill_trash_can': 0.6,
+    'grill_trash_can': 0.5,
 }
 
 TEST_OBJECTS = [
@@ -199,29 +194,25 @@ TEST_OBJECTS = [
 ]
 
 GRASP_TEST_OBJECTS = [
-    'conic_bin',
-    'jar',
-    'bunsen_burner',
-    'long_vase',
-    # New objects:
-    'ringed_cup_oversized_base',
     'square_rod_embellishment',
     'elliptical_capsule',
-    'aero_cylinder',
     'grill_trash_can',
+    'sack_vase',
+    'two_handled_vase',
+    'thick_wood_chair',
+    'curved_handle_cup',
+    'baseball_cap',
 ]
 
 PICK_PLACE_TEST_OBJECTS = [
-    'conic_bin',
-    'jar',
-    'bunsen_burner',
-    'long_vase',
-    # New objects:
-    'ringed_cup_oversized_base',
     'square_rod_embellishment',
     'elliptical_capsule',
-    'aero_cylinder',
     'grill_trash_can',
+    'sack_vase',
+    'two_handled_vase',
+    'thick_wood_chair',
+    'curved_handle_cup',
+    'baseball_cap',
 ]
 
 OBJECT_ORIENTATIONS = {
@@ -238,7 +229,7 @@ OBJECT_ORIENTATIONS = {
     # New objects:
     'colunnade_top': (0, 0, 1, 0),
     'stalagcite_chunk': (0, 0, 1, 0),
-    'bongo_drum_bowl': (0, 0, 1, 0),
+    'bongo_drum_bowl': (0, 0.707, 0.707, 0),
     'pacifier_vase': (0, 0, 1, 1),
     'beehive_funnel': (0, 0, 1, 0),
     'crooked_lid_trash_can': (0, 0, 1, 0),
