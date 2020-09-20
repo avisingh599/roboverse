@@ -84,7 +84,7 @@ class Widow250DrawerEnv(Widow250Env):
         info['drawer_opened_percentage'] = \
             self.get_drawer_opened_percentage()
         info['drawer_opened_success'] = info["drawer_opened_percentage"] > \
-                self.drawer_opened_success_thresh
+            self.drawer_opened_success_thresh
         return info
 
     def get_drawer_handle_pos(self):

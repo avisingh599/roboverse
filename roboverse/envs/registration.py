@@ -823,7 +823,14 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'ball',
                    'load_tray': False,
                    }
-    }
+    },
+    {
+        'id': 'Widow250ButtonPress-v0',
+        'entry_point': 'roboverse.envs.widow250_button:Widow250ButtonEnv',
+        'kwargs': {'control_mode': 'discrete_gripper',
+                   'load_tray': False,
+                   }
+    },
 )
 
 
