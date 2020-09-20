@@ -851,10 +851,9 @@ ENVIRONMENT_SPECS = (
                    'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
-
     # Drawer environments
     {
-        'id': 'Widow250Drawer-v0',
+        'id': 'Widow250DrawerOpen-v0',
         'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerEnv',
         'kwargs': {'reward_type': 'opening',
                    'control_mode': 'discrete_gripper',
@@ -864,7 +863,26 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'ball',
                    'load_tray': False,
                    }
-    }
+    },
+    {
+        'id': 'Widow250DrawerRandomizedOpen-v0',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerRandomizedEnv',
+        'kwargs': {'reward_type': 'opening',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('ball',),
+                   'object_scales': (0.75,),
+                   'target_object': 'ball',
+                   'load_tray': False,
+                   }
+    },
+    {
+        'id': 'Widow250ButtonPress-v0',
+        'entry_point': 'roboverse.envs.widow250_button:Widow250ButtonEnv',
+        'kwargs': {'control_mode': 'discrete_gripper',
+                   'load_tray': False,
+                   }
+    },
 )
 
 

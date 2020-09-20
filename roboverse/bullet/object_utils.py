@@ -5,6 +5,7 @@ import importlib.util
 import numpy as np
 from .control import get_object_position, get_link_state
 from roboverse.bullet.drawer_utils import *
+from roboverse.bullet.button_utils import *
 
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 ASSET_PATH = os.path.join(CUR_PATH, '../assets')
@@ -308,5 +309,12 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+    ),
+    button=dict(
+        fileName=os.path.join(
+            BASE_ASSET_PATH, 'button/button.urdf'),
+        basePosition=(.7, 0.2, -.35),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.1,
     ),
 )
