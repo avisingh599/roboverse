@@ -63,6 +63,21 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
+        'id': 'Widow250GraspTwoTestRL1-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'object_names': ('jar', 'gatorade'),
+                   'object_scales': (0.8, 0.7),
+                   'object_orientations': ((0, 0.707, 0, 0.707), (0, 0, 1, 0)),
+
+                   'target_object': 'jar',
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
+                   }
+    },
+    {
         'id': 'Widow250MultiThreeObjectGraspTrain-v0',
         'entry_point': 'roboverse.envs.widow250:Widow250MultiObjectEnv',
         'kwargs': {'reward_type': 'grasping',
@@ -107,6 +122,22 @@ ENVIRONMENT_SPECS = (
                    'object_scales': (0.7, 0.6, 0.8),
                    'object_orientations': (
                         (0, 0, 1, 0), (0, 0, 1, 0), (0, 0, 1, 0)),
+                   }
+    },
+    {
+        'id': 'Widow250GraspThreeTestRL1-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'object_names': ('conic_bin', 'jar', 'gatorade'),
+                   'object_scales': (0.4, 0.8, 0.7),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, 0.707, 0, 0.707), (0, 0, 1, 0)),
+
+                   'target_object': 'jar',
+                   'load_tray': False,
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
                    }
     },
     {
