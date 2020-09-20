@@ -1,5 +1,6 @@
 import gym
-from roboverse.assets.shapenet_object_lists import TRAIN_OBJECTS, TEST_OBJECTS
+from roboverse.assets.shapenet_object_lists \
+    import GRASP_TRAIN_OBJECTS, GRASP_TEST_OBJECTS, PICK_PLACE_TRAIN_OBJECTS, PICK_PLACE_TEST_OBJECTS
 
 ENVIRONMENT_SPECS = (
     {
@@ -31,8 +32,7 @@ ENVIRONMENT_SPECS = (
         'entry_point': 'roboverse.envs.widow250:Widow250MultiObjectEnv',
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
-
-                   'possible_objects': TRAIN_OBJECTS,
+                   'possible_objects': GRASP_TRAIN_OBJECTS,
                    'num_objects': 2,
 
                    'load_tray': False,
@@ -47,12 +47,12 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
 
-                   'possible_objects': TEST_OBJECTS,
+                   'possible_objects': GRASP_TEST_OBJECTS,
                    'num_objects': 2,
 
                    'load_tray': False,
-                   'object_position_high': (.68, .25, -.20),
-                   'object_position_low': (.53, .15, -.20),
+                   'object_position_high': (.68, .25, -.30),
+                   'object_position_low': (.53, .15, -.30),
                    'xyz_action_scale': 0.2,
                    }
     },
@@ -172,17 +172,40 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250MultiObjectPutInBowlRandomBowlPosition-v0',
+        'id': 'Widow250MultiObjectPutInBowlRandomBowlPositionTrain-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
-                   'possible_train_objects': TRAIN_OBJECTS,
-                   'possible_test_objects': TEST_OBJECTS,
+                   'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
                    'num_objects': 2,
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.25),
-                   'object_position_high': (.7, .27, -.25),
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'bowl_small',
+                   'container_position_low': (.5, 0.26, -.25),
+                   'container_position_high': (.7, 0.26, -.25),
+                   'container_position_z': -0.35,
+
+                   'container_orientation': (0, 0, 0.707107, 0.707107),
+                   'container_scale': 0.07,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250MultiObjectPutInBowlRandomBowlPositionTest-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'possible_objects': PICK_PLACE_TEST_OBJECTS,
+                   'num_objects': 2,
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
                    'container_position_low': (.5, 0.26, -.25),
