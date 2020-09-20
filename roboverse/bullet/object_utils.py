@@ -259,6 +259,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     table_top=dict(
         fileName=os.path.join(
@@ -266,6 +267,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     table_square=dict(
         fileName=os.path.join(
@@ -273,6 +275,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     torus=dict(
         fileName=os.path.join(
@@ -280,6 +283,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     cube_concave=dict(
         fileName=os.path.join(
@@ -287,6 +291,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     plate=dict(
         fileName=os.path.join(
@@ -294,6 +299,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     husky=dict(
         fileName=os.path.join(
@@ -301,6 +307,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     marble_cube=dict(
         fileName=os.path.join(
@@ -308,5 +315,6 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
 )
