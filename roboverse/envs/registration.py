@@ -936,7 +936,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInBasketTestRL1-v0-v0',
+        'id': 'Widow250PutInBasketTestRL1-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -958,7 +958,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInBasketTestRL2-v0-v0',
+        'id': 'Widow250PutInBasketTestRL2-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
