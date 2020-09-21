@@ -1083,8 +1083,8 @@ ENVIRONMENT_SPECS = (
                    'object_names': ("shed", "sack_vase"),
                    'object_scales': (0.6, 0.6),
                    'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
-                   'object_position_high': (.7, .25, -.30),
-                   'object_position_low': (.6, .15, -.30),
+                   'object_position_high': (.75, .25, -.30),
+                   'object_position_low': (.6, .1, -.30),
                    'target_object': "shed",
                    'load_tray': False,
                    }
