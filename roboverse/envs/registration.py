@@ -625,46 +625,9 @@ ENVIRONMENT_SPECS = (
                    'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
-    {
-        'id': 'Widow250PutInPanTefalRandomPanTefalPosition-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'pan_tefal',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
-        'id': 'Widow250MultiObjectPutInPanTefalRandomPanTefalPositionTrain-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
-                   'num_objects': 2,
-                   'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
-                   'container_name': 'pan_tefal',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
 
     {
-        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL1-v0',
+        'id': 'Widow250PutInPanTefalTestRL1-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -686,7 +649,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL2-v0',
+        'id': 'Widow250PutInPanTefalTestRL2-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -707,7 +670,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL3-v0',
+        'id': 'Widow250PutInPanTefalTestRL3-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -729,7 +692,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInPanTefalRandomPanTefalPositionTestRL4-v0',
+        'id': 'Widow250PutInPanTefalRL4-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -771,45 +734,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInTableTopRandomTableTopPosition-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'table_top',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
         'id': 'Widow250PutOnTorus-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'torus',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
-        'id': 'Widow250PutOnTorusRandomTorusPosition-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -847,45 +772,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnCubeConcaveRandomCubeConcavePosition-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'cube_concave',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
         'id': 'Widow250PutOnPlate-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'plate',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
-        'id': 'Widow250PutOnPlateRandomPlatePosition-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -923,25 +810,6 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnHuskyRandomHuskyPosition-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'husky',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
         'id': 'Widow250PutOnMarbleCube-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
@@ -961,26 +829,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePosition-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'marble_cube',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
-        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL1-v0',
+        'id': 'Widow250PutOnMarbleCubeTestRL1-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -1002,7 +851,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL2-v0',
+        'id': 'Widow250PutOnMarbleCubeTestRL2-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -1023,7 +872,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL3-v0',
+        'id': 'Widow250PutOnMarbleCubeTestRL3-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -1045,7 +894,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnMarbleCubeRandomMarbleCubePositionTestRL4-v0',
+        'id': 'Widow250PutOnMarbleCubeTestRL4-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -1087,26 +936,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInBasketRandomBasketPosition-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'two_handled_vase'),
-                   'object_scales': (0.7, 0.6),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'basket',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
-        'id': 'Widow250PutInBasketRandomBasketPositionTestRL1-v0-v0',
+        'id': 'Widow250PutInBasketTestRL1-v0-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -1128,7 +958,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutInBasketRandomBasketPositionTestRL2-v0-v0',
+        'id': 'Widow250PutInBasketTestRL2-v0-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -1168,26 +998,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnCheckerboardTableRandomCheckerboardTablePosition-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
-        'kwargs': {'reward_type': 'pick_place',
-                   'control_mode': 'discrete_gripper',
-
-                   'object_names': ('shed', 'bullet_vase'),
-                   'object_scales': (0.7, 0.5),
-                   'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
-                   'container_name': 'checkerboard_table',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
-                   }
-    },
-    {
-        'id': 'Widow250PutOnCheckerboardTableRandomCheckerboardTablePositionTestRL3-v0',
+        'id': 'Widow250PutOnCheckerboardTableTestRL3-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
@@ -1209,7 +1020,7 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
-        'id': 'Widow250PutOnCheckerboardTableRandomCheckerboardTablePositionTestRL4-v0',
+        'id': 'Widow250PutOnCheckerboardTableTestRL4-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
