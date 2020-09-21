@@ -25,7 +25,7 @@ CONTAINER_CONFIGS = {
         'container_position_z': -0.37,
         'place_success_height_threshold': -0.32,
         'place_success_radius_threshold': 0.04,
-        'min_distance_from_object': 0.10,
+        'min_distance_from_object': 0.11,
     },
     'cube_concave': {
         'container_name': 'cube_concave',
@@ -36,7 +36,7 @@ CONTAINER_CONFIGS = {
         'container_position_z': -0.35,
         'place_success_height_threshold': -0.23,
         'place_success_radius_threshold': 0.04,
-        'min_distance_from_object': 0.10,
+        'min_distance_from_object': 0.11,
     },
     'table_top': {
         'container_position_low': (.50, 0.22, -.30),
@@ -56,7 +56,7 @@ CONTAINER_CONFIGS = {
         'place_success_radius_threshold': 0.04,
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.07,
-        'min_distance_from_object': 0.09,
+        'min_distance_from_object': 0.11,
     },
     'tray': {
         'container_position_low': (.5, 0.25, -.30),
@@ -66,7 +66,7 @@ CONTAINER_CONFIGS = {
         'container_position_z': -0.37,
         'place_success_height_threshold': -0.32,
         'place_success_radius_threshold': 0.04,
-        'min_distance_from_object': 0.1,
+        'min_distance_from_object': 0.11,
     },
     'open_box': {
         'container_position_low': (.5, 0.23, -.30),
@@ -76,7 +76,7 @@ CONTAINER_CONFIGS = {
         'container_position_z': -0.35,
         'place_success_height_threshold': -0.32,
         'place_success_radius_threshold': 0.04,
-        'min_distance_from_object': 0.1,
+        'min_distance_from_object': 0.11,
     },
     'pan_tefal': {
         'container_position_low': (.50, 0.22, -.30),
@@ -86,7 +86,7 @@ CONTAINER_CONFIGS = {
         'container_position_z': -0.37,
         'place_success_height_threshold': -0.32,
         'place_success_radius_threshold': 0.04,
-        'min_distance_from_object': 0.09,
+        'min_distance_from_object': 0.1,
     },
     'husky': {
         'container_position_low': (.50, 0.22, -.30),
@@ -138,7 +138,7 @@ CONTAINER_CONFIGS = {
         'container_position_z': -0.37,
         'place_success_height_threshold': -0.32,
         'place_success_radius_threshold': 0.04,
-        'min_distance_from_object': 0.09,
+        'min_distance_from_object': 0.1,
     },
     'cube': {
         'container_position_low': (.5, 0.22, -.30),
@@ -148,7 +148,7 @@ CONTAINER_CONFIGS = {
         'container_position_z': -0.35,
         'place_success_radius_threshold': 0.03,
         'place_success_height_threshold': -0.23,
-        'min_distance_from_object': 0.09,
+        'min_distance_from_object': 0.1,
     }
 }
 
