@@ -1,7 +1,18 @@
 TRAIN_CONTAINERS = [
     'plate',
     'cube_concave',
-    'table_top'
+    'table_top',
+    'bowl_small',
+    'tray',
+    'open_box',
+    'husky',
+]
+
+TEST_CONTAINERS = [
+    'plate_tefal',
+    'marble_cube',
+    'basket',
+    'checkerboard_table',
 ]
 
 CONTAINER_CONFIGS = {
