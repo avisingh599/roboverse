@@ -1,6 +1,8 @@
 import roboverse
+import roboverse.bullet as bullet
 from roboverse.policies import policies
-from scripted_collect import collect_one_traj
+from PIL import Image
+
 import skvideo.io
 import cv2
 import os
@@ -15,14 +17,19 @@ ROBOT_VIEW_CROP_X = 30
 class BulletVideoLogger:
     def __init__(self, env_name, scripted_policy_name,
                  num_timesteps_per_traj, accept_trajectory_key,
-                 video_save_dir, success_only,
-                 add_robot_view, noise=0.2):
+                 video_save_dir, save_all, save_images,
+                 add_robot_view, noise=0.1):
         self.env_name = env_name
         self.num_timesteps_per_traj = num_timesteps_per_traj
         self.accept_trajectory_key = accept_trajectory_key
         self.noise = noise
         self.video_save_dir = video_save_dir
-        self.success_only = success_only
+        self.save_all = save_all
+        if save_images:
+            self.save_function = self.save_images
+        else:
+            self.save_function = self.save_video
+
         self.image_size = 512
         self.add_robot_view = add_robot_view
 
@@ -40,40 +47,18 @@ class BulletVideoLogger:
                                      pitch=self.camera_pitch,
                                      roll=self.camera_roll,
                                      up_axis_index=2)
-        self.view_matrix = roboverse.bullet.get_view_matrix(
+        self.view_matrix = bullet.get_view_matrix(
             **self.view_matrix_args)
-        self.projection_matrix = roboverse.bullet.get_projection_matrix(
+        self.projection_matrix = bullet.get_projection_matrix(
             self.image_size, self.image_size)
         # end camera settings
-        self.env = self.instantiate_env()
-        assert scripted_policy_name in policies.keys()
-        policy_class = policies[scripted_policy_name]
-        self.scripted_policy_class = policy_class(self.env)
-        self.trajectories_collected = 0
-
-    def instantiate_env(self):
-        env = roboverse.make(self.env_name, gui=False,
+        self.env = roboverse.make(self.env_name, gui=False,
                              transpose_image=False)
-        return env
-
-    def get_traj_and_success(self):
-        self.trajectories_collected += 1
-        print("trajectories collected", self.trajectories_collected)
-        policy = self.scripted_policy_class
-        traj, success, _ = collect_one_traj(
-            self.env, policy, self.num_timesteps_per_traj,
-            self.noise, self.accept_trajectory_key)
-        return traj, success
-
-    def get_single_traj(self):
-        if self.success_only:
-            success = False
-            while not success:
-                traj, success = self.get_traj_and_success()
-            print("collected success", traj, success)
-        else:
-            traj, _ = self.get_traj_and_success()
-        return traj
+        assert scripted_policy_name in policies.keys()
+        self.policy_name = scripted_policy_name
+        policy_class = policies[scripted_policy_name]
+        self.scripted_policy = policy_class(self.env)
+        self.trajectories_collected = 0
 
     def add_robot_view_to_video(self, images):
         image_x, image_y, image_c = images[0].shape
@@ -106,23 +91,32 @@ class BulletVideoLogger:
 
         return images
 
-    def save_video_from_traj(self, traj, path_idx):
-        actions = traj['actions']
-        print("len(actions)", len(actions))
+    def collect_traj_and_save_video(self, path_idx):
         images = []
         self.env.reset()
+        self.scripted_policy.reset()
         for t in range(self.num_timesteps_per_traj):
-            img, depth, segmentation = roboverse.bullet.render(
+            img, depth, segmentation = bullet.render(
                 self.image_size, self.image_size,
                 self.view_matrix, self.projection_matrix)
             images.append(img)
-            obs, rew, done, info = self.env.step(actions[t])  # step_slow
-            # if len(imgs) > 0:
-            #     images.extend(imgs)
+            action, _ = self.scripted_policy.get_action()
+            obs, rew, done, info = self.env.step(action)
 
+        if self.save_all:
+            self.save_function(images, path_idx)
+        elif info[self.accept_trajectory_key]:
+            self.save_function(images, path_idx)
+        else:
+            return False
+
+        return True
+
+    def save_video(self, images, path_idx):
         # Save Video
-        save_path = "{}/{}_scripted_{}_reward_{}.mp4".format(
-            self.video_save_dir, self.env_name, path_idx, int(rew))
+        save_path = "{}/{}_scripted_{}_{}.mp4".format(
+            self.video_save_dir, self.env_name, self.policy_name,
+            path_idx)
         if self.add_robot_view:
             dot_idx = save_path.index(".")
             save_path = save_path[:dot_idx] + "_with_robot_view" + \
@@ -138,29 +132,47 @@ class BulletVideoLogger:
             writer.writeFrame(images[i])
         writer.close()
 
-    def save_videos(self, num_videos):
-        for i in range(num_videos):
-            traj = self.get_single_traj()
-            self.save_video_from_traj(traj, i)
+    def save_images(self, images, path_idx):
+        # Save Video
+        save_path = "{}/{}_scripted_{}_{}".format(
+            self.video_save_dir, self.env_name, self.policy_name,
+            path_idx)
+        if self.add_robot_view:
+            save_path += "_with_robot_view"
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+
+        if self.add_robot_view:
+            self.add_robot_view_to_video(images)
+        for i in range(len(images)):
+            im = Image.fromarray(images[i])
+            im.save(os.path.join(save_path, '{}.jpg'.format(i)))
+
+    def run(self, num_videos):
+        i = 0
+        while i < num_videos:
+            saved = self.collect_traj_and_save_video(i)
+            if saved:
+                i += 1
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--env", type=str)
-    parser.add_argument("--policy-name", type=str, required=True)
-    parser.add_argument("--accept-trajectory-key", type=str, required=True)
-    parser.add_argument("--num-timesteps", type=int, required=True)
-    parser.add_argument("--video-save-dir", type=str, default="scripted_rollouts")
-    parser.add_argument("--num-videos", type=int, default=1)
+    parser.add_argument("-e", "--env", type=str)
+    parser.add_argument("-pl", "--policy-name", type=str, required=True)
+    parser.add_argument("-a", "--accept-trajectory-key", type=str, required=True)
+    parser.add_argument("-t", "--num-timesteps", type=int, required=True)
+    parser.add_argument("-d", "--video-save-dir", type=str,
+                        default="data/scripted_rollouts")
+    parser.add_argument("-n", "--num-videos", type=int, default=1)
     parser.add_argument("--add-robot-view", action="store_true", default=False)
-    parser.add_argument("--success-only", action="store_true", default=False)
-    # Currently, success-only collects only successful trajectories,
-    # but these trajectories do not always succeed again due to
-    # randomized initial conditions
+    parser.add_argument("--save-images", action="store_true", default=False)
+    parser.add_argument("--save-all", action="store_true", default=False)
+
     args = parser.parse_args()
 
     vid_log = BulletVideoLogger(
         args.env, args.policy_name, args.num_timesteps,
-        args.accept_trajectory_key, args.video_save_dir, args.success_only,
-        args.add_robot_view)
-    vid_log.save_videos(args.num_videos)
+        args.accept_trajectory_key, args.video_save_dir, args.save_all,
+        args.save_images, args.add_robot_view)
+    vid_log.run(args.num_videos)
