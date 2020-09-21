@@ -258,12 +258,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.59, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -285,8 +280,6 @@ ENVIRONMENT_SPECS = (
                    'possible_containers': TRAIN_CONTAINERS,
 
                    # the below is ignored
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
                    }
     },
     {
@@ -306,8 +299,6 @@ ENVIRONMENT_SPECS = (
                    'possible_containers': TEST_CONTAINERS,
 
                    # the below is ignored
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
                    }
     },
     {
@@ -324,12 +315,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.59, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -349,12 +335,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -374,12 +355,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -398,12 +374,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -422,12 +393,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -450,12 +416,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -477,12 +438,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -505,12 +461,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -534,12 +485,7 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'bowl_small',
-                   'container_position_low': (.5, 0.26, -.30),
-                   'container_position_high': (.7, 0.26, -.30),
-                   'container_position_z': -0.35,
 
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -559,13 +505,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.59, .27, -.30),
 
                    'container_name': 'tray',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.18,
-                   'container_position_z': -0.37,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.1,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -585,13 +524,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'tray',
-                   'container_position_low': (.5, 0.25, -.30),
-                   'container_position_high': (.7, 0.25, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.18,
-                   'container_position_z': -0.37,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.1,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -612,13 +544,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.59, .27, -.30),
 
                    'container_name': 'open_box',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.1,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.1,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -638,13 +563,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'open_box',
-                   'container_position_low': (.5, 0.23, -.30),
-                   'container_position_high': (.7, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.1,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.1,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -664,14 +582,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.59, .27, -.30),
 
                    'container_name': 'cube',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.05,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.03,
-                   'place_success_height_threshold': -0.23,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -691,14 +601,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'cube',
-                   'container_position_low': (.5, 0.22, -.30),
-                   'container_position_high': (.7, 0.24, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.05,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.03,
-                   'place_success_height_threshold': -0.23,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -718,13 +620,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'pan_tefal',
-                   'container_position_low': (.70, 0.23, -.30),
-                   'container_position_high': (.70, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.4,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -744,13 +639,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'pan_tefal',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.24, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.4,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -769,13 +657,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'pan_tefal',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.24, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.4,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -799,13 +680,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'pan_tefal',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.24, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.4,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -827,13 +701,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'pan_tefal',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.24, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.4,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -856,13 +723,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'pan_tefal',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.24, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.4,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -886,13 +746,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'pan_tefal',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.24, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.4,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -912,13 +765,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'table_top',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.13,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.05,
-                   'min_distance_from_object': 0.11,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -938,13 +784,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'table_top',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.13,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.05,
-                   'min_distance_from_object': 0.11,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -964,13 +803,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'torus',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (1, 1, 1, 1),
-                   'container_scale': 0.15,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -990,13 +822,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'torus',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (1, 1, 1, 1),
-                   'container_scale': 0.15,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.05,
-                   'min_distance_from_object': 0.09,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1016,14 +841,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'cube_concave',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.06,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1043,14 +860,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'cube_concave',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.06,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1070,13 +879,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'plate',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.46,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1096,13 +898,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'plate',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.46,
-                   'container_position_z': -0.35,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1122,14 +917,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'husky',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.13,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1149,14 +936,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'husky',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.13,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1176,14 +955,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'marble_cube',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1203,14 +974,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'marble_cube',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1233,14 +996,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'marble_cube',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1262,14 +1017,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'marble_cube',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1292,14 +1039,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'marble_cube',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1323,14 +1062,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'marble_cube',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.07,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.10,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1350,14 +1081,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'basket',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 1.68,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.28,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.11,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1377,14 +1100,49 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'basket',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 1.68,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.28,
-                   'place_success_radius_threshold': 0.04,
-                   'min_distance_from_object': 0.11,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBasketRandomBasketPositionTestRL1-v0-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('square_rod_embellishment',
+                                    'grill_trash_can'),
+                   'object_scales': (0.6, 0.5),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'square_rod_embellishment',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'basket',
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutInBasketRandomBasketPositionTestRL2-v0-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed', 'sack_vase'),
+                   'object_scales': (0.6, 0.6),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': 'shed',
+
+                   'load_tray': False,
+                   'object_position_low': (.5, .18, -.30),
+                   'object_position_high': (.7, .27, -.30),
+
+                   'container_name': 'basket',
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1404,14 +1162,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'checkerboard_table',
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.08,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.05,
-                   'min_distance_from_object': 0.11,
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),
@@ -1431,14 +1181,51 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'checkerboard_table',
-                   'container_position_low': (.50, 0.22, -.30),
-                   'container_position_high': (.70, 0.26, -.30),
-                   'container_orientation': (0, 0, 0.707107, 0.707107),
-                   'container_scale': 0.08,
-                   'container_position_z': -0.35,
-                   'place_success_height_threshold': -0.23,
-                   'place_success_radius_threshold': 0.05,
-                   'min_distance_from_object': 0.11,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutOnCheckerboardTableRandomCheckerboardTablePositionTestRL3-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('two_handled_vase',
+                                    'thick_wood_chair',),
+                   'object_scales': (0.45, 0.4),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0, 1, 0)),
+                   'target_object': 'two_handled_vase',
+
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.30),
+                   'object_position_high': (.69, .27, -.30),
+
+                   'container_name': 'checkerboard_table',
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
+        'id': 'Widow250PutOnCheckerboardTableRandomCheckerboardTablePositionTestRL4-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('curved_handle_cup',
+                                    'baseball_cap',),
+                   'object_scales': (0.5, 0.5),
+                   'object_orientations': ((0, 0.707, 0.707, 0),
+                                           (0, -0.707, 0.707, 0)),
+                   'target_object': 'curved_handle_cup',
+
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.30),
+                   'object_position_high': (.69, .27, -.30),
+
+                   'container_name': 'checkerboard_table',
 
                    'camera_distance': 0.29,
                    'camera_target_pos': (0.6, 0.2, -0.28),

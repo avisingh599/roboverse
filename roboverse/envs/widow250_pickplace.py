@@ -3,34 +3,27 @@ from roboverse.bullet import object_utils
 import roboverse.bullet as bullet
 from roboverse.envs import objects
 from .multi_object import MultiObjectEnv, MultiObjectMultiContainerEnv
+from roboverse.assets.shapenet_object_lists import CONTAINER_CONFIGS
 
 
 class Widow250PickPlaceEnv(Widow250Env):
 
     def __init__(self,
                  container_name='bowl_small',
-                 container_position_low=(.72, 0.23, -.35),
-                 container_position_high=(.72, 0.23, -.35),
-                 container_position_z=-0.35,
-                 container_orientation=(0, 0, 0.707107, 0.707107),
-                 container_scale=0.07,
-                 min_distance_from_object=0.1,
-
-                 place_success_height_threshold=-0.32,
-                 place_success_radius_threshold=0.03,
-
                  **kwargs
                  ):
         self.container_name = container_name
-        self.container_position_low = container_position_low
-        self.container_position_high = container_position_high
-        self.container_position_z = container_position_z
-        self.container_orientation = container_orientation
-        self.container_scale = container_scale
-        self.min_distance_from_object = min_distance_from_object
 
-        self.place_success_height_threshold = place_success_height_threshold
-        self.place_success_radius_threshold = place_success_radius_threshold
+        container_config = CONTAINER_CONFIGS[self.container_name]
+        self.container_position_low = container_config['container_position_low']
+        self.container_position_high = container_config['container_position_high']
+        self.container_position_z = container_config['container_position_z']
+        self.container_orientation = container_config['container_orientation']
+        self.container_scale = container_config['container_scale']
+        self.min_distance_from_object = container_config['min_distance_from_object']
+
+        self.place_success_height_threshold = container_config['place_success_height_threshold']
+        self.place_success_radius_threshold = container_config['place_success_radius_threshold']
 
         super(Widow250PickPlaceEnv, self).__init__(**kwargs)
 
