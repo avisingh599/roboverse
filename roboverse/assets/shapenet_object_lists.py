@@ -10,7 +10,7 @@ TRAIN_CONTAINERS = [
 ]
 
 TEST_CONTAINERS = [
-    'plate_tefal',
+    'pan_tefal',
     'marble_cube',
     'basket',
     'checkerboard_table',
@@ -129,6 +129,7 @@ CONTAINER_CONFIGS = {
         'place_success_height_threshold': -0.23,
         'place_success_radius_threshold': 0.05,
         'min_distance_from_object': 0.11,
+    },
     'torus': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
