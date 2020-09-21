@@ -180,7 +180,12 @@ class Widow250Env(gym.Env, Serializable):
         return self.get_observation()
 
     def step(self, action):
-        action = np.clip(action, -1, +1)  # TODO maybe clean this up
+        # TODO Clean this up
+        if np.isnan(np.sum(action)):
+            print('action', action)
+            assert False
+
+        action = np.clip(action, -1, +1)  # TODO Clean this up
 
         xyz_action = action[:3]  # ee position actions
         abc_action = action[3:6]  # ee orientation actions
