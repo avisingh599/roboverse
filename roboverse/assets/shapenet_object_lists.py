@@ -103,8 +103,29 @@ CONTAINER_CONFIGS = {
         'place_success_height_threshold': -0.23,
         'place_success_radius_threshold': 0.04,
         'min_distance_from_object': 0.10,
+    },
+    'basket': {
+        'container_name': 'basket',
+        'container_position_low': (.50, 0.22, -.30),
+        'container_position_high': (.70, 0.26, -.30),
+        'container_orientation': (0, 0, 0.707107, 0.707107),
+        'container_scale': 1.68,
+        'container_position_z': -0.35,
+        'place_success_height_threshold': -0.28,
+        'place_success_radius_threshold': 0.04,
+        'min_distance_from_object': 0.11,
+    },
+    'checkerboard_table': {
+        'container_name': 'checkerboard_table',
+        'container_position_low': (.50, 0.22, -.30),
+        'container_position_high': (.70, 0.26, -.30),
+        'container_orientation': (0, 0, 0.707107, 0.707107),
+        'container_scale': 0.08,
+        'container_position_z': -0.35,
+        'place_success_height_threshold': -0.23,
+        'place_success_radius_threshold': 0.05,
+        'min_distance_from_object': 0.11,
     }
-
 }
 
 TRAIN_OBJECTS = [

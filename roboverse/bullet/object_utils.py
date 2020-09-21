@@ -270,7 +270,7 @@ BULLET_OBJECT_SPECS = dict(
         globalScaling=0.8,
         useFixedBase=1,
     ),
-    table_square=dict(
+    checkerboard_table=dict(
         fileName=os.path.join(
             BULLET3_ASSET_PATH, 'table_square/table_square.urdf'),
         basePosition=(.65, 0.3, -.3),
@@ -313,6 +313,14 @@ BULLET_OBJECT_SPECS = dict(
     marble_cube=dict(
         fileName=os.path.join(
             BULLET3_ASSET_PATH, 'marble_cube.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+        useFixedBase=1,
+    ),
+    basket=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'dinnerware/cup/cup_small.urdf'),
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
