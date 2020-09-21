@@ -260,6 +260,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     table_top=dict(
         fileName=os.path.join(
@@ -267,13 +268,15 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
-    table_square=dict(
+    checkerboard_table=dict(
         fileName=os.path.join(
             BULLET3_ASSET_PATH, 'table_square/table_square.urdf'),
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     torus=dict(
         fileName=os.path.join(
@@ -281,6 +284,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     cube_concave=dict(
         fileName=os.path.join(
@@ -288,6 +292,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     plate=dict(
         fileName=os.path.join(
@@ -295,6 +300,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     husky=dict(
         fileName=os.path.join(
@@ -302,6 +308,7 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
     ),
     marble_cube=dict(
         fileName=os.path.join(
@@ -309,6 +316,15 @@ BULLET_OBJECT_SPECS = dict(
         basePosition=(.65, 0.3, -.3),
         baseOrientation=(0, 0, 0.707107, 0.707107),
         globalScaling=0.8,
+        useFixedBase=1,
+    ),
+    basket=dict(
+        fileName=os.path.join(
+            BULLET3_ASSET_PATH, 'dinnerware/cup/cup_small.urdf'),
+        basePosition=(.65, 0.3, -.3),
+        baseOrientation=(0, 0, 0.707107, 0.707107),
+        globalScaling=0.8,
+        useFixedBase=1,
     ),
     button=dict(
         fileName=os.path.join(

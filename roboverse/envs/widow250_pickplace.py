@@ -81,7 +81,12 @@ class Widow250PickPlaceEnv(Widow250Env):
             bullet.step_simulation(self.num_sim_steps_reset)
 
     def get_reward(self, info):
-        reward = float(info['place_success_target'])
+        if self.reward_type == 'pick_place':
+            reward = float(info['place_success_target'])
+        elif self.reward_type == 'grasp':
+            reward = float(info['grasp_success_target'])
+        else:
+            raise NotImplementedError
         return reward
 
     def get_info(self):
