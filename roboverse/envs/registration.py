@@ -1,7 +1,7 @@
 import gym
 from roboverse.assets.shapenet_object_lists \
     import GRASP_TRAIN_OBJECTS, GRASP_TEST_OBJECTS, PICK_PLACE_TRAIN_OBJECTS, \
-    PICK_PLACE_TEST_OBJECTS, TRAIN_CONTAINERS
+    PICK_PLACE_TEST_OBJECTS, TRAIN_CONTAINERS, TEST_CONTAINERS
 
 ENVIRONMENT_SPECS = (
     {
@@ -271,7 +271,8 @@ ENVIRONMENT_SPECS = (
     },
     {
         'id': 'Widow250PickPlaceMultiObjectMultiContainerTrain-v0',
-        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceMultiObjectMultiContainerEnv',
+        'entry_point': 'roboverse.envs.widow250_pickplace'
+                       ':Widow250PickPlaceMultiObjectMultiContainerEnv',
         'kwargs': {'reward_type': 'pick_place',
                    'control_mode': 'discrete_gripper',
 
@@ -280,13 +281,33 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.59, .27, -.30),
                    'num_objects': 2,
 
-                   # the below is ignored
-                   'container_position_low': (.72, 0.23, -.30),
-                   'container_position_high': (.72, 0.23, -.30),
-
                    'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
                    'possible_containers': TRAIN_CONTAINERS,
 
+                   # the below is ignored
+                   'container_position_low': (.72, 0.23, -.30),
+                   'container_position_high': (.72, 0.23, -.30),
+                   }
+    },
+    {
+        'id': 'Widow250PickPlaceMultiObjectMultiContainerTest-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace'
+                       ':Widow250PickPlaceMultiObjectMultiContainerEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.30),
+                   'object_position_high': (.59, .27, -.30),
+                   'num_objects': 2,
+
+
+                   'possible_objects': PICK_PLACE_TEST_OBJECTS,
+                   'possible_containers': TEST_CONTAINERS,
+
+                   # the below is ignored
+                   'container_position_low': (.72, 0.23, -.30),
+                   'container_position_high': (.72, 0.23, -.30),
                    }
     },
     {

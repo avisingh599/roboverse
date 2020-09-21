@@ -5,7 +5,8 @@ TRAIN_CONTAINERS = [
     'bowl_small',
     'tray',
     'open_box',
-    'husky',
+    'cube',
+    'torus',
 ]
 
 TEST_CONTAINERS = [
@@ -17,7 +18,6 @@ TEST_CONTAINERS = [
 
 CONTAINER_CONFIGS = {
     'plate': {
-        'container_name': 'plate',
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
@@ -39,7 +39,6 @@ CONTAINER_CONFIGS = {
         'min_distance_from_object': 0.10,
     },
     'table_top': {
-        'container_name': 'table_top',
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
@@ -50,7 +49,6 @@ CONTAINER_CONFIGS = {
         'min_distance_from_object': 0.11,
     },
     'bowl_small': {
-        'container_name': 'bowl_small',
         'container_position_low': (.5, 0.26, -.30),
         'container_position_high': (.7, 0.26, -.30),
         'container_position_z': -0.35,
@@ -61,7 +59,6 @@ CONTAINER_CONFIGS = {
         'min_distance_from_object': 0.09,
     },
     'tray': {
-        'container_name': 'tray',
         'container_position_low': (.5, 0.25, -.30),
         'container_position_high': (.7, 0.25, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
@@ -72,7 +69,6 @@ CONTAINER_CONFIGS = {
         'min_distance_from_object': 0.1,
     },
     'open_box': {
-        'container_name': 'open_box',
         'container_position_low': (.5, 0.23, -.30),
         'container_position_high': (.7, 0.23, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
@@ -82,8 +78,7 @@ CONTAINER_CONFIGS = {
         'place_success_radius_threshold': 0.04,
         'min_distance_from_object': 0.1,
     },
-    'plate_tefal': {
-        'container_name': 'pan_tefal',
+    'pan_tefal': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.24, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
@@ -94,7 +89,6 @@ CONTAINER_CONFIGS = {
         'min_distance_from_object': 0.09,
     },
     'husky': {
-        'container_name': 'husky',
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
@@ -105,7 +99,6 @@ CONTAINER_CONFIGS = {
         'min_distance_from_object': 0.10,
     },
     'marble_cube': {
-        'container_name': 'marble_cube',
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
@@ -136,6 +129,25 @@ CONTAINER_CONFIGS = {
         'place_success_height_threshold': -0.23,
         'place_success_radius_threshold': 0.05,
         'min_distance_from_object': 0.11,
+    'torus': {
+        'container_position_low': (.50, 0.22, -.30),
+        'container_position_high': (.70, 0.26, -.30),
+        'container_orientation': (1, 1, 1, 1),
+        'container_scale': 0.15,
+        'container_position_z': -0.35,
+        'place_success_height_threshold': -0.32,
+        'place_success_radius_threshold': 0.04,
+        'min_distance_from_object': 0.09,
+    },
+    'cube': {
+        'container_position_low': (.5, 0.22, -.30),
+        'container_position_high': (.7, 0.24, -.30),
+        'container_orientation': (0, 0, 0.707107, 0.707107),
+        'container_scale': 0.05,
+        'container_position_z': -0.35,
+        'place_success_radius_threshold': 0.03,
+        'place_success_height_threshold': -0.23,
+        'min_distance_from_object': 0.09,
     }
 }
 
