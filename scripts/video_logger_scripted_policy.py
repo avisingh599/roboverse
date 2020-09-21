@@ -38,8 +38,8 @@ class BulletVideoLogger:
         # camera settings
         self.camera_target_pos = [0.6, 0.2, -0.2]
         self.camera_roll = 0.0
-        self.camera_pitch = -40
-        self.camera_yaw = 180
+        self.camera_pitch = -20
+        self.camera_yaw = 215
         self.camera_distance = 0.5
         self.view_matrix_args = dict(target_pos=self.camera_target_pos,
                                      distance=self.camera_distance,
