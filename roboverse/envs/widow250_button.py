@@ -12,7 +12,7 @@ class Widow250ButtonEnv(Widow250Env):
                  button_pos_low=None,
                  button_pos_high=None,
                  button_quat=(0, 0, 0.707107, 0.707107),
-                 reward_type="button_pressing",
+                 reward_type="button_press",
                  **kwargs):
         self.button_pos = button_pos
         self.button_pos_low = button_pos_low
@@ -65,9 +65,9 @@ class Widow250ButtonEnv(Widow250Env):
                     self.button_pressed_success_thresh)
 
     def get_reward(self, info):
-        if self.reward_type == "button_pressing":
+        if self.reward_type == "button_press":
             return float(info['button_pressed_success'])
-        elif self.reward_type == "grasping":
+        elif self.reward_type == "grasp":
             return float(info['grasp_success_target'])
         else:
             raise NotImplementedError
