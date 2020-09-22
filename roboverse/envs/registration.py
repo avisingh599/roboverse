@@ -15,6 +15,20 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
+        'id': 'Widow250GraspEasy-v0',
+        'entry_point': 'roboverse.envs.widow250:Widow250Env',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'target_object': 'shed',
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'load_tray': False,
+                   'xyz_action_scale': 0.2,
+                   'object_position_high': (.6, .2, -.30),
+                   'object_position_low': (.6, .2, -.30),
+                   }
+    },
+    {
         'id': 'Widow250MultiTaskGrasp-v0',
         'entry_point': 'roboverse.envs.widow250:Widow250Env',
         'kwargs': {'reward_type': 'grasping',
