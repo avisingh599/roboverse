@@ -1,36 +1,41 @@
 from roboverse.envs.widow250 import Widow250Env
 import roboverse
+import roboverse.bullet as bullet
 from roboverse.bullet import object_utils
 from roboverse.envs import objects
 import numpy as np
-
 
 class Widow250ButtonEnv(Widow250Env):
 
     def __init__(self,
                  button_pos=(0.5, 0.2, -.3),
+                 button_pos_low=None,
+                 button_pos_high=None,
                  button_quat=(0, 0, 0.707107, 0.707107),
+                 reward_type="button_press",
                  **kwargs):
         self.button_pos = button_pos
+        self.button_pos_low = button_pos_low
+        self.button_pos_high = button_pos_high
         self.button_quat = button_quat
         self.button_pressed_success_thresh = 0.8
         super(Widow250ButtonEnv, self).__init__(
-            object_names=(None,),
-            object_scales=(None,),
-            object_orientations=(None,),
-            object_position_high=(None,),
-            object_position_low=(None,),
-            target_object=None,
-            **kwargs)
+            reward_type=reward_type, **kwargs)
+
+    def set_button_pos(self):
+        if (self.button_pos_low is not None and
+                self.button_pos_high is not None):
+            rand_button_pos = object_utils.generate_object_positions(
+                self.button_pos_low, self.button_pos_high, 1)[0]
+            return rand_button_pos
+        elif self.button_pos is not None:
+            return self.button_pos
 
     def _load_meshes(self):
-        self.table_id = objects.table()
-        self.robot_id = objects.widow250()
+        super(Widow250ButtonEnv, self)._load_meshes()
 
-        if self.load_tray:
-            self.tray_id = objects.tray()
+        self.button_pos = self.set_button_pos()
 
-        self.objects = {}
         self.objects['button'] = object_utils.load_object(
             "button", self.button_pos, self.button_quat, scale=0.25)
 
@@ -40,7 +45,7 @@ class Widow250ButtonEnv(Widow250Env):
             self.objects['button'])[2]
 
     def get_info(self):
-        info = {}
+        info = super(Widow250ButtonEnv, self).get_info()
         info['button_z_pos'] = self.get_button_pos()[2]
         info['button_pressed_percentage'] = (
             (self.button_max_z_pos - info['button_z_pos']) /
@@ -60,11 +65,16 @@ class Widow250ButtonEnv(Widow250Env):
                     self.button_pressed_success_thresh)
 
     def get_reward(self, info):
-        return float(self.is_button_pressed())
+        if self.reward_type == "button_press":
+            return float(info['button_pressed_success'])
+        elif self.reward_type == "grasp":
+            return float(info['grasp_success_target'])
+        else:
+            raise NotImplementedError
 
 
 if __name__ == "__main__":
-    env = roboverse.make('Widow250ButtonPress-v0',
+    env = roboverse.make("Widow250RandPosButtonPressTwoObjGrasp-v0",
                          gui=True, transpose_image=False)
     import time
     env.reset()
