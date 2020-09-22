@@ -1089,6 +1089,22 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    }
     },
+    {
+        'id': 'Widow250RandPosButtonPressTwoObjGrasp-v0',
+        'entry_point': 'roboverse.envs.widow250_button:Widow250ButtonEnv',
+        'kwargs': {'control_mode': 'discrete_gripper',
+                   'button_pos_low': (0.5, 0.25, -.3),
+                   'button_pos_high': (0.55, 0.15, -.3),
+
+                   'object_names': ("shed", "sack_vase"),
+                   'object_scales': (0.6, 0.6),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'object_position_high': (.75, .25, -.30),
+                   'object_position_low': (.65, .1, -.30),
+                   'target_object': "shed",
+                   'load_tray': False,
+                   }
+    },
 )
 
 

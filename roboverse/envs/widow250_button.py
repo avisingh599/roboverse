@@ -96,14 +96,8 @@ class Widow250ButtonEnv(Widow250Env):
 
 
 if __name__ == "__main__":
-    env = roboverse.make('Widow250ButtonPress-v0',
-                         gui=True, transpose_image=False,
-                         object_names=("shed", "sack_vase"),
-                         object_scales=(0.6,0.6),
-                         object_orientations=((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
-                         object_position_high=(.7, .25, -.30),
-                         object_position_low=(.6, .15, -.30),
-                         target_object="shed",)
+    env = roboverse.make("Widow250RandPosButtonPressTwoObjGrasp-v0",
+                         gui=True, transpose_image=False)
     import time
     env.reset()
     # import IPython; IPython.embed()
