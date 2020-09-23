@@ -8,7 +8,7 @@ class ButtonPress:
         self.env = env
         self.xyz_action_scale = 7.0
         self.gripper_dist_thresh = 0.06
-        self.gripper_xy_dist_thresh = 0.03
+        self.gripper_xy_dist_thresh = 0.02
         self.ending_height_thresh = 0.2
         self.reset()
 
@@ -27,7 +27,7 @@ class ButtonPress:
         if (gripper_button_xy_dist > self.gripper_xy_dist_thresh
                 and not self.env.is_button_pressed()):
             # print('xy - approaching handle')
-            action_xyz = (button_pos - ee_pos) * 7.0
+            action_xyz = (button_pos - ee_pos) * self.xyz_action_scale
             action_xyz = list(action_xyz[:2]) + [0.]  # don't droop down.
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
@@ -40,7 +40,7 @@ class ButtonPress:
             self.gripper_closed = True
         elif not self.env.is_button_pressed():
             # print("opening drawer")
-            action_xyz = np.array([0, 0, -0.5])
+            action_xyz = (button_pos - ee_pos) * self.xyz_action_scale
             # action = np.asarray([0., 0., 0.7])
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]  # close gripper
