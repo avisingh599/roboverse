@@ -80,5 +80,6 @@ def slide_drawer(drawer, direction):
         targetVelocity=0,
         force=10
     )
-
+    
+    control.step_simulation(num_ts)
     return drawer_pos
