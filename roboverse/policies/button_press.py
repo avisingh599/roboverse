@@ -40,7 +40,7 @@ class ButtonPress:
             self.gripper_closed = True
         elif not self.env.is_button_pressed():
             # print("opening drawer")
-            action_xyz = np.array([0, 0, -1])
+            action_xyz = np.array([0, 0, -0.5])
             # action = np.asarray([0., 0., 0.7])
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]  # close gripper
