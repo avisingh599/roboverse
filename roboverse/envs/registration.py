@@ -1081,6 +1081,19 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    }
     },
+    {
+        'id': 'Widow250DrawerRandomizedOpenTwoObjGrasp-v0',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerRandomizedEnv',
+        'kwargs': {'reward_type': 'opening',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ("shed", "sack_vase"),
+                   'object_scales': (0.6, 0.6),
+                   'object_orientations': ((0, 0, 1, 0), (0, 0.707, 0.707, 0)),
+                   'target_object': "shed",
+                   'load_tray': False,
+                   }
+    },
     # Button environments
     {
         'id': 'Widow250ButtonPress-v0',
