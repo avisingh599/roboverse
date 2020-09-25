@@ -259,6 +259,26 @@ ENVIRONMENT_SPECS = (
     },
     # Pick and place environments
     {
+        'id': 'Widow250PickPlaceEasy-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_low': (.6, .2, -.3),
+                   'object_position_high': (.6, .2, -.3),
+
+                   'container_name': 'bowl_small',
+                   'fixed_container_position': True,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
         'id': 'Widow250PickPlace-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
