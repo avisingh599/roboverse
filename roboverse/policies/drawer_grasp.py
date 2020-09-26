@@ -20,7 +20,6 @@ class DrawerGrasp:
             np.random.randint(self.env.num_objects)]
         self.pick_point = bullet.get_object_position(
             self.env.objects[self.object_to_target])[0]
-        self.pick_point += np.array([-0.01, 0, 0])
         if self.object_to_target in GRASP_OFFSETS.keys():
             self.pick_point += np.asarray(GRASP_OFFSETS[self.object_to_target])
         self.pick_point += np.random.normal(scale=self.pick_point_noise, size=(3,))

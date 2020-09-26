@@ -428,5 +428,6 @@ GRASP_OFFSETS = {
     'double_l_faucet': (0.01, 0.0, 0.0),
     'pear_ringed_vase': (0.0, 0.01, 0.0),
     'teepee': (0.0, 0.04, 0.0),
-    'long_vase': (0.0, 0.03, 0.0)
+    'long_vase': (0.0, 0.03, 0.0),
+    'ball': (-0.01, -0.01, 0.0)
 }
