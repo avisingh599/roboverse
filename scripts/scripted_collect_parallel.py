@@ -17,6 +17,9 @@ def get_data_save_directory(args):
     else:
         data_save_directory += '_{}'.format(args.num_trajectories)
 
+    if args.save_all:
+        data_save_directory += '_save_all'
+
     data_save_directory += '_noise_{}'.format(args.noise)
     data_save_directory += '_{}'.format(get_timestamp())
 
@@ -32,6 +35,7 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--num-trajectories", type=int, required=True)
     parser.add_argument("-t", "--num-timesteps", type=int, required=True)
     parser.add_argument("-d", "--data-save-directory", type=str, required=True)
+    parser.add_argument("--save-all", action='store_true', default=False)
     parser.add_argument("--target-object", type=str, default="shed")
     parser.add_argument("-p", "--num-parallel-threads", type=int, default=10)
     parser.add_argument("--noise", type=float, default=0.1)
@@ -57,6 +61,9 @@ if __name__ == "__main__":
                '-o{}'.format(args.target_object),
                '-d{}'.format(save_directory),
                ]
+
+    if args.save_all:
+        command.append('--save-all')
 
     subprocesses = []
     for i in range(args.num_parallel_threads):
