@@ -96,12 +96,13 @@ def main(args):
     policy_class = policies[args.policy_name]
     policy = policy_class(env)
     num_success = 0
+    num_saved = 0
     num_attempts = 0
     accept_trajectory_key = args.accept_trajectory_key
 
     progress_bar = tqdm(total=args.num_trajectories)
 
-    while num_success < args.num_trajectories:
+    while num_saved < args.num_trajectories:
         num_attempts += 1
         traj, success, num_steps = collect_one_traj(
             env, policy, args.num_timesteps, args.noise,
@@ -112,6 +113,11 @@ def main(args):
                 print("num_timesteps: ", num_steps)
             data.append(traj)
             num_success += 1
+            num_saved += 1
+            progress_bar.update(1)
+        elif args.save_all:
+            data.append(traj)
+            num_saved += 1
             progress_bar.update(1)
 
         if args.gui:
@@ -133,6 +139,7 @@ if __name__ == "__main__":
     parser.add_argument("-a", "--accept-trajectory-key", type=str, required=True)
     parser.add_argument("-n", "--num-trajectories", type=int, required=True)
     parser.add_argument("-t", "--num-timesteps", type=int, required=True)
+    parser.add_argument("--save-all", action='store_true', default=False)
     parser.add_argument("--gui", action='store_true', default=False)
     parser.add_argument("-o", "--target-object", type=str)
     parser.add_argument("-d", "--save-directory", type=str, default="")
