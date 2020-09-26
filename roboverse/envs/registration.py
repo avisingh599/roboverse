@@ -1092,7 +1092,7 @@ ENVIRONMENT_SPECS = (
     {
         'id': 'Widow250DrawerGrasp-v0',
         'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerEnv',
-        'kwargs': {'reward_type': 'opening',
+        'kwargs': {'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
                    'start_opened': True,
                    'object_names': ('ball',),
