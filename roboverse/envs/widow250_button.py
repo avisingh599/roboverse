@@ -37,7 +37,7 @@ class Widow250ButtonEnv(Widow250Env):
         self.button_pos = self.set_button_pos()
 
         self.objects['button'] = object_utils.load_object(
-            "button", self.button_pos, self.button_quat, scale=0.25)
+            "button", self.button_pos, self.button_quat, scale=0.15)
 
         self.button_min_z_pos = object_utils.push_down_button(
             self.objects['button'])[2]
