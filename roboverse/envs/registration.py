@@ -306,14 +306,11 @@ ENVIRONMENT_SPECS = (
                    'control_mode': 'discrete_gripper',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.59, .27, -.30),
                    'num_objects': 2,
 
                    'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
                    'possible_containers': TRAIN_CONTAINERS,
 
-                   # the below is ignored
                    }
     },
     {
@@ -324,15 +321,10 @@ ENVIRONMENT_SPECS = (
                    'control_mode': 'discrete_gripper',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.59, .27, -.30),
                    'num_objects': 2,
-
 
                    'possible_objects': PICK_PLACE_TEST_OBJECTS,
                    'possible_containers': TEST_CONTAINERS,
-
-                   # the below is ignored
                    }
     },
     {
@@ -673,9 +665,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'square_rod_embellishment',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -694,9 +683,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'shed',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -716,9 +702,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'two_handled_vase',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -739,9 +722,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'curved_handle_cup',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -875,8 +855,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'square_rod_embellishment',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'marble_cube',
 
@@ -896,9 +874,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'shed',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'marble_cube',
 
                    'camera_distance': 0.29,
@@ -918,9 +893,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'two_handled_vase',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'marble_cube',
 
                    'camera_distance': 0.29,
@@ -941,9 +913,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'curved_handle_cup',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'marble_cube',
 
                    'camera_distance': 0.29,
@@ -959,10 +928,8 @@ ENVIRONMENT_SPECS = (
                    'object_names': ('shed', 'two_handled_vase'),
                    'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
 
+                   'load_tray': False,
                    'container_name': 'basket',
 
                    'camera_distance': 0.29,
@@ -982,9 +949,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'square_rod_embellishment',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'basket',
 
                    'camera_distance': 0.29,
@@ -1003,9 +967,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'shed',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'basket',
 
                    'camera_distance': 0.29,
@@ -1044,9 +1005,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'two_handled_vase',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
                    'container_name': 'checkerboard_table',
 
                    'camera_distance': 0.29,
@@ -1067,9 +1025,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'curved_handle_cup',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
                    'container_name': 'checkerboard_table',
 
                    'camera_distance': 0.29,
