@@ -10,13 +10,18 @@ class Widow250PickPlaceEnv(Widow250Env):
 
     def __init__(self,
                  container_name='bowl_small',
+                 fixed_container_position=False,
                  **kwargs
                  ):
         self.container_name = container_name
 
         container_config = CONTAINER_CONFIGS[self.container_name]
+        self.fixed_container_position = fixed_container_position
         self.container_position_low = container_config['container_position_low']
-        self.container_position_high = container_config['container_position_high']
+        if self.fixed_container_position:
+            self.container_position_high = self.container_position_low
+        else:
+            self.container_position_high = container_config['container_position_high']
         self.container_position_z = container_config['container_position_z']
         self.container_orientation = container_config['container_orientation']
         self.container_scale = container_config['container_scale']

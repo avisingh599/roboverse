@@ -13,10 +13,12 @@ class Widow250DrawerEnv(Widow250Env):
                  drawer_pos=(0.5, 0.2, -.35),
                  drawer_quat=(0, 0, 0.707107, 0.707107),
                  left_opening=True,  # False is not supported
+                 start_opened=False,
                  **kwargs):
         self.drawer_pos = drawer_pos
         self.drawer_quat = drawer_quat
         self.left_opening = left_opening
+        self.start_opened = start_opened
         self.drawer_opened_success_thresh = 0.8
         obj_pos_high, obj_pos_low = self.get_obj_pos_high_low()
         super(Widow250DrawerEnv, self).__init__(
@@ -67,13 +69,16 @@ class Widow250DrawerEnv(Widow250Env):
             self.drawer_min_x_pos = opened_drawer_x_pos
             self.drawer_max_x_pos = closed_drawer_x_pos
 
+        if self.start_opened:
+           object_utils.open_drawer(self.objects['drawer'])
+
     def get_obj_pos_high_low(self):
         obj_pos_high = tuple(
             np.array(self.drawer_pos[:2] + (-.2,)) +
-            (1 - 2 * (not self.left_opening)) * np.array((0.15, 0, 0)))
+            (1 - 2 * (not self.left_opening)) * np.array((0.12, 0, 0)))
         obj_pos_low = tuple(
             np.array(self.drawer_pos[:2] + (-.2,)) -
-            (1 - 2 * (not self.left_opening)) * np.array((-0.15, 0, 0)))
+            (1 - 2 * (not self.left_opening)) * np.array((-0.12, 0, 0)))
         return obj_pos_high, obj_pos_low
 
     def get_info(self):

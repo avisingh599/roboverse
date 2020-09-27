@@ -259,6 +259,26 @@ ENVIRONMENT_SPECS = (
     },
     # Pick and place environments
     {
+        'id': 'Widow250PickPlaceEasy-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_low': (.6, .2, -.3),
+                   'object_position_high': (.6, .2, -.3),
+
+                   'container_name': 'bowl_small',
+                   'fixed_container_position': True,
+
+                   'camera_distance': 0.29,
+                   'camera_target_pos': (0.6, 0.2, -0.28),
+                   }
+    },
+    {
         'id': 'Widow250PickPlace-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',
@@ -286,14 +306,11 @@ ENVIRONMENT_SPECS = (
                    'control_mode': 'discrete_gripper',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.59, .27, -.30),
                    'num_objects': 2,
 
                    'possible_objects': PICK_PLACE_TRAIN_OBJECTS,
                    'possible_containers': TRAIN_CONTAINERS,
 
-                   # the below is ignored
                    }
     },
     {
@@ -304,15 +321,10 @@ ENVIRONMENT_SPECS = (
                    'control_mode': 'discrete_gripper',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.59, .27, -.30),
                    'num_objects': 2,
-
 
                    'possible_objects': PICK_PLACE_TEST_OBJECTS,
                    'possible_containers': TEST_CONTAINERS,
-
-                   # the below is ignored
                    }
     },
     {
@@ -653,9 +665,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'square_rod_embellishment',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -674,9 +683,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'shed',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -696,9 +702,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'two_handled_vase',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -719,9 +722,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'curved_handle_cup',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'pan_tefal',
 
                    'camera_distance': 0.29,
@@ -855,8 +855,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'square_rod_embellishment',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
 
                    'container_name': 'marble_cube',
 
@@ -876,9 +874,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'shed',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'marble_cube',
 
                    'camera_distance': 0.29,
@@ -898,9 +893,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'two_handled_vase',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'marble_cube',
 
                    'camera_distance': 0.29,
@@ -921,9 +913,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'curved_handle_cup',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'marble_cube',
 
                    'camera_distance': 0.29,
@@ -939,10 +928,8 @@ ENVIRONMENT_SPECS = (
                    'object_names': ('shed', 'two_handled_vase'),
                    'object_scales': (0.7, 0.6),
                    'target_object': 'shed',
-                   'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
 
+                   'load_tray': False,
                    'container_name': 'basket',
 
                    'camera_distance': 0.29,
@@ -962,9 +949,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'square_rod_embellishment',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'basket',
 
                    'camera_distance': 0.29,
@@ -983,9 +967,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'shed',
 
                    'load_tray': False,
-                   'object_position_low': (.5, .18, -.30),
-                   'object_position_high': (.7, .27, -.30),
-
                    'container_name': 'basket',
 
                    'camera_distance': 0.29,
@@ -1024,9 +1005,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'two_handled_vase',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
                    'container_name': 'checkerboard_table',
 
                    'camera_distance': 0.29,
@@ -1047,9 +1025,6 @@ ENVIRONMENT_SPECS = (
                    'target_object': 'curved_handle_cup',
 
                    'load_tray': False,
-                   'object_position_low': (.49, .18, -.30),
-                   'object_position_high': (.69, .27, -.30),
-
                    'container_name': 'checkerboard_table',
 
                    'camera_distance': 0.29,
@@ -1063,6 +1038,18 @@ ENVIRONMENT_SPECS = (
         'kwargs': {'reward_type': 'opening',
                    'control_mode': 'discrete_gripper',
 
+                   'object_names': ('ball',),
+                   'object_scales': (0.75,),
+                   'target_object': 'ball',
+                   'load_tray': False,
+                   }
+    },
+    {
+        'id': 'Widow250DrawerGrasp-v0',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DrawerEnv',
+        'kwargs': {'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+                   'start_opened': True,
                    'object_names': ('ball',),
                    'object_scales': (0.75,),
                    'target_object': 'ball',
