@@ -55,8 +55,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_low': (.53, .15, -.30),
                    'xyz_action_scale': 0.2,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -73,8 +71,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_low': (.53, .15, -.30),
                    'xyz_action_scale': 0.2,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -90,8 +86,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_low': (.5, .15, -.30),
                    'xyz_action_scale': 0.2,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
 
                    # Next three entries are ignored
                    'object_names': ('beer_bottle', 'gatorade', 'shed'),
@@ -114,8 +108,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_low': (.5, .15, -.30),
                    'xyz_action_scale': 0.2,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
 
                    # Next three entries are ignored
                    'object_names': ('beer_bottle', 'gatorade', 'shed'),
@@ -155,8 +147,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'bowl_small',
                    'fixed_container_position': True,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -175,8 +165,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'bowl_small',
 
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -224,8 +212,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'bowl_small',
 
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -244,8 +230,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'bowl_small',
 
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -264,8 +248,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'bowl_small',
 
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -283,8 +265,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'bowl_small',
 
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -302,8 +282,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'bowl_small',
 
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -321,8 +299,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'tray',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -340,8 +316,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'open_box',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -359,8 +333,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'cube',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -378,8 +350,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'pan_tefal',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -397,8 +367,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'pan_tefal',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -416,9 +384,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'pan_tefal',
                    'fixed_container_position': True,
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -434,9 +399,6 @@ ENVIRONMENT_SPECS = (
 
                    'load_tray': False,
                    'container_name': 'pan_tefal',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -454,8 +416,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'pan_tefal',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -473,9 +433,6 @@ ENVIRONMENT_SPECS = (
 
                    'load_tray': False,
                    'container_name': 'pan_tefal',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -493,8 +450,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'table_top',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -511,9 +466,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_high': (.69, .27, -.30),
 
                    'container_name': 'torus',
-
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -531,8 +483,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'cube_concave',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -550,8 +500,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'plate',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -569,8 +517,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'husky',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -588,8 +534,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'marble_cube',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -608,8 +552,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'marble_cube',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -626,8 +568,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'marble_cube',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -645,8 +585,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'marble_cube',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -665,8 +603,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'marble_cube',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -686,8 +622,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'marble_cube',
                    'fixed_container_position': True,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -703,8 +637,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'basket',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -722,8 +654,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'basket',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -740,8 +670,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'basket',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -759,8 +687,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'basket',
                    'fixed_container_position': True,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -778,8 +704,6 @@ ENVIRONMENT_SPECS = (
 
                    'container_name': 'checkerboard_table',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -797,8 +721,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'checkerboard_table',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -817,8 +739,6 @@ ENVIRONMENT_SPECS = (
                    'container_name': 'checkerboard_table',
                    'fixed_container_position': True,
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     {
@@ -837,8 +757,6 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'container_name': 'checkerboard_table',
 
-                   'camera_distance': 0.29,
-                   'camera_target_pos': (0.6, 0.2, -0.28),
                    }
     },
     # Drawer environments
