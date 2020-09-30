@@ -40,7 +40,7 @@ class BulletVideoLogger:
         self.camera_roll = 0.0
         self.camera_pitch = -10
         self.camera_yaw = 215
-        self.camera_distance = 0.32
+        self.camera_distance = 0.4
         self.view_matrix_args = dict(target_pos=self.camera_target_pos,
                                      distance=self.camera_distance,
                                      yaw=self.camera_yaw,
@@ -146,7 +146,7 @@ class BulletVideoLogger:
             self.add_robot_view_to_video(images)
         for i in range(len(images)):
             im = Image.fromarray(images[i])
-            im.save(os.path.join(save_path, '{}.jpg'.format(i)))
+            im.save(os.path.join(save_path, '{}.png'.format(i)))
 
     def run(self, num_videos):
         i = 0
