@@ -13,10 +13,12 @@ class Widow250DrawerEnv(Widow250Env):
                  drawer_pos=(0.5, 0.2, -.35),
                  drawer_quat=(0, 0, 0.707107, 0.707107),
                  left_opening=True,  # False is not supported
+                 start_opened=False,
                  **kwargs):
         self.drawer_pos = drawer_pos
         self.drawer_quat = drawer_quat
         self.left_opening = left_opening
+        self.start_opened = start_opened
         self.drawer_opened_success_thresh = 0.8
         obj_pos_high, obj_pos_low = self.get_obj_pos_high_low()
         super(Widow250DrawerEnv, self).__init__(
@@ -67,13 +69,16 @@ class Widow250DrawerEnv(Widow250Env):
             self.drawer_min_x_pos = opened_drawer_x_pos
             self.drawer_max_x_pos = closed_drawer_x_pos
 
+        if self.start_opened:
+           object_utils.open_drawer(self.objects['drawer'])
+
     def get_obj_pos_high_low(self):
         obj_pos_high = tuple(
             np.array(self.drawer_pos[:2] + (-.2,)) +
-            (1 - 2 * (not self.left_opening)) * np.array((0.15, 0, 0)))
+            (1 - 2 * (not self.left_opening)) * np.array((0.12, 0, 0)))
         obj_pos_low = tuple(
             np.array(self.drawer_pos[:2] + (-.2,)) -
-            (1 - 2 * (not self.left_opening)) * np.array((-0.15, 0, 0)))
+            (1 - 2 * (not self.left_opening)) * np.array((-0.12, 0, 0)))
         return obj_pos_high, obj_pos_low
 
     def get_info(self):
@@ -124,10 +129,56 @@ class Widow250DrawerRandomizedEnv(Widow250DrawerEnv):
             **kwargs
         )
 
+    def _load_meshes(self):
+        self.table_id = objects.table()
+        self.robot_id = objects.widow250()
+
+        if self.load_tray:
+            self.tray_id = objects.tray()
+
+        self.objects = {}
+        object_positions = object_utils.generate_object_positions(
+            self.object_position_low, self.object_position_high,
+            self.num_objects,
+        )
+        self.original_object_positions = object_positions
+
+        self.objects["drawer"] = object_utils.load_object(
+            "drawer", self.drawer_pos, self.drawer_quat, scale=0.1)
+        # Open and close testing.
+        closed_drawer_x_pos = object_utils.open_drawer(
+            self.objects['drawer'])[0]
+
+        opened_drawer_x_pos = object_utils.close_drawer(
+            self.objects['drawer'])[0]
+
+        if self.left_opening:
+            self.drawer_min_x_pos = closed_drawer_x_pos
+            self.drawer_max_x_pos = opened_drawer_x_pos
+        else:
+            self.drawer_min_x_pos = opened_drawer_x_pos
+            self.drawer_max_x_pos = closed_drawer_x_pos
+
+        for object_name, object_position in zip(self.object_names,
+                                                object_positions):
+            self.objects[object_name] = object_utils.load_object(
+                object_name,
+                object_position,
+                object_quat=self.object_orientations[object_name],
+                scale=self.object_scales[object_name])
+            bullet.step_simulation(self.num_sim_steps_reset)
+
+    def get_obj_pos_high_low(self):
+        obj_pos_high = tuple(
+            np.array(self.drawer_pos) + np.array([0.05, 0.06, 0.1]))
+        obj_pos_low = tuple(
+            np.array(self.drawer_pos) + np.array([-0.05, -0.06, 0.1]))
+        return obj_pos_high, obj_pos_low
+
     def set_drawer_pos_and_quat(self):
         num_possible_drawer_positions = 4
         drawer_positions = [
-            (0.75 - 0.1 * i, 0.2, -.35)
+            (0.75 - 0.1 * i, 0.15, -.35)
             for i in range(num_possible_drawer_positions)
         ]
         pos_orientation_pairings = list(itertools.product(
@@ -151,7 +202,7 @@ class Widow250DrawerRandomizedEnv(Widow250DrawerEnv):
 
 
 if __name__ == "__main__":
-    env = roboverse.make('Widow250DrawerRandomizedOpen-v0',
+    env = roboverse.make('Widow250DrawerRandomizedOpenTwoObjGrasp-v0',
                          gui=True, transpose_image=False)
     import time
     env.reset()

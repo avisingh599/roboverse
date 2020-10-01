@@ -20,6 +20,7 @@ CONTAINER_CONFIGS = {
     'plate': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.50, 0.22, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.46,
         'container_position_z': -0.37,
@@ -31,6 +32,7 @@ CONTAINER_CONFIGS = {
         'container_name': 'cube_concave',
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.50, 0.22, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.06,
         'container_position_z': -0.35,
@@ -41,6 +43,7 @@ CONTAINER_CONFIGS = {
     'table_top': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.50, 0.22, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.13,
         'container_position_z': -0.37,
@@ -51,6 +54,7 @@ CONTAINER_CONFIGS = {
     'bowl_small': {
         'container_position_low': (.5, 0.26, -.30),
         'container_position_high': (.7, 0.26, -.30),
+        'container_position_default': (.50, 0.26, -.30),
         'container_position_z': -0.35,
         'place_success_height_threshold': -0.32,
         'place_success_radius_threshold': 0.04,
@@ -61,6 +65,7 @@ CONTAINER_CONFIGS = {
     'tray': {
         'container_position_low': (.5, 0.25, -.30),
         'container_position_high': (.7, 0.25, -.30),
+        'container_position_default': (.5, 0.25, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.18,
         'container_position_z': -0.37,
@@ -71,6 +76,7 @@ CONTAINER_CONFIGS = {
     'open_box': {
         'container_position_low': (.5, 0.23, -.30),
         'container_position_high': (.7, 0.23, -.30),
+        'container_position_default': (.5, 0.23, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.1,
         'container_position_z': -0.35,
@@ -81,6 +87,7 @@ CONTAINER_CONFIGS = {
     'pan_tefal': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.24, -.30),
+        'container_position_default': (.65, 0.23, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.4,
         'container_position_z': -0.37,
@@ -91,6 +98,7 @@ CONTAINER_CONFIGS = {
     'husky': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.50, 0.22, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.13,
         'container_position_z': -0.35,
@@ -101,6 +109,7 @@ CONTAINER_CONFIGS = {
     'marble_cube': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.60, 0.24, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.07,
         'container_position_z': -0.35,
@@ -112,6 +121,7 @@ CONTAINER_CONFIGS = {
         'container_name': 'basket',
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.55, 0.22, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 1.68,
         'container_position_z': -0.37,
@@ -123,6 +133,7 @@ CONTAINER_CONFIGS = {
         'container_name': 'checkerboard_table',
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.50, 0.22, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.08,
         'container_position_z': -0.37,
@@ -133,6 +144,7 @@ CONTAINER_CONFIGS = {
     'torus': {
         'container_position_low': (.50, 0.22, -.30),
         'container_position_high': (.70, 0.26, -.30),
+        'container_position_default': (.50, 0.22, -.30),
         'container_orientation': (1, 1, 1, 1),
         'container_scale': 0.15,
         'container_position_z': -0.37,
@@ -143,6 +155,7 @@ CONTAINER_CONFIGS = {
     'cube': {
         'container_position_low': (.5, 0.22, -.30),
         'container_position_high': (.7, 0.24, -.30),
+        'container_position_default': (.5, 0.22, -.30),
         'container_orientation': (0, 0, 0.707107, 0.707107),
         'container_scale': 0.05,
         'container_position_z': -0.35,
@@ -428,5 +441,6 @@ GRASP_OFFSETS = {
     'double_l_faucet': (0.01, 0.0, 0.0),
     'pear_ringed_vase': (0.0, 0.01, 0.0),
     'teepee': (0.0, 0.04, 0.0),
-    'long_vase': (0.0, 0.03, 0.0)
+    'long_vase': (0.0, 0.03, 0.0),
+    'ball': (-0.01, -0.01, 0.0)
 }

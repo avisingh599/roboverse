@@ -36,11 +36,11 @@ class BulletVideoLogger:
         if not os.path.exists(self.video_save_dir):
             os.makedirs(self.video_save_dir)
         # camera settings
-        self.camera_target_pos = [0.6, 0.2, -0.2]
+        self.camera_target_pos = [0.57, 0.2, -0.22]
         self.camera_roll = 0.0
-        self.camera_pitch = -20
+        self.camera_pitch = -10
         self.camera_yaw = 215
-        self.camera_distance = 0.5
+        self.camera_distance = 0.4
         self.view_matrix_args = dict(target_pos=self.camera_target_pos,
                                      distance=self.camera_distance,
                                      yaw=self.camera_yaw,
@@ -146,7 +146,7 @@ class BulletVideoLogger:
             self.add_robot_view_to_video(images)
         for i in range(len(images)):
             im = Image.fromarray(images[i])
-            im.save(os.path.join(save_path, '{}.jpg'.format(i)))
+            im.save(os.path.join(save_path, '{}.png'.format(i)))
 
     def run(self, num_videos):
         i = 0
