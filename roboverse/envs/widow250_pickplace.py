@@ -46,6 +46,13 @@ class Widow250PickPlaceEnv(Widow250Env):
                     min_distance_small_obj=0.07,
                     min_distance_large_obj=self.min_distance_from_object,
                 )
+            if not self.in_vr_replay:
+                self.fixed_container_position = self.container_position
+                self.fixed_object_position = self.original_object_positions
+            else:
+                self.container_position = self.fixed_container_position
+                self.original_object_positions = self.fixed_object_position
+
         elif self.num_objects == 1:
             self.container_position, self.original_object_positions = \
                 object_utils.generate_object_positions_single(
