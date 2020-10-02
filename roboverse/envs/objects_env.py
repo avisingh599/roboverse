@@ -13,14 +13,12 @@ from PIL import Image
 
 from roboverse.assets.shapenet_object_lists import (
     PICK_PLACE_TRAIN_OBJECTS,
+    PICK_PLACE_TEST_OBJECTS,
     TRAIN_CONTAINERS,
     TEST_CONTAINERS,
     OBJECT_SCALINGS,
     CONTAINER_CONFIGS,
 )
-
-objects_to_visualize = (PICK_PLACE_TRAIN_OBJECTS +
-                        TRAIN_CONTAINERS + TEST_CONTAINERS)
 
 
 def get_scaling(object_name):
@@ -42,16 +40,11 @@ class ObjectsEnv(gym.Env, Serializable):
                  observation_img_h=128 * (5 + 2),
                  observation_img_w=128 * (9 + 2),
                  transpose_image=True,
+                 layout=(5, 9),
 
-                 object_names=tuple(objects_to_visualize),
-                 object_scales=tuple([
-                    get_scaling(object_name) for object_name
-                    in objects_to_visualize]),
-                 object_orientations=tuple(
-                    [(0, 0, 1, 0)] * len(objects_to_visualize)),
+                 objects_to_visualize=[],
                  object_position_high=(.7, .27, -.30),
                  object_position_low=(.5, .18, -.30),
-                 target_object=objects_to_visualize[0],
                  load_tray=True,
 
                  num_sim_steps=10,
@@ -61,6 +54,7 @@ class ObjectsEnv(gym.Env, Serializable):
                  reward_type='grasping',
                  grasp_success_height_threshold=-0.25,
                  grasp_success_object_gripper_threshold=0.1,
+                 interobject_spacing=0.1,
 
                  xyz_action_scale=0.2,
                  abc_action_scale=20.0,
@@ -78,10 +72,22 @@ class ObjectsEnv(gym.Env, Serializable):
                  in_vr_replay=False,
                  ):
 
+        object_names = tuple(objects_to_visualize)
+        print("object_names", object_names)
+        object_scales = tuple([
+            get_scaling(object_name) for object_name
+            in objects_to_visualize])
+        object_orientations = tuple(
+            [(0, 0, 1, 0)] * len(objects_to_visualize))
+        target_object = object_names[0]
+        print("target_object", target_object)
+
         self.control_mode = control_mode
         self.observation_mode = observation_mode
-        self.observation_img_h = observation_img_h
-        self.observation_img_w = observation_img_w
+        self.layout = layout
+        self.observation_img_h = 128 * (layout[0] + 2)
+        self.observation_img_w = 128 * (layout[1] + 2)
+        self.interobject_spacing = interobject_spacing
         self.transpose_image = transpose_image
 
         self.num_sim_steps = num_sim_steps
@@ -118,12 +124,6 @@ class ObjectsEnv(gym.Env, Serializable):
             self.object_scales[object_name] = object_scale
 
         self.in_vr_replay = in_vr_replay
-        # self._load_meshes()
-
-        # self.movable_joints = bullet.get_movable_joints(self.robot_id)
-        # self.end_effector_index = END_EFFECTOR_INDEX
-        # self.reset_joint_values = RESET_JOINT_VALUES
-        # self.reset_joint_indices = RESET_JOINT_INDICES
 
         self.xyz_action_scale = xyz_action_scale
         self.abc_action_scale = abc_action_scale
@@ -159,12 +159,11 @@ class ObjectsEnv(gym.Env, Serializable):
         # self.robot_id = objects.widow250()
 
         self.objects = {}
-        dist = 0.1
         x_low, y_low = 0.35, -.3
-        num_obj_per_row = 9
+        num_obj_per_row = self.layout[1]
         for i, object_name in enumerate(self.object_names):
-            obj_pos_x = x_low + (dist * (i % num_obj_per_row))
-            obj_pos_y = y_low + (dist * (i // num_obj_per_row))
+            obj_pos_x = x_low + (self.interobject_spacing * (i % num_obj_per_row))
+            obj_pos_y = y_low + (self.interobject_spacing * (i // num_obj_per_row))
             obj_pos_z = -0.36
             object_position = (obj_pos_x, obj_pos_y, obj_pos_z)
             self.objects[object_name] = object_utils.load_object(
@@ -211,13 +210,31 @@ class ObjectsEnv(gym.Env, Serializable):
 
 
 if __name__ == "__main__":
-    env = roboverse.make('PickPlaceTrainObject-v0',
-                         gui=True, transpose_image=False)
     parser = argparse.ArgumentParser()
     parser.add_argument("--save-path", type=str, required=True)
     args = parser.parse_args()
 
-    for i in range(10):
+    train_objects = (
+        PICK_PLACE_TRAIN_OBJECTS + TRAIN_CONTAINERS)[1:]
+    test_objects = (
+        PICK_PLACE_TEST_OBJECTS + TEST_CONTAINERS)
+    test_objects.remove("two_handled_vase")
+
+    layouts = [(5, 8), (2, 6)]
+    camera_target_pos = [(0.71, -0.1, -0.28), (0.735, -0.225, -0.28)]
+    camera_distance = [0.425, 0.32]
+    interobject_spacings = [0.1, 0.15]
+
+    for i, object_cluster in enumerate([train_objects, test_objects]):
+        env = roboverse.make('PickPlaceTrainObject-v0',
+                             gui=True, transpose_image=False,
+                             objects_to_visualize=object_cluster,
+                             layout=layouts[i],
+                             camera_target_pos=camera_target_pos[i],
+                             camera_distance=camera_distance[i],
+                             interobject_spacing=interobject_spacings[i])
+
         img, _, _, _ = env.step(None)
         im = Image.fromarray(img)
         im.save(os.path.join(args.save_path, '{}.png'.format(i)))
+        bullet.disconnect()
