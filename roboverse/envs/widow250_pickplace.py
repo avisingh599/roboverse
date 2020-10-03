@@ -11,8 +11,6 @@ class Widow250PickPlaceEnv(Widow250Env):
     def __init__(self,
                  container_name='bowl_small',
                  fixed_container_position=False,
-                 deter_container_position=None,
-                 deter_objects_positions=None,
                  **kwargs
                  ):
         self.container_name = container_name
@@ -32,9 +30,6 @@ class Widow250PickPlaceEnv(Widow250Env):
 
         self.place_success_height_threshold = container_config['place_success_height_threshold']
         self.place_success_radius_threshold = container_config['place_success_radius_threshold']
-
-        self.deter_container_position = deter_container_position
-        self.deter_objects_positions = deter_objects_positions
 
         super(Widow250PickPlaceEnv, self).__init__(**kwargs)
 
@@ -57,14 +52,6 @@ class Widow250PickPlaceEnv(Widow250Env):
                     min_distance_small_obj=0.07,
                     min_distance_large_obj=self.min_distance_from_object,
                 )
-            if not self.in_vr_replay:
-                self.deter_container_position = list(self.container_position)
-                self.deter_objects_positions = self.original_object_positions
-            else:
-                self.container_position = list(self.deter_container_position)
-                print("self.deter_object_positions", self.deter_objects_positions)
-                self.original_object_positions = self.deter_objects_positions
-
         elif self.num_objects == 1:
             self.container_position, self.original_object_positions = \
                 object_utils.generate_object_positions_single(

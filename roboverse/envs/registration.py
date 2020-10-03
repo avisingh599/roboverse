@@ -759,21 +759,6 @@ ENVIRONMENT_SPECS = (
 
                    }
     },
-    {
-        'id': 'Widow250GraspThreeTestRL1-v0',
-        'entry_point': 'roboverse.envs.widow250:Widow250Env',
-        'kwargs': {'reward_type': 'grasping',
-                   'control_mode': 'discrete_gripper',
-                   'object_names': ('conic_bin', 'jar', 'gatorade'),
-                   'object_scales': (0.4, 0.8, 0.7),
-                   'object_orientations': ((0, 0.707, 0.707, 0),
-                                           (0, 0.707, 0, 0.707), (0, 0, 1, 0)),
-                   'target_object': 'jar',
-                   'load_tray': False,
-                   'object_position_high': (.68, .25, -.30),
-                   'object_position_low': (.53, .15, -.30),
-                   }
-    },
     # Drawer environments
     {
         'id': 'Widow250DrawerOpen-v0',
@@ -860,13 +845,6 @@ ENVIRONMENT_SPECS = (
                    'object_position_low': (.65, .1, -.30),
                    'target_object': "shed",
                    'load_tray': False,
-                   }
-    },
-    # ObjectEnv
-    {
-        'id': 'PickPlaceTrainObject-v0',
-        'entry_point': 'roboverse.envs.objects_env:ObjectsEnv',
-        'kwargs': {
                    }
     },
 )

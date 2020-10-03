@@ -310,7 +310,7 @@ OBJECT_SCALINGS = {
     'tongue_chair': 0.5,
     'oil_tanker': 1.0,
     'thick_wood_chair': 0.4,
-    'modern_canoe': 0.5,
+    'modern_canoe': 0.9,
     'pear_ringed_vase': 0.65,
     'short_handle_cup': 0.5,
     'curved_handle_cup': 0.5,
@@ -320,7 +320,7 @@ OBJECT_SCALINGS = {
 
     'teepee': 0.7,
     'trapezoidal_bin': 0.4,
-    'vintage_canoe': 0.5,
+    'vintage_canoe': 1.0,
     'bathtub': 0.4,
     'flowery_half_donut': 0.5,
     't_cup': 0.5,
