@@ -51,7 +51,7 @@ def slide_drawer(drawer, direction):
     # -1 = open; 1 = close
     drawer_frame_joint_idx = get_drawer_base_joint(drawer)
 
-    num_ts = 150
+    num_ts = 90
 
     command = direction / 3
 
