@@ -60,11 +60,8 @@ class DrawerOpenTransfer:
             neutral_action = [0.5]
         elif (np.linalg.norm(ee_pos - self.ending_pos) >
                 self.ending_pos_thresh):
-            print("Lift upward")
             self.drawer_never_opened = False
             action_xyz = (self.ending_pos - ee_pos) * 3.0  # force upward action
-            print(np.linalg.norm(ee_pos - self.ending_pos))
-            print(ee_pos - self.ending_pos)
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
             neutral_action = [-0.5]
