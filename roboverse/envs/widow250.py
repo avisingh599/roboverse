@@ -24,7 +24,7 @@ GRIPPER_LIMITS_HIGH = JOINT_LIMIT_UPPER[-2:]
 GRIPPER_OPEN_STATE = [0.036, -0.036]
 GRIPPER_CLOSED_STATE = [0.015, -0.015]
 
-ACTION_DIM = 8
+ACTION_DIM = 7
 
 
 class Widow250Env(gym.Env, Serializable):
@@ -50,6 +50,8 @@ class Widow250Env(gym.Env, Serializable):
                  reward_type='grasping',
                  grasp_success_height_threshold=-0.25,
                  grasp_success_object_gripper_threshold=0.1,
+
+                 use_neutral_action=False,
 
                  xyz_action_scale=0.2,
                  abc_action_scale=20.0,
@@ -80,6 +82,8 @@ class Widow250Env(gym.Env, Serializable):
         self.grasp_success_height_threshold = grasp_success_height_threshold
         self.grasp_success_object_gripper_threshold = \
             grasp_success_object_gripper_threshold
+
+        self.use_neutral_action = use_neutral_action
 
         self.gui = gui
 
@@ -183,6 +187,7 @@ class Widow250Env(gym.Env, Serializable):
         return self.get_observation()
 
     def step(self, action):
+        assert action is not None and len(action) == ACTION_DIM + self.use_neutral_action
         # TODO Clean this up
         if np.isnan(np.sum(action)):
             print('action', action)
@@ -193,6 +198,9 @@ class Widow250Env(gym.Env, Serializable):
         xyz_action = action[:3]  # ee position actions
         abc_action = action[3:6]  # ee orientation actions
         gripper_action = action[6]
+
+        if self.use_neutral_action:
+            neutral_action = action[7]
 
         ee_pos, ee_quat = bullet.get_link_state(
             self.robot_id, self.end_effector_index)
@@ -245,6 +253,12 @@ class Widow250Env(gym.Env, Serializable):
             rest_pose=RESET_JOINT_VALUES,
             joint_range=JOINT_RANGE,
             num_sim_steps=num_sim_steps)
+
+        if self.use_neutral_action and neutral_action < 0:
+            bullet.reset_robot(
+                self.robot_id,
+                self.reset_joint_indices,
+                self.reset_joint_values)
 
         info = self.get_info()
         reward = self.get_reward(info)
@@ -302,7 +316,7 @@ class Widow250Env(gym.Env, Serializable):
         return img
 
     def _set_action_space(self):
-        self.action_dim = ACTION_DIM
+        self.action_dim = ACTION_DIM + self.use_neutral_action
         act_bound = 1
         act_high = np.ones(self.action_dim) * act_bound
         self.action_space = gym.spaces.Box(-act_high, act_high)

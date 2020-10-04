@@ -42,23 +42,30 @@ class Grasp:
             if xy_diff > 0.03:
                 action_xyz[2] = 0.0
             action_angles = [0., 0., 0.]
-            action_gripper = [0.0]
+            action_gripper = [0.]
+            neutral_action=[0.5]
         elif self.env.is_gripper_open:
             # near the object enough, performs grasping action
             action_xyz = (self.pick_point - ee_pos) * self.xyz_action_scale
             action_angles = [0., 0., 0.]
             action_gripper = [-0.7]
+            neutral_action=[0.5]
         elif not object_lifted:
             # lifting objects above the height threshold for picking
             action_xyz = (self.env.ee_pos_init - ee_pos) * self.xyz_action_scale
             action_angles = [0., 0., 0.]
             action_gripper = [0.]
+            neutral_action=[0.5]
         else:
             # Hold
             action_xyz = (0., 0., 0.)
             action_angles = [0., 0., 0.]
             action_gripper = [0.]
+            neutral_action=[0.5]
 
         agent_info = dict(done=done)
         action = np.concatenate((action_xyz, action_angles, action_gripper))
+        if self.env.use_neutral_action:
+            action = np.concatenate((action, neutral_action))
+
         return action, agent_info
