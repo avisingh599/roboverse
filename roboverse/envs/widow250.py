@@ -83,6 +83,9 @@ class Widow250Env(gym.Env, Serializable):
 
         self.gui = gui
 
+        self.fc_input_key = 'state'
+        self.cnn_input_key = 'image'
+
         # TODO(avi): Add limits to ee orientation as well
         self.ee_pos_high = ee_pos_high
         self.ee_pos_low = ee_pos_low
