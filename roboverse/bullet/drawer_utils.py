@@ -51,11 +51,9 @@ def slide_drawer(drawer, direction):
     # -1 = open; 1 = close
     drawer_frame_joint_idx = get_drawer_base_joint(drawer)
 
-    num_ts = 30
+    num_ts = 150
 
-    command = np.clip(direction,
-                      -1 * np.abs(direction), np.abs(direction)) / 3
-    # enable fast opening; slow closing
+    command = direction / 3
 
     # Wait a little before closing
     wait_ts = 30  # 0 if direction == -1 else 30
@@ -71,7 +69,7 @@ def slide_drawer(drawer, direction):
 
     drawer_pos = get_drawer_bottom_pos(drawer)
 
-    control.step_simulation(5 * num_ts)
+    control.step_simulation(num_ts)
 
     p.setJointMotorControl2(
         drawer,
