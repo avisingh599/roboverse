@@ -60,7 +60,7 @@ def apply_action_ik(target_ee_pos, target_ee_quat, target_gripper_state,
                                 controlMode=p.POSITION_CONTROL,
                                 targetPositions=joint_poses,
                                 # targetVelocity=0,
-                                forces=[500] * len(movable_joints),
+                                forces=[5] * len(movable_joints),
                                 positionGains=[0.03] * len(movable_joints),
                                 # velocityGain=1
                                 )

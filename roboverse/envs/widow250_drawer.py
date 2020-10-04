@@ -14,12 +14,14 @@ class Widow250DrawerEnv(Widow250Env):
                  drawer_quat=(0, 0, 0.707107, 0.707107),
                  left_opening=True,  # False is not supported
                  start_opened=False,
+                 use_neutral_action=False,
                  **kwargs):
         self.drawer_pos = drawer_pos
         self.drawer_quat = drawer_quat
         self.left_opening = left_opening
         self.start_opened = start_opened
-        self.drawer_opened_success_thresh = 0.8
+        self.drawer_opened_success_thresh = 0.95
+        self.use_neutral_action = use_neutral_action
         obj_pos_high, obj_pos_low = self.get_obj_pos_high_low()
         super(Widow250DrawerEnv, self).__init__(
             # object_names=object_names,
@@ -29,6 +31,18 @@ class Widow250DrawerEnv(Widow250Env):
             object_position_low=obj_pos_low,
             **kwargs
         )
+
+    def step(self, action):
+        if self.use_neutral_action:
+            neutral_action = action[7]
+            if neutral_action < 0:
+                bullet.reset_robot(
+                    self.robot_id,
+                    self.reset_joint_indices,
+                    self.reset_joint_values)
+            return super(Widow250DrawerEnv, self).step(action[:7])
+        else:
+            return super(Widow250DrawerEnv, self).step(action[:7])
 
     def _load_meshes(self):
         self.table_id = objects.table()
