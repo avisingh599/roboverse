@@ -52,7 +52,6 @@ class DrawerOpenTransfer:
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
         else:
-            print('neutral')
             action_xyz = [0., 0., 0.]
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
