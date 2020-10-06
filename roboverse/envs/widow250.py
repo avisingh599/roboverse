@@ -271,10 +271,14 @@ class Widow250Env(gym.Env, Serializable):
         gripper_binary_state = [float(self.is_gripper_open)]
         ee_pos, ee_quat = bullet.get_link_state(
             self.robot_id, self.end_effector_index)
+        object_position, object_orientation = bullet.get_object_position(
+            self.objects[self.target_object])
         if self.observation_mode == 'pixels':
             image_observation = self.render_obs()
             image_observation = np.float32(image_observation.flatten()) / 255.0
             observation = {
+                'object_position': object_position,
+                'object_orientation': object_orientation,
                 'state': np.concatenate(
                     (ee_pos, ee_quat, gripper_state, gripper_binary_state)),
                 'image': image_observation
