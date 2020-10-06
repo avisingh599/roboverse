@@ -51,6 +51,8 @@ class Widow250Env(gym.Env, Serializable):
                  grasp_success_height_threshold=-0.25,
                  grasp_success_object_gripper_threshold=0.1,
 
+                 use_neutral_action=False,
+
                  xyz_action_scale=0.2,
                  abc_action_scale=20.0,
                  gripper_action_scale=20.0,
@@ -81,7 +83,15 @@ class Widow250Env(gym.Env, Serializable):
         self.grasp_success_object_gripper_threshold = \
             grasp_success_object_gripper_threshold
 
+        self.use_neutral_action = use_neutral_action
+
         self.gui = gui
+
+        # TODO(avi): This hard-coding should be removed
+        self.fc_input_key = 'state'
+        self.cnn_input_key = 'image'
+        self.terminates = False
+        self.scripted_traj_len = 30
 
         # TODO(avi): Add limits to ee orientation as well
         self.ee_pos_high = ee_pos_high
@@ -180,16 +190,18 @@ class Widow250Env(gym.Env, Serializable):
         return self.get_observation()
 
     def step(self, action):
+
         # TODO Clean this up
         if np.isnan(np.sum(action)):
             print('action', action)
-            assert False
+            raise RuntimeError('Action has NaN entries')
 
         action = np.clip(action, -1, +1)  # TODO Clean this up
 
         xyz_action = action[:3]  # ee position actions
         abc_action = action[3:6]  # ee orientation actions
         gripper_action = action[6]
+        neutral_action = action[7]
 
         ee_pos, ee_quat = bullet.get_link_state(
             self.robot_id, self.end_effector_index)
@@ -243,6 +255,12 @@ class Widow250Env(gym.Env, Serializable):
             joint_range=JOINT_RANGE,
             num_sim_steps=num_sim_steps)
 
+        if self.use_neutral_action and neutral_action > 0.5:
+            bullet.move_to_neutral(
+                self.robot_id,
+                self.reset_joint_indices,
+                self.reset_joint_values)
+
         info = self.get_info()
         reward = self.get_reward(info)
         done = False
@@ -253,10 +271,14 @@ class Widow250Env(gym.Env, Serializable):
         gripper_binary_state = [float(self.is_gripper_open)]
         ee_pos, ee_quat = bullet.get_link_state(
             self.robot_id, self.end_effector_index)
+        object_position, object_orientation = bullet.get_object_position(
+            self.objects[self.target_object])
         if self.observation_mode == 'pixels':
             image_observation = self.render_obs()
             image_observation = np.float32(image_observation.flatten()) / 255.0
             observation = {
+                'object_position': object_position,
+                'object_orientation': object_orientation,
                 'state': np.concatenate(
                     (ee_pos, ee_quat, gripper_state, gripper_binary_state)),
                 'image': image_observation

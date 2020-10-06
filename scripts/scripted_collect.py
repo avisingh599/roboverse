@@ -67,7 +67,7 @@ def collect_one_traj(env, policy, num_timesteps, noise,
             num_steps = j
 
         rewards.append(reward)
-        if done:
+        if done or agent_info['done']:
             break
 
     if info[accept_trajectory_key]:
@@ -92,7 +92,9 @@ def main(args):
                          transpose_image=False)
 
     data = []
-    assert args.policy_name in policies.keys()
+    assert args.policy_name in policies.keys(), f"The policy name must be one of: {policies.keys()}"
+    assert args.accept_trajectory_key in env.get_info().keys(), \
+        f"""The accept trajectory key must be one of: {env.get_info().keys()}"""
     policy_class = policies[args.policy_name]
     policy = policy_class(env)
     num_success = 0

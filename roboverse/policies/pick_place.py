@@ -75,7 +75,9 @@ class PickPlace:
             self.place_attempted = True
 
         agent_info = dict(place_attempted=self.place_attempted, done=done)
-        action = np.concatenate((action_xyz, action_angles, action_gripper))
+        neutral_action = [0.]
+        action = np.concatenate(
+            (action_xyz, action_angles, action_gripper, neutral_action))
         return action, agent_info
 
 

@@ -51,11 +51,9 @@ def slide_drawer(drawer, direction):
     # -1 = open; 1 = close
     drawer_frame_joint_idx = get_drawer_base_joint(drawer)
 
-    num_ts = 20 if direction == -1 else 30
+    num_ts = 90
 
-    command = np.clip(10 * direction,
-                      -10 * np.abs(direction), np.abs(direction))
-    # enable fast opening; slow closing
+    command = direction / 3
 
     # Wait a little before closing
     wait_ts = 30  # 0 if direction == -1 else 30
@@ -66,7 +64,7 @@ def slide_drawer(drawer, direction):
         drawer_frame_joint_idx,
         controlMode=p.VELOCITY_CONTROL,
         targetVelocity=command,
-        force=10
+        force=5
     )
 
     drawer_pos = get_drawer_bottom_pos(drawer)
@@ -78,8 +76,8 @@ def slide_drawer(drawer, direction):
         drawer_frame_joint_idx,
         controlMode=p.VELOCITY_CONTROL,
         targetVelocity=0,
-        force=10
+        force=5
     )
-    
+
     control.step_simulation(num_ts)
     return drawer_pos

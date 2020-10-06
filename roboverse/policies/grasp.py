@@ -32,7 +32,6 @@ class Grasp:
             self.env.objects[self.object_to_target])
         object_lifted = object_pos[2] > self.pick_height_thresh
         gripper_pickpoint_dist = np.linalg.norm(self.pick_point - ee_pos)
-        # gripper_droppoint_dist = np.linalg.norm(self.drop_point - ee_pos)
         done = False
 
         if gripper_pickpoint_dist > 0.02 and self.env.is_gripper_open:
@@ -42,7 +41,7 @@ class Grasp:
             if xy_diff > 0.03:
                 action_xyz[2] = 0.0
             action_angles = [0., 0., 0.]
-            action_gripper = [0.0]
+            action_gripper = [0.]
         elif self.env.is_gripper_open:
             # near the object enough, performs grasping action
             action_xyz = (self.pick_point - ee_pos) * self.xyz_action_scale
@@ -60,5 +59,7 @@ class Grasp:
             action_gripper = [0.]
 
         agent_info = dict(done=done)
-        action = np.concatenate((action_xyz, action_angles, action_gripper))
+        neutral_action = [0.]
+        action = np.concatenate(
+            (action_xyz, action_angles, action_gripper, neutral_action))
         return action, agent_info

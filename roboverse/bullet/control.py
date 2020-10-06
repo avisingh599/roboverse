@@ -60,7 +60,7 @@ def apply_action_ik(target_ee_pos, target_ee_quat, target_gripper_state,
                                 controlMode=p.POSITION_CONTROL,
                                 targetPositions=joint_poses,
                                 # targetVelocity=0,
-                                forces=[500] * len(movable_joints),
+                                forces=[5] * len(movable_joints),
                                 positionGains=[0.03] * len(movable_joints),
                                 # velocityGain=1
                                 )
@@ -86,6 +86,20 @@ def reset_robot(robot_id, reset_joint_indices, reset_joint_values):
     assert len(reset_joint_indices) == len(reset_joint_values)
     for i, value in zip(reset_joint_indices, reset_joint_values):
         p.resetJointState(robot_id, i, value)
+
+
+def move_to_neutral(robot_id, reset_joint_indices, reset_joint_values,
+                    num_sim_steps=7):
+    assert len(reset_joint_indices) == len(reset_joint_values)
+    p.setJointMotorControlArray(robot_id,
+                                reset_joint_indices,
+                                controlMode=p.POSITION_CONTROL,
+                                targetPositions=reset_joint_values,
+                                forces=[100] * len(reset_joint_indices),
+                                positionGains=[0.03] * len(reset_joint_indices),
+                                )
+    for _ in range(num_sim_steps):
+        p.stepSimulation()
 
 
 def reset_object(body_id, position, orientation):

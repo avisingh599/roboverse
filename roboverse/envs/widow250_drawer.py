@@ -19,7 +19,7 @@ class Widow250DrawerEnv(Widow250Env):
         self.drawer_quat = drawer_quat
         self.left_opening = left_opening
         self.start_opened = start_opened
-        self.drawer_opened_success_thresh = 0.8
+        self.drawer_opened_success_thresh = 0.95
         obj_pos_high, obj_pos_low = self.get_obj_pos_high_low()
         super(Widow250DrawerEnv, self).__init__(
             # object_names=object_names,
