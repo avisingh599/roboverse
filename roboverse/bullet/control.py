@@ -89,7 +89,7 @@ def reset_robot(robot_id, reset_joint_indices, reset_joint_values):
 
 
 def move_to_neutral(robot_id, reset_joint_indices, reset_joint_values,
-                    num_sim_steps=7):
+                    num_sim_steps=75):
     assert len(reset_joint_indices) == len(reset_joint_values)
     p.setJointMotorControlArray(robot_id,
                                 reset_joint_indices,
