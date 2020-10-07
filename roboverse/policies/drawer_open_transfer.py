@@ -9,8 +9,7 @@ class DrawerOpenTransfer:
         self.xyz_action_scale = 7.0
         self.gripper_dist_thresh = 0.06
         self.gripper_xy_dist_thresh = 0.04
-        self.ending_pos_thresh = 0.04
-        self.ending_pos = [6.00122578e-01,  1.54955496e-01, -1.73008145e-01]
+        self.ending_z = -0.25
         self.reset()
 
     def reset(self):
@@ -26,7 +25,7 @@ class DrawerOpenTransfer:
         gripper_handle_dist = np.linalg.norm(handle_pos - ee_pos)
         gripper_handle_xy_dist = np.linalg.norm(handle_pos[:2] - ee_pos[:2])
         done = False
-
+        neutral_action = [0.0]
         if (gripper_handle_xy_dist > self.gripper_xy_dist_thresh
                 and not self.env.is_drawer_open()):
             # print('xy - approaching handle')
@@ -34,14 +33,13 @@ class DrawerOpenTransfer:
             action_xyz = list(action_xyz[:2]) + [0.]  # don't droop down.
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
-            neutral_action = [0.5]
+
         elif (gripper_handle_dist > self.gripper_dist_thresh
                 and not self.env.is_drawer_open()):
             # moving down toward handle
             action_xyz = (handle_pos - ee_pos) * 7.0
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
-            neutral_action = [0.5]
         elif not self.env.is_drawer_open():
             # print("opening drawer")
             x_command = (-1) ** (1 - self.env.left_opening)
@@ -49,27 +47,16 @@ class DrawerOpenTransfer:
             # action = np.asarray([0., 0., 0.7])
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
-            neutral_action = [0.5]
-        elif (abs(ee_pos[2] - self.ending_pos[2]) >
-                self.ending_pos_thresh):
-            self.drawer_never_opened = False
-            action_xyz = (self.ending_pos - ee_pos)* 2.0   # force upward action
-            action_xyz[2] *= 3.0
+        elif ee_pos[2] < self.ending_z:
+            action_xyz = [0., 0., 0.5]
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
-            neutral_action = [0.5]
-        elif (np.linalg.norm(ee_pos - self.ending_pos) >
-                self.ending_pos_thresh):
-            self.drawer_never_opened = False
-            action_xyz = (self.ending_pos - ee_pos) * 3.0  # force upward action
-            action_angles = [0., 0., 0.]
-            action_gripper = [0.0]
-            neutral_action = [-0.5]
         else:
             action_xyz = [0., 0., 0.]
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
-            neutral_action = [0.5]
+            neutral_action = [0.7]
+            done = True
 
         agent_info = dict(done=done)
         action = np.concatenate((action_xyz, action_angles, action_gripper))
