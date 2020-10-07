@@ -17,10 +17,11 @@ class Widow250PickPlaceEnv(Widow250Env):
 
         container_config = CONTAINER_CONFIGS[self.container_name]
         self.fixed_container_position = fixed_container_position
-        self.container_position_low = container_config['container_position_low']
         if self.fixed_container_position:
-            self.container_position_high = self.container_position_low
+            self.container_position_low = container_config['container_position_default']
+            self.container_position_high = container_config['container_position_default']
         else:
+            self.container_position_low = container_config['container_position_low']
             self.container_position_high = container_config['container_position_high']
         self.container_position_z = container_config['container_position_z']
         self.container_orientation = container_config['container_orientation']

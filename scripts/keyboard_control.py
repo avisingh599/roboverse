@@ -37,7 +37,8 @@ def keyboard_control(args):
                 take_action = False
 
         if take_action:
-            env.step(action)
+            obs, rew, done, info = env.step(action)
+            print(rew)
         time.sleep(0.1)
 
 
