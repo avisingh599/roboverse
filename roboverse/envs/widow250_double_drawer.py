@@ -10,7 +10,7 @@ import itertools
 class Widow250DoubleDrawerEnv(Widow250Env):
 
     def __init__(self,
-                 drawer_pos=(0.5, 0.2, -.35),
+                 drawer_pos=(0.47, 0.2, -.35),
                  drawer_quat=(0, 0, 0.707107, 0.707107),
                  left_opening=True,  # False is not supported
                  start_opened=False,
