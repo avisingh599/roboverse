@@ -13,7 +13,6 @@ class DrawerOpenTransfer:
         self.reset()
 
     def reset(self):
-        # self.dist_thresh = 0.06 + np.random.normal(scale=0.01)
         self.drawer_never_opened = True
         offset_coeff = (-1) ** (1 - self.env.left_opening)
         self.handle_offset = np.array([offset_coeff * 0.01, 0.0, -0.01])
@@ -59,7 +58,5 @@ class DrawerOpenTransfer:
             done = True
 
         agent_info = dict(done=done)
-        action = np.concatenate((action_xyz, action_angles, action_gripper))
-        if self.env.use_neutral_action:
-            action = np.concatenate((action, neutral_action))
+        action = np.concatenate((action_xyz, action_angles, action_gripper, neutral_action))
         return action, agent_info
