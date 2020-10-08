@@ -819,6 +819,7 @@ ENVIRONMENT_SPECS = (
                    'object_scales': (0.75,),
                    'target_object': 'ball',
                    'load_tray': False,
+                   'use_neutral_action': True
                    }
     },
     {
