@@ -22,9 +22,6 @@ class Widow250DrawerEnv(Widow250Env):
         self.drawer_opened_success_thresh = 0.95
         obj_pos_high, obj_pos_low = self.get_obj_pos_high_low()
         super(Widow250DrawerEnv, self).__init__(
-            # object_names=object_names,
-            # object_scales=object_scales,
-            # object_orientations=object_orientations,
             object_position_high=obj_pos_high,
             object_position_low=obj_pos_low,
             **kwargs
@@ -199,6 +196,15 @@ class Widow250DrawerRandomizedEnv(Widow250DrawerEnv):
         self.object_position_low, self.object_position_high = \
             self.get_obj_pos_high_low()
         return super(Widow250DrawerRandomizedEnv, self).reset()
+
+
+class Widow250DoubleDrawerEnv(Widow250DrawerEnv):
+
+    def _load_meshes(self):
+        super(Widow250DoubleDrawerEnv, self)._load_meshes()
+        self.objects["drawer_top"] = object_utils.load_object(
+            "drawer_no_handle", self.drawer_pos + np.array([0, 0, 0.07]),
+            self.drawer_quat, scale=0.1)
 
 
 if __name__ == "__main__":

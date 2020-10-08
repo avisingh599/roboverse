@@ -824,8 +824,9 @@ ENVIRONMENT_SPECS = (
     },
     {
         'id': 'Widow250DoubleDrawerOpenNeutral-v0',
-        'entry_point': 'roboverse.envs.widow250_double_drawer:Widow250DoubleDrawerEnv',
-        'kwargs': {'reward_type': 'opening',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DoubleDrawerEnv',
+        'kwargs': {'drawer_pos': (0.47, 0.2, -.35),
+                   'reward_type': 'opening',
                    'control_mode': 'discrete_gripper',
 
                    'object_names': ('ball',),
@@ -837,8 +838,9 @@ ENVIRONMENT_SPECS = (
     },
     {
         'id': 'Widow250DoubleDrawerGraspNeutral-v0',
-        'entry_point': 'roboverse.envs.widow250_double_drawer:Widow250DoubleDrawerEnv',
-        'kwargs': {'reward_type': 'opening',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DoubleDrawerEnv',
+        'kwargs': {'drawer_pos': (0.47, 0.2, -.35),
+                   'reward_type': 'opening',
                    'control_mode': 'discrete_gripper',
 
                    'object_names': ('ball',),
