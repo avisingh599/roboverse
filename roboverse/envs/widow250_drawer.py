@@ -81,9 +81,7 @@ class Widow250DrawerEnv(Widow250Env):
 
     def get_info(self):
         info = super(Widow250DrawerEnv, self).get_info()
-        drawer_x_pos = object_utils.get_drawer_pos(
-            self.objects["drawer"])[0]
-        info['drawer_x_pos'] = drawer_x_pos
+        info['drawer_x_pos'] = self.get_drawer_pos()[0]
         info['drawer_opened_percentage'] = \
             self.get_drawer_opened_percentage()
         info['drawer_opened_success'] = info["drawer_opened_percentage"] > \
@@ -96,16 +94,21 @@ class Widow250DrawerEnv(Widow250Env):
         return handle_pos
 
     def is_drawer_open(self):
+        # refers to bottom drawer in the double drawer case
         info = self.get_info()
         return info['drawer_opened_success']
 
     def get_drawer_opened_percentage(self, drawer_key="drawer"):
         # compatible with either drawer or upper_drawer
-        drawer_x_pos = object_utils.get_drawer_pos(
-            self.objects[drawer_key])[0]
+        drawer_x_pos = self.get_drawer_pos(drawer_key)[0]
         return object_utils.get_drawer_opened_percentage(
             self.left_opening, self.drawer_min_x_pos,
             self.drawer_max_x_pos, drawer_x_pos)
+
+    def get_drawer_pos(self, drawer_key="drawer"):
+        drawer_pos = object_utils.get_drawer_pos(
+            self.objects[drawer_key])
+        return drawer_pos
 
     def get_reward(self, info):
         if not info:
@@ -228,14 +231,16 @@ class Widow250DoubleDrawerEnv(Widow250DrawerEnv):
 
     def get_info(self):
         info = super(Widow250DoubleDrawerEnv, self).get_info()
-        drawer_x_pos = object_utils.get_drawer_pos(
-            self.objects["drawer_top"])[0]
-        info['drawer_top_x_pos'] = drawer_x_pos
+        info['drawer_top_x_pos'] = self.get_drawer_pos("drawer_top")[0]
         info['drawer_top_opened_percentage'] = \
             self.get_drawer_opened_percentage("drawer_top")
         info['drawer_top_closed_success'] = info["drawer_top_opened_percentage"] \
             < self.drawer_closed_success_thresh
         return info
+
+    def is_top_drawer_closed(self):
+        info = self.get_info()
+        return info['drawer_top_closed_success']
 
 
 if __name__ == "__main__":
