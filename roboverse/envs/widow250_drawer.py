@@ -20,6 +20,7 @@ class Widow250DrawerEnv(Widow250Env):
         self.left_opening = left_opening
         self.start_opened = start_opened
         self.drawer_opened_success_thresh = 0.95
+        self.drawer_closed_success_thresh = 0.05
         obj_pos_high, obj_pos_low = self.get_obj_pos_high_low()
         super(Widow250DrawerEnv, self).__init__(
             object_position_high=obj_pos_high,
@@ -67,7 +68,7 @@ class Widow250DrawerEnv(Widow250Env):
             self.drawer_max_x_pos = closed_drawer_x_pos
 
         if self.start_opened:
-           object_utils.open_drawer(self.objects['drawer'])
+            object_utils.open_drawer(self.objects['drawer'])
 
     def get_obj_pos_high_low(self):
         obj_pos_high = tuple(
@@ -80,7 +81,7 @@ class Widow250DrawerEnv(Widow250Env):
 
     def get_info(self):
         info = super(Widow250DrawerEnv, self).get_info()
-        drawer_x_pos = object_utils.get_drawer_bottom_pos(
+        drawer_x_pos = object_utils.get_drawer_pos(
             self.objects["drawer"])[0]
         info['drawer_x_pos'] = drawer_x_pos
         info['drawer_opened_percentage'] = \
@@ -98,9 +99,10 @@ class Widow250DrawerEnv(Widow250Env):
         info = self.get_info()
         return info['drawer_opened_success']
 
-    def get_drawer_opened_percentage(self):
-        drawer_x_pos = object_utils.get_drawer_bottom_pos(
-            self.objects["drawer"])[0]
+    def get_drawer_opened_percentage(self, drawer_key="drawer"):
+        # compatible with either drawer or upper_drawer
+        drawer_x_pos = object_utils.get_drawer_pos(
+            self.objects[drawer_key])[0]
         return object_utils.get_drawer_opened_percentage(
             self.left_opening, self.drawer_min_x_pos,
             self.drawer_max_x_pos, drawer_x_pos)
@@ -199,16 +201,45 @@ class Widow250DrawerRandomizedEnv(Widow250DrawerEnv):
 
 
 class Widow250DoubleDrawerEnv(Widow250DrawerEnv):
+    def __init__(self,
+                 drawer_pos=(0.5, 0.2, -.35),
+                 drawer_quat=(0, 0, 0.707107, 0.707107),
+                 left_opening=True,  # False is not supported
+                 start_opened=False,
+                 start_top_opened=False,
+                 **kwargs):
+        self.start_top_opened = start_top_opened
+        super(Widow250DoubleDrawerEnv, self).__init__(
+            drawer_pos=drawer_pos,
+            drawer_quat=drawer_quat,
+            left_opening=left_opening,  # False is not supported
+            start_opened=start_opened,
+            **kwargs,
+        )
 
     def _load_meshes(self):
         super(Widow250DoubleDrawerEnv, self)._load_meshes()
         self.objects["drawer_top"] = object_utils.load_object(
             "drawer_no_handle", self.drawer_pos + np.array([0, 0, 0.07]),
             self.drawer_quat, scale=0.1)
+        if self.start_top_opened:
+            object_utils.open_drawer(
+                self.objects["drawer_top"], half_open=True)
+
+    def get_info(self):
+        info = super(Widow250DoubleDrawerEnv, self).get_info()
+        drawer_x_pos = object_utils.get_drawer_pos(
+            self.objects["drawer_top"])[0]
+        info['drawer_top_x_pos'] = drawer_x_pos
+        info['drawer_top_opened_percentage'] = \
+            self.get_drawer_opened_percentage("drawer_top")
+        info['drawer_top_closed_success'] = info["drawer_top_opened_percentage"] \
+            < self.drawer_closed_success_thresh
+        return info
 
 
 if __name__ == "__main__":
-    env = roboverse.make('Widow250DrawerRandomizedOpenTwoObjGrasp-v0',
+    env = roboverse.make('Widow250DoubleDrawerCloseOpenNeutral-v0',
                          gui=True, transpose_image=False)
     import time
     env.reset()
@@ -217,9 +248,7 @@ if __name__ == "__main__":
     for j in range(5):
         for i in range(20):
             obs, rew, done, info = env.step(
-                np.asarray([-0.05, 0., 0., 0., 0., 0.5, 0.]))
+                np.asarray([-0.05, 0., 0., 0., 0., 0.5, 0., 0.]))
             print("reward", rew, "info", info)
             time.sleep(0.1)
         env.reset()
-
-    env.reset()
