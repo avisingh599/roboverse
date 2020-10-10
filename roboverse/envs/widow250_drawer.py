@@ -5,6 +5,7 @@ import roboverse.bullet as bullet
 from roboverse.envs import objects
 import numpy as np
 import itertools
+from roboverse.assets.shapenet_object_lists import CONTAINER_CONFIGS
 
 
 class Widow250DrawerEnv(Widow250Env):
@@ -14,11 +15,13 @@ class Widow250DrawerEnv(Widow250Env):
                  drawer_quat=(0, 0, 0.707107, 0.707107),
                  left_opening=True,  # False is not supported
                  start_opened=False,
+                 blocking_object_in_tray=True,
                  **kwargs):
         self.drawer_pos = drawer_pos
         self.drawer_quat = drawer_quat
         self.left_opening = left_opening
         self.start_opened = start_opened
+        self.blocking_object_in_tray = blocking_object_in_tray
         self.drawer_opened_success_thresh = 0.95
         self.drawer_closed_success_thresh = 0.05
         obj_pos_high, obj_pos_low = self.get_obj_pos_high_low()
@@ -212,6 +215,8 @@ class Widow250DoubleDrawerEnv(Widow250DrawerEnv):
                  start_top_opened=False,
                  **kwargs):
         self.start_top_opened = start_top_opened
+        self.tray_position = (.8, 0.0, -.37)
+
         super(Widow250DoubleDrawerEnv, self).__init__(
             drawer_pos=drawer_pos,
             drawer_quat=drawer_quat,
@@ -225,6 +230,29 @@ class Widow250DoubleDrawerEnv(Widow250DrawerEnv):
         self.objects["drawer_top"] = object_utils.load_object(
             "drawer_no_handle", self.drawer_pos + np.array([0, 0, 0.07]),
             self.drawer_quat, scale=0.1)
+
+        self.tray_id = objects.tray(base_position=self.tray_position, scale=0.3)
+
+        self.blocking_object_name = 'gatorade'
+
+        if self.blocking_object_in_tray:
+            object_position = np.random.uniform(
+                low=(.79, .0, -.34), high=(.81, .0, -.34))
+            # TODO Maybe randomize the quat as well
+            object_quat = (0, 0, 1, 0)
+        else:
+            object_position = np.random.uniform(
+                low=(.63, .2, -.34), high=(.65, .2, -.34))
+            object_quat = (0, 0, 1, 0)
+
+        self.blocking_object = object_utils.load_object(
+            self.blocking_object_name,
+            object_position,
+            object_quat=object_quat,
+            scale=1.0)
+
+        bullet.step_simulation(self.num_sim_steps_reset)
+
         if self.start_top_opened:
             object_utils.open_drawer(
                 self.objects["drawer_top"], half_open=True)

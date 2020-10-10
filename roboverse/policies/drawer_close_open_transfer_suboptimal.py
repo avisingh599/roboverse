@@ -40,7 +40,6 @@ class DrawerCloseOpenTransferSuboptimal:
             action_xyz = [0., 0.2, -0.3]
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
-            print("ee_pos[2]", ee_pos[2])
         elif not self.env.is_top_drawer_closed() and ee_pos[2] < self.height_thresh:
             # print("close top drawer")
             self.reached_pushing_region = True

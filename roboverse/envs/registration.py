@@ -852,7 +852,7 @@ ENVIRONMENT_SPECS = (
         'id': 'Widow250DoubleDrawerGraspNeutral-v0',
         'entry_point': 'roboverse.envs.widow250_drawer:Widow250DoubleDrawerEnv',
         'kwargs': {'drawer_pos': (0.47, 0.2, -.35),
-                   'reward_type': 'opening',
+                   'reward_type': 'grasping',
                    'control_mode': 'discrete_gripper',
 
                    'object_names': ('ball',),
@@ -861,6 +861,22 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'start_opened': True,
                    'use_neutral_action': True
+                   }
+    },
+    {
+        'id': 'Widow250DoubleDrawerPickPlaceOpenGraspNeutral-v0',
+        'entry_point': 'roboverse.envs.widow250_drawer:Widow250DoubleDrawerEnv',
+        'kwargs': {'drawer_pos': (0.47, 0.2, -.35),
+                   'reward_type': 'grasping',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('ball',),
+                   'object_scales': (0.75,),
+                   'target_object': 'ball',
+                   'load_tray': False,
+                   'start_opened': False,
+                   'use_neutral_action': True,
+                   'blocking_object_in_tray': False,
                    }
     },
     {
@@ -876,7 +892,7 @@ ENVIRONMENT_SPECS = (
                    'load_tray': False,
                    'start_opened': False,
                    'start_top_opened': True,
-                   'use_neutral_action': True
+                   'use_neutral_action': True,
                    }
     },
     {
