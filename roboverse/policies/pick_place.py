@@ -130,7 +130,6 @@ class PickPlaceOpen:
                 neutral_action = [action[7]]
                 done = info['done']
             else:
-                print(object_pos)  # TODO (remove this)
                 action_xyz = [0., 0., 0.]
                 action_angles = [0., 0., 0.]
                 action_gripper = [0.0]
