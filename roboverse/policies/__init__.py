@@ -2,10 +2,14 @@ from .pick_place import PickPlace, PickPlaceOpen, PickPlaceOpenSuboptimal
 from .drawer_open import DrawerOpen
 from .grasp import Grasp
 from .button_press import ButtonPress
-from .drawer_open_transfer import DrawerOpenTransfer
-from .drawer_open_transfer_suboptimal import DrawerOpenTransferSuboptimal
-from .drawer_close_open_transfer import DrawerCloseOpenTransfer
-from .drawer_close_open_transfer_suboptimal import DrawerCloseOpenTransferSuboptimal
+from .drawer_open_transfer import (
+    DrawerOpenTransfer,
+    DrawerOpenTransferSuboptimal
+)
+from .drawer_close_open_transfer import (
+    DrawerCloseOpenTransfer,
+    DrawerCloseOpenTransferSuboptimal
+)
 
 policies = dict(
     grasp=Grasp,

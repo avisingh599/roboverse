@@ -56,7 +56,6 @@ class DrawerCloseOpenTransfer:
             action_xyz = list(action_xyz[:2]) + [0.]  # don't droop down.
             action_angles = [0., 0., 0.]
             action_gripper = [0.0]
-
         elif (gripper_handle_dist > self.gripper_dist_thresh
                 and not self.env.is_drawer_open()):
             # moving down toward handle
@@ -83,4 +82,52 @@ class DrawerCloseOpenTransfer:
 
         agent_info = dict(done=done)
         action = np.concatenate((action_xyz, action_angles, action_gripper, neutral_action))
+        return action, agent_info
+
+
+class DrawerCloseOpenTransferSuboptimal:
+    def __init__(self, env):
+        self.env = env
+        self.gripper_xy_dist_thresh = 0.04
+        self.height_thresh = -0.2
+        self.reset()
+
+    def reset(self):
+        offset_coeff = (-1) ** (1 - self.env.left_opening)
+        self.handle_offset = np.array([offset_coeff * 0.01, 0.0, -0.01])
+        self.reached_pushing_region = False
+
+    def get_action(self):
+        ee_pos, _ = bullet.get_link_state(
+            self.env.robot_id, self.env.end_effector_index)
+        handle_pos = self.env.get_drawer_handle_pos() + self.handle_offset
+        gripper_handle_xy_dist = np.linalg.norm(handle_pos[:2] - ee_pos[:2])
+        done = False
+        neutral_action = [0.0]
+        if not gripper_handle_xy_dist > self.gripper_xy_dist_thresh:
+            print("move forward")
+            action_xyz = [0., 0.2, -0.3]
+            action_angles = [0., 0., 0.]
+            action_gripper = [0.0]
+        elif not self.env.is_top_drawer_closed() and ee_pos[2] < self.height_thresh:
+            print("open top drawer")
+            self.reached_pushing_region = True
+            action_xyz = [0.5, 0, 0.0]
+            action_angles = [0., 0., 0.]
+            action_gripper = [0.0]
+        elif (gripper_handle_xy_dist > self.gripper_xy_dist_thresh
+                and not self.env.is_drawer_open()):
+            print('xy - approaching handle')
+            action_xyz = (handle_pos - ee_pos) * 7.0
+            action_xyz = list(action_xyz[:2]) + [0.]  # don't droop down.
+            action_angles = [0., 0., 0.]
+            action_gripper = [0.0]
+        else:
+            action_xyz = [0.,0., 0.]  # don't droop down.
+            action_angles = [0., 0., 0.]
+            action_gripper = [0.0]
+
+        agent_info = dict(done=done)
+        action = np.concatenate(
+            (action_xyz, action_angles, action_gripper, neutral_action))
         return action, agent_info

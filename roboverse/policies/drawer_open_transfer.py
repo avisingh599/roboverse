@@ -4,17 +4,18 @@ import roboverse.bullet as bullet
 
 class DrawerOpenTransfer:
 
-    def __init__(self, env):
+    def __init__(self, env, close_drawer=False):
         self.env = env
         self.xyz_action_scale = 7.0
         self.gripper_dist_thresh = 0.06
         self.gripper_xy_dist_thresh = 0.04
         self.ending_z = -0.25
+        self.close_drawer = close_drawer  # closes instead of opens
         self.reset()
 
     def reset(self):
         self.drawer_never_opened = True
-        offset_coeff = (-1) ** (1 - self.env.left_opening)
+        offset_coeff = (-1) ** (self.env.left_opening - 1 + self.close_drawer)
         self.handle_offset = np.array([offset_coeff * 0.01, 0.0, -0.01])
 
     def get_action(self):
@@ -41,7 +42,7 @@ class DrawerOpenTransfer:
             action_gripper = [0.0]
         elif not self.env.is_drawer_open():
             # print("opening drawer")
-            x_command = (-1) ** (1 - self.env.left_opening)
+            x_command = (-1) ** (self.env.left_opening - 1 + self.close_drawer)
             action_xyz = np.array([x_command, 0, 0])
             # action = np.asarray([0., 0., 0.7])
             action_angles = [0., 0., 0.]
@@ -58,5 +59,13 @@ class DrawerOpenTransfer:
             done = True
 
         agent_info = dict(done=done)
-        action = np.concatenate((action_xyz, action_angles, action_gripper, neutral_action))
+        action = np.concatenate(
+            (action_xyz, action_angles, action_gripper, neutral_action))
         return action, agent_info
+
+
+class DrawerOpenTransferSuboptimal(DrawerOpenTransfer):
+
+    def __init__(self, env):
+        super(DrawerOpenTransferSuboptimal, self).__init__(
+            env, close_drawer=True)
