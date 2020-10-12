@@ -85,7 +85,8 @@ class PickPlace:
 class PickPlaceOpen:
 
     def __init__(self, env, pick_height_thresh=-0.31, xyz_action_scale=7.0,
-                 pick_point_noise=0.00, drop_point_offset_mean=0.00, drop_point_noise=0.00):
+                 pick_point_noise=0.00, drop_point_offset_mean=0.00,
+                 drop_point_noise=0.00, pick_point_z=-0.32):
         self.env = env
         self.pick_height_thresh_noisy = (
             pick_height_thresh + np.random.normal(scale=0.01))
@@ -93,6 +94,7 @@ class PickPlaceOpen:
         self.pick_point_noise = pick_point_noise
         self.drop_point_noise = drop_point_noise
         self.drop_point_offset_mean = drop_point_offset_mean
+        self.pick_point_z = pick_point_z
 
         self.drawer_policy = DrawerOpenTransfer(env)
 
@@ -100,7 +102,7 @@ class PickPlaceOpen:
 
     def reset(self):
         self.pick_point = bullet.get_object_position(self.env.blocking_object)[0]
-        self.pick_point[2] = -0.32
+        self.pick_point[2] = self.pick_point_z
         drop_point_error = np.random.normal(
             self.drop_point_offset_mean, self.drop_point_noise)
         self.drop_point = (

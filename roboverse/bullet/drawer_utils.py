@@ -51,12 +51,12 @@ def slide_drawer(drawer, direction, half_slide=False):
     # -1 = open; 1 = close
     drawer_frame_joint_idx = get_drawer_base_joint(drawer)
 
-    num_ts = 30
+    num_ts = np.random.randint(low=57, high=61)
 
     if half_slide:
         num_ts = int(num_ts / 2)
 
-    command = direction
+    command = 0.5*direction
 
     # Wait a little before closing
     wait_ts = 30  # 0 if direction == -1 else 30

@@ -74,12 +74,18 @@ class Widow250DrawerEnv(Widow250Env):
             object_utils.open_drawer(self.objects['drawer'])
 
     def get_obj_pos_high_low(self):
-        obj_pos_high = tuple(
-            np.array(self.drawer_pos[:2] + (-.2,)) +
-            (1 - 2 * (not self.left_opening)) * np.array((0.12, 0, 0)))
-        obj_pos_low = tuple(
-            np.array(self.drawer_pos[:2] + (-.2,)) -
-            (1 - 2 * (not self.left_opening)) * np.array((-0.12, 0, 0)))
+        obj_pos_high = np.array(self.drawer_pos[:2] + (-.2,)) \
+                       + (1 - 2 * (not self.left_opening)) * np.array((0.12, 0, 0))
+        obj_pos_low = np.array(self.drawer_pos[:2] + (-.2,)) \
+            - (1 - 2 * (not self.left_opening)) * np.array((-0.12, 0, 0))
+
+        # randomization along x-axis
+        obj_pos_high[0] = obj_pos_high[0] + 0.015
+        obj_pos_low[0] = obj_pos_low[0] - 0.015
+
+        # randomization along y-axis
+        # obj_pos_high[1] = obj_pos_high[1] + 0.01
+        # obj_pos_low[1] = obj_pos_low[1] - 0.01
         return obj_pos_high, obj_pos_low
 
     def get_info(self):
