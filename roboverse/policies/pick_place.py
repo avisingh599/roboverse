@@ -10,8 +10,8 @@ class PickPlace:
     def __init__(self, env, pick_height_thresh=-0.31, xyz_action_scale=7.0,
                  pick_point_noise=0.00, drop_point_noise=0.00):
         self.env = env
-        self.pick_height_thresh_noisy = pick_height_thresh \
-                                            + np.random.normal(scale=0.01)
+        self.pick_height_thresh_noisy = (
+            pick_height_thresh + np.random.normal(scale=0.01))
         self.xyz_action_scale = xyz_action_scale
         self.pick_point_noise = pick_point_noise
         self.drop_point_noise = drop_point_noise
@@ -85,21 +85,21 @@ class PickPlace:
 class PickPlaceOpen:
 
     def __init__(self, env, pick_height_thresh=-0.31, xyz_action_scale=7.0,
-                 pick_point_noise=0.00, drop_point_noise=0.00):
+                 pick_point_z=-0.32, suboptimal=False):
         self.env = env
-        self.pick_height_thresh_noisy = pick_height_thresh \
-                                            + np.random.normal(scale=0.01)
+        self.pick_height_thresh_noisy = (
+            pick_height_thresh + np.random.normal(scale=0.01))
         self.xyz_action_scale = xyz_action_scale
-        self.pick_point_noise = pick_point_noise
-        self.drop_point_noise = drop_point_noise
+        self.pick_point_z = pick_point_z
+        self.suboptimal = suboptimal
 
-        self.drawer_policy = DrawerOpenTransfer(env)
+        self.drawer_policy = DrawerOpenTransfer(env, suboptimal=self.suboptimal)
 
         self.reset()
 
     def reset(self):
         self.pick_point = bullet.get_object_position(self.env.blocking_object)[0]
-        self.pick_point[2] = -0.32
+        self.pick_point[2] = self.pick_point_z
         self.drop_point = bullet.get_object_position(self.env.tray_id)[0]
         self.drop_point[2] = -0.2
         self.place_attempted = False
@@ -126,7 +126,6 @@ class PickPlaceOpen:
                 neutral_action = [action[7]]
                 done = info['done']
             else:
-                print(object_pos)  # TODO (remove this)
                 action_xyz = [0., 0., 0.]
                 action_angles = [0., 0., 0.]
                 action_gripper = [0.0]
@@ -168,12 +167,19 @@ class PickPlaceOpen:
         return action, agent_info
 
 
+class PickPlaceOpenSuboptimal(PickPlaceOpen):
+    def __init__(self, env, **kwargs):
+        super(PickPlaceOpenSuboptimal, self).__init__(
+            env, suboptimal=True, **kwargs,
+        )
+
+
 class PickPlaceOld:
 
     def __init__(self, env, pick_height_thresh=-0.31):
         self.env = env
-        self.pick_height_thresh_noisy = pick_height_thresh \
-                                            + np.random.normal(scale=0.01)
+        self.pick_height_thresh_noisy = (
+            pick_height_thresh + np.random.normal(scale=0.01))
         self.xyz_action_scale = 7.0
         self.reset()
 

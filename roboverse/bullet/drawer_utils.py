@@ -4,8 +4,8 @@ import roboverse.bullet.control as control
 import numpy as np
 
 
-def open_drawer(drawer):
-    return slide_drawer(drawer, -1)
+def open_drawer(drawer, half_open=False):
+    return slide_drawer(drawer, -1, half_slide=half_open)
 
 
 def close_drawer(drawer):
@@ -26,10 +26,10 @@ def get_drawer_handle_link(drawer):
     return handle_link_idx
 
 
-def get_drawer_bottom_pos(drawer):
-    drawer_bottom_pos, _ = bullet.get_link_state(
+def get_drawer_pos(drawer):
+    drawer_pos, _ = bullet.get_link_state(
         drawer, get_drawer_base_joint(drawer))
-    return np.array(drawer_bottom_pos)
+    return np.array(drawer_pos)
 
 
 def get_drawer_handle_pos(drawer):
@@ -46,14 +46,17 @@ def get_drawer_opened_percentage(
         return (max_x_pos - drawer_x_pos) / (max_x_pos - min_x_pos)
 
 
-def slide_drawer(drawer, direction):
+def slide_drawer(drawer, direction, half_slide=False):
     assert direction in [-1, 1]
     # -1 = open; 1 = close
     drawer_frame_joint_idx = get_drawer_base_joint(drawer)
 
-    num_ts = 90
+    num_ts = np.random.randint(low=57, high=61)
 
-    command = direction / 3
+    if half_slide:
+        num_ts = int(num_ts / 2)
+
+    command = 0.5*direction
 
     # Wait a little before closing
     wait_ts = 30  # 0 if direction == -1 else 30
@@ -67,7 +70,7 @@ def slide_drawer(drawer, direction):
         force=5
     )
 
-    drawer_pos = get_drawer_bottom_pos(drawer)
+    drawer_pos = get_drawer_pos(drawer)
 
     control.step_simulation(num_ts)
 
