@@ -86,6 +86,7 @@ class Widow250DrawerEnv(Widow250Env):
         # randomization along y-axis
         # obj_pos_high[1] = obj_pos_high[1] + 0.01
         # obj_pos_low[1] = obj_pos_low[1] - 0.01
+        
         return obj_pos_high, obj_pos_low
 
     def get_info(self):
