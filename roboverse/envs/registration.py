@@ -197,6 +197,47 @@ ENVIRONMENT_SPECS = (
                    }
     },
     {
+        'id': 'Widow250PickTray-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.30),
+                   'object_position_high': (.75, .27, -.30),
+
+                   'container_name': 'tray',
+                   'fixed_container_position': True,
+
+                   'use_neutral_action': True,
+                   'neutral_gripper_open': False,
+                   }
+    },
+    {
+        'id': 'Widow250PlaceTray-v0',
+        'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
+        'kwargs': {'reward_type': 'pick_place',
+                   'control_mode': 'discrete_gripper',
+
+                   'object_names': ('shed',),
+                   'object_scales': (0.7,),
+                   'target_object': 'shed',
+                   'load_tray': False,
+                   'object_position_low': (.49, .18, -.30),
+                   'object_position_high': (.75, .27, -.30),
+
+                   'container_name': 'tray',
+                   'fixed_container_position': True,
+                   'start_object_in_gripper': True,
+
+                   'use_neutral_action': True,
+                   'neutral_gripper_open': False,
+                   }
+    },
+    {
         'id': 'Widow250SinglePutInBowl-v0',
         'entry_point': 'roboverse.envs.widow250_pickplace:Widow250PickPlaceEnv',
         'kwargs': {'reward_type': 'pick_place',

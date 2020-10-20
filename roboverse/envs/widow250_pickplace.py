@@ -4,6 +4,10 @@ import roboverse.bullet as bullet
 from roboverse.envs import objects
 from .multi_object import MultiObjectEnv, MultiObjectMultiContainerEnv
 from roboverse.assets.shapenet_object_lists import CONTAINER_CONFIGS
+import os.path as osp
+
+OBJECT_IN_GRIPPER_PATH = osp.join(osp.dirname(osp.dirname(osp.realpath(__file__))),
+                'assets/bullet-objects/bullet_saved_states/objects_in_gripper/')
 
 
 class Widow250PickPlaceEnv(Widow250Env):
@@ -11,6 +15,7 @@ class Widow250PickPlaceEnv(Widow250Env):
     def __init__(self,
                  container_name='bowl_small',
                  fixed_container_position=False,
+                 start_object_in_gripper=False,
                  **kwargs
                  ):
         self.container_name = container_name
@@ -31,6 +36,7 @@ class Widow250PickPlaceEnv(Widow250Env):
         self.place_success_height_threshold = container_config['place_success_height_threshold']
         self.place_success_radius_threshold = container_config['place_success_radius_threshold']
 
+        self.start_object_in_gripper = start_object_in_gripper
         super(Widow250PickPlaceEnv, self).__init__(**kwargs)
 
     def _load_meshes(self):
@@ -39,8 +45,8 @@ class Widow250PickPlaceEnv(Widow250Env):
         self.objects = {}
 
         """
-        TODO(avi) This needs to be cleaned up, generate function should only 
-                  take in (x,y) positions instead. 
+        TODO(avi) This needs to be cleaned up, generate function should only
+                  take in (x,y) positions instead.
         """
         assert self.container_position_low[2] == self.object_position_low[2]
 
@@ -69,7 +75,6 @@ class Widow250PickPlaceEnv(Widow250Env):
                                                      self.container_orientation,
                                                      self.container_scale)
         bullet.step_simulation(self.num_sim_steps_reset)
-
         for object_name, object_position in zip(self.object_names,
                                                 self.original_object_positions):
             self.objects[object_name] = object_utils.load_object(
@@ -78,6 +83,19 @@ class Widow250PickPlaceEnv(Widow250Env):
                 object_quat=self.object_orientations[object_name],
                 scale=self.object_scales[object_name])
             bullet.step_simulation(self.num_sim_steps_reset)
+
+    def reset(self):
+        super(Widow250PickPlaceEnv, self).reset()
+        ee_pos_init, ee_quat_init = bullet.get_link_state(
+            self.robot_id, self.end_effector_index)
+        ee_pos_init[2] -= 0.05
+
+        if self.start_object_in_gripper:
+            bullet.load_state(osp.join(OBJECT_IN_GRIPPER_PATH,
+                'object_in_gripper_reset.bullet'))
+            self.is_gripper_open = False
+
+        return self.get_observation()
 
     def get_reward(self, info):
         if self.reward_type == 'pick_place':

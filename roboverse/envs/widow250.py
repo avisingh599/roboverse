@@ -52,6 +52,7 @@ class Widow250Env(gym.Env, Serializable):
                  grasp_success_object_gripper_threshold=0.1,
 
                  use_neutral_action=False,
+                 neutral_gripper_open=True,
 
                  xyz_action_scale=0.2,
                  abc_action_scale=20.0,
@@ -84,6 +85,7 @@ class Widow250Env(gym.Env, Serializable):
             grasp_success_object_gripper_threshold
 
         self.use_neutral_action = use_neutral_action
+        self.neutral_gripper_open = neutral_gripper_open
 
         self.gui = gui
 
@@ -256,10 +258,16 @@ class Widow250Env(gym.Env, Serializable):
             num_sim_steps=num_sim_steps)
 
         if self.use_neutral_action and neutral_action > 0.5:
-            bullet.move_to_neutral(
-                self.robot_id,
-                self.reset_joint_indices,
-                self.reset_joint_values)
+            if self.neutral_gripper_open:
+                bullet.move_to_neutral(
+                    self.robot_id,
+                    self.reset_joint_indices,
+                    RESET_JOINT_VALUES)
+            else:
+                bullet.move_to_neutral(
+                    self.robot_id,
+                    self.reset_joint_indices,
+                    RESET_JOINT_VALUES_GRIPPER_CLOSED)
 
         info = self.get_info()
         reward = self.get_reward(info)
