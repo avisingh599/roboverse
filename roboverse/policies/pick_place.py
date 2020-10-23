@@ -102,6 +102,11 @@ class PickPlaceOpen:
         self.pick_point[2] = self.pick_point_z
         self.drop_point = bullet.get_object_position(self.env.tray_id)[0]
         self.drop_point[2] = -0.2
+
+        if self.suboptimal and np.random.uniform() > 0.5:
+            self.drop_point[0] += np.random.uniform(-0.2, 0.0)
+            self.drop_point[1] += np.random.uniform(0.0, 0.2)
+
         self.place_attempted = False
         self.neutral_taken = False
         self.drawer_policy.reset()
