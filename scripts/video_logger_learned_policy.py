@@ -46,19 +46,27 @@ class BulletVideoLogger:
 
         if not os.path.exists(self.video_save_dir):
             os.makedirs(self.video_save_dir)
-        # camera settings for pick and place
-        self.camera_target_pos = [0.55, 0.1, -0.30]
+
+        # cam for pick and place (front view)
+        # self.camera_target_pos = [0.55, 0.1, -0.30]
+        # self.camera_roll = 0.0
+        # self.camera_pitch = -30.0
+        # self.camera_yaw = 180.0
+        # self.camera_distance = 0.50
+
+        # drawer cam (front view)
+        # self.camera_target_pos = [0.60, 0.05, -0.30]
+        # self.camera_roll = 0.0
+        # self.camera_pitch = -30.0
+        # self.camera_yaw = 180.0
+        # self.camera_distance = 0.50
+
+        # drawer cam (canonical view)
+        self.camera_target_pos = [0.55, 0., -0.30]
         self.camera_roll = 0.0
         self.camera_pitch = -30.0
         self.camera_yaw = 150.0
-        self.camera_distance = 0.55
-
-        # camera settings for drawer tasks
-        # self.camera_target_pos = [0.55, 0., -0.30]
-        # self.camera_roll = 0.0
-        # self.camera_pitch = -30.0
-        # self.camera_yaw = 150.0
-        # self.camera_distance = 0.64
+        self.camera_distance = 0.64
 
         self.view_matrix_args = dict(target_pos=self.camera_target_pos,
                                      distance=self.camera_distance,
