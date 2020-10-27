@@ -1,21 +1,21 @@
-# Start here
+# roboverse
+A set of environments utilizing [pybullet](https://github.com/bulletphysics/bullet3) was simulation of robotic manipulation tasks. 
 
-`python roboverse/envs/widow250.py`
+## Setup
+I recommend using [conda](https://docs.anaconda.com/anaconda/install/) for setup:
 
-## Scripted data collection
+```
+conda create -n roboverse python=3.6
+source activate roboverse
+pip install -r requirements.txt
+```
 
-`python scripts/scripted_collect_parallel.py -n 5000 -p 20 -t 25 -e Widow250PickPlace-v0 -pl grasp -a grasp_success -d testing`
-
-`python scripts/scripted_collect.py -n 100 -t 25 -e Widow250PickPlace-v0 -pl grasp -a grasp_success --gui`
+To test if things are working by visualizing a scripted robot policy, run the following command:
 
 `python scripts/scripted_collect.py -n 100 -t 30 -e Widow250DoubleDrawerOpenNeutral-v0 -pl drawer_open_transfer -a drawer_opened_success --noise=0.1 --gui`
 
-## Pulling all submodules (like bullet-objects)
+## If you want to dig into the code, start here:
+`python roboverse/envs/widow250.py`
 
-First time: `git submodule update --init --recursive`
-
-Subsequent updates: `git submodule update --recursive --remote`
-
-## TODO
-- [ ] DrawerOpenSuboptimal is actually just DrawerClose. This should be renamed, and the code should be shared between the two scripts (since they only differ in one action).  
-- [ ] Add obstacle object and box/tray to DoubleDrawer env
+## Credit
+Primary developers: [Avi Singh](https://www.avisingh.org/), Albert Yu, Jonathan Yang, [Michael Janner](https://people.eecs.berkeley.edu/~janner/), Huihan Liu, Gaoyue Zhou
