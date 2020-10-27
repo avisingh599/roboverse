@@ -1,6 +1,15 @@
 # roboverse
 A set of environments utilizing [pybullet](https://github.com/bulletphysics/bullet3) was simulation of robotic manipulation tasks. 
 
+## Usage
+Creating and using environments is simple:
+```python
+import roboverse
+env = roboverse.make('Widow250DoubleDrawerOpenNeutral-v0', gui=True)
+env.reset()
+for _ in range(25):
+    env.step(env.action_space.sample())
+```
 ## Setup
 I recommend using [conda](https://docs.anaconda.com/anaconda/install/) for setup:
 
@@ -9,6 +18,7 @@ conda create -n roboverse python=3.6
 source activate roboverse
 pip install -r requirements.txt
 ```
+When using this repository with other projects, run `pip install -e .` in the root directory of this repo. 
 
 To test if things are working by visualizing a scripted robot policy, run the following command:
 
