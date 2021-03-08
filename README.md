@@ -1,5 +1,5 @@
 # roboverse
-A set of environments utilizing [pybullet](https://github.com/bulletphysics/bullet3) was simulation of robotic manipulation tasks. 
+A set of environments utilizing [pybullet](https://github.com/bulletphysics/bullet3) for simulation of robotic manipulation tasks. 
 
 ## Usage
 Creating and using environments is simple:
